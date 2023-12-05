@@ -23,7 +23,8 @@ function Sys1List() {
       </List>
       <Divider />
       <List>
-        <ListItemNavPath navPath={'/sys2item1'} icon={<PersonAddIcon color = 'sys2'/>} text={ sys2ListLang.sys2item1[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/avm_myprepared'} icon={<PersonAddIcon color = 'sys2'/>} text={ sys2ListLang.sys2item1[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/avm_myreview'} icon={<PersonAddIcon color = 'sys2'/>} text={ sys2ListLang.sys2item1[cookies.load('site-lang')] }/>
       </List>
     </div>
   )

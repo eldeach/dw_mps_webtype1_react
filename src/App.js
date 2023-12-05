@@ -27,7 +27,9 @@ import MyReview from './MotherSite/Forms/MyReview/MyReview'
 import UserRecorder from './MotherSite/Forms/User/UserRecorder/UserRecorder';
 import ViewUser from './MotherSite/Forms/User/ViewUser/ViewUser';
 
-import NoCardVeiw from './System/RedirectPage/NoCardView/NoCardVeiw';
+// AVM Forms
+import AvmMyPrepared from './AVM/Forms/MyPrepared/MyPrepared'
+import AvmMyReview from './AVM/Forms/MyReview/MyReview'
 
 // ======================================================================================== [Import Component] CSS
 import './App.css';
@@ -107,6 +109,11 @@ function App() {
                         handlePageTitle={handlePageTitle}
                         handleSystemCode={handleSystemCode}/>
                     }/>
+
+
+                    <Route path='/avm_myprepared' element={<AvmMyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/avm_myreview' element={<AvmMyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    
                 </Routes>
             </div>
     </ThemeProvider>
