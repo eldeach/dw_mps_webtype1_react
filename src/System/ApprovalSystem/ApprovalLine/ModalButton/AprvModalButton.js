@@ -137,7 +137,7 @@ function AddPersonnelButton (props){
         >
             { formikProps => (
                 <div>
-                    <Button fullWidth disabled = { props.disabled } variant="outlined" color = 'sys1' size="small" sx={{ mt : 1 }} onClick={()=> handleModalOpen() }>ADD</Button>
+                    <Button fullWidth disabled = { props.disabled } variant="outlined" color = {props.sysCode} size="small" sx={{ mt : 1 }} onClick={()=> handleModalOpen() }>ADD</Button>
                     <Modal open={( popup === 1 )} onClose={ handleModalClose }>
                         <form
                         noValidate
@@ -148,11 +148,12 @@ function AddPersonnelButton (props){
                             <Paper id='addPersonnelPaper' sx={ style.popupPaper } elevation={3}>
                                 <div className = "popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
                                 <div style={ style.pageTitle.box }>
-                                    <PeopleIcon color='sys1' sx = {{ fontSize : 'xx-large' }}/>
+                                    <PeopleIcon color={props.sysCode} sx = {{ fontSize : 'xx-large' }}/>
                                     <div style={style.pageTitle.text}>{aprvModalButtonLang.pageTitle[cookies.load('site-lang')]}</div>
                                 </div>
                                 <FormControl style={{ border:'#D3D3D3 solid 1px', borderRadius:'5px', marginLeft : '5px', marginRight : '5px', marginTop:'5px', marginBottom:'2px', paddingLeft:'10px', width:'100%', boxSizing:'border-box', display: 'flex', flexDirection: 'row', alignItems:'center' }}>
                                     <FormLabel
+                                    color = {props.sysCode}
                                     id="approval_type"
                                     sx={{ mr:1 }}
                                     >
@@ -167,22 +168,22 @@ function AddPersonnelButton (props){
                                     >
                                         <FormControlLabel
                                         value="APPROVAL"
-                                        control={<Radio />}
+                                        control={<Radio color = {props.sysCode}/>}
                                         label={<Typography sx={{fontSize:14}}>Approval</Typography>}
                                         />
                                         <FormControlLabel
                                         value="AGREEMENT"
-                                        control={<Radio />}
+                                        control={<Radio color = {props.sysCode}/>}
                                         label={<Typography sx={{fontSize:14}}>Agreement</Typography>}
                                         />
                                         <FormControlLabel
                                         value="RECIEVE"
-                                        control={<Radio />}
+                                        control={<Radio color = {props.sysCode}/>}
                                         label={<Typography sx={{fontSize:14}}>Recieve</Typography>}
                                         />     
                                         <FormControlLabel
                                         value="FINAL_APPROVAL"
-                                        control={<Radio />}
+                                        control={<Radio color = {props.sysCode}/>}
                                         label={<Typography sx={{fontSize:14}}>Final Approval</Typography>}
                                         />  
                                     </RadioGroup>
@@ -203,7 +204,7 @@ function AddPersonnelButton (props){
                                         props.inheritedArr.map(( oneElement, elementIndex ) => (
                                             <Button
                                             variant="outlined"
-                                            color = 'sys1'
+                                            color = {props.sysCode}
                                             size="small"
                                             sx = {{ m : 0.5 }}
                                             onClick={() => {

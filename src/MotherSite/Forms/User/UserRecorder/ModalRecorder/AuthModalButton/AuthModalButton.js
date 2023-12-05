@@ -13,10 +13,10 @@ import GppGoodIcon from '@mui/icons-material/GppGood';
 // ======================================================================================== [Import Component] js
 import authModalButtonLang from './authModalButtonLang'
 // objArrHandler
-import objArrAddElementByArrLang from '../../../../../../../System/Funcs/ArrHandler/objArrAddElementByArr/objArrAddElementByArr'
+import objArrAddElementByArrLang from '../../../../../../System/Funcs/ArrHandler/objArrAddElementByArr/objArrAddElementByArr'
 
 // Table
-import TableType1 from '../../../../../../../System/TableObj/TableType1/Template/TableType1' // System Component
+import TableType1 from '../../../../../../System/TableObj/TableType1/Template/TableType1' // System Component
 import columnDef from './columnDef' // this form's columnDef
 
 

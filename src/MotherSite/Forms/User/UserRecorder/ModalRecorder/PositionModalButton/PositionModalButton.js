@@ -58,7 +58,8 @@ function AddPosition(props){
     const initialValues = {
         job_position: '',
         job_team: '',
-        job_company: ''
+        job_company: '',
+        job_description : ''
     }
 
     const [popup,setPopup] = useState(0);
@@ -172,6 +173,29 @@ function AddPosition(props){
                                 InputProps={{
                                     endAdornment:(
                                         <IconButton size='small' onClick={()=>{formikProps.setFieldValue('job_company','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
+                                <TextField
+                                variant="outlined"
+                                id="job_description"
+                                name="job_description"
+                                label={positionModalButtonLang.inputField.job_description.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.job_description}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.job_description ? formikProps.errors.job_description : ""}
+                                error={formikProps.touched.job_description && Boolean(formikProps.errors.job_description)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('job_description','')}}>
                                             <ClearIcon size='small'/>
                                         </IconButton>
                                     ),

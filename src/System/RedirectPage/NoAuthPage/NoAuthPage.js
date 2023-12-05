@@ -9,14 +9,10 @@ import InfoIcon from '@mui/icons-material/Info';
 
 // ======================================================================================== [Import Component] js
 import noAuthPageLang from './noAuthPageLang'
-import { useNavigate } from 'react-router-dom';
 
 // ======================================================================================== [Import Component] CSS
 
 function NoAuthPage(){
-
-    const navigate = useNavigate();
-
     const style = {
         subtitle:{
             box : {

@@ -1,12 +1,20 @@
-const sys1ListLang = {
+const sys2ListLang = {
     returnFirstPage : {
         kor : "첫 페이지로",
         eng : "Go to the first page"
     },
-    sys2item1 : {
-        kor : "시스템 2 아이템 1",
-        eng : "System 2 Item 1"
-    }
+    myprepared : {
+        kor : "내 상신",
+        eng : "My Prepared"
+    },
+    myreview : {
+        kor : "내 검토",
+        eng : "My Review"
+    },
+    eq : {
+        kor : "설비",
+        eng : "Machine"
+    },
 }
 
-export default sys1ListLang;
+export default sys2ListLang;

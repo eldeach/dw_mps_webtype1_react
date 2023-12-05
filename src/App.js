@@ -30,6 +30,7 @@ import ViewUser from './MotherSite/Forms/User/ViewUser/ViewUser';
 // AVM Forms
 import AvmMyPrepared from './AVM/Forms/MyPrepared/MyPrepared'
 import AvmMyReview from './AVM/Forms/MyReview/MyReview'
+import MachineRecorder from './AVM/Forms/Machine/MachineRecorder/MachineRecorder'
 
 // ======================================================================================== [Import Component] CSS
 import './App.css';
@@ -113,6 +114,28 @@ function App() {
 
                     <Route path='/avm_myprepared' element={<AvmMyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/avm_myreview' element={<AvmMyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/addmachine' element={
+                        <MachineRecorder
+                        preparedType = 'NEW'
+                        initialValues = {{
+                            approval_payload :[[]],
+                            revision_history : '',
+                            previous_approval_payload_id : null,
+                            eq_code : '',
+                            eq_code_alt : '',
+                            eq_code_alt2 : '',
+                            iq : [],
+                            oq : [],
+                            pq : [],
+                            periodic_qual : [],
+                            periodic_review : [],
+                            periodic_ster : [],
+                            periodic_cv : [],
+                            param : [],
+                        }}
+                        handlePageTitle = { handlePageTitle }
+                        handleSystemCode = { handleSystemCode } />
+                    } />
                     
                 </Routes>
             </div>

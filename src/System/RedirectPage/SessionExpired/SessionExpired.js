@@ -15,8 +15,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 function SessionExpired(){
-    const navigate = useNavigate();
-
     const style = {
         subtitle:{
             box : {

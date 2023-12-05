@@ -4,11 +4,11 @@ import Sys2List from './Menu/Sys2List/Sys2List'
 
 const menuConfig = {
     sys1 : {
-        name : 'System 1',
+        name : 'Mother Site',
         menu : Sys1List,
     },
     sys2 : {
-        name : 'System 2',
+        name : 'AVM',
         menu : Sys2List,
     },
     sys3 : {

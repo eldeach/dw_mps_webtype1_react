@@ -88,9 +88,9 @@ function ApprovalLine (props) {
     return (
         <Paper id='approvalPaper' sx={style.paper} elevation={3}>
             <div style={style.subtitle.box}>
-                <DrawIcon color='sys1'/>
+                <DrawIcon color={props.sysCode}/>
                 <div style={style.subtitle.text}>Approval Line</div>
-                <Button disabled = { props.immediateEffective } size="small" variant='contained' sx={{ ml:'auto' }} color='sys1' onClick={()=> props.updateValue(arrAddEmptyArr( props.inheritedArr ))}>
+                <Button disabled = { props.immediateEffective } size="small" variant='contained' sx={{ ml:'auto' }} color={props.sysCode} onClick={()=> props.updateValue(arrAddEmptyArr( props.inheritedArr ))}>
                     {
                         approvalLineLang.approvalPaper.button.addPersonnel[cookies.load('site-lang')]
                     }
@@ -103,7 +103,7 @@ function ApprovalLine (props) {
                             <Chip
                             size="small"
                             icon={<NumbersIcon size="small"/>}
-                            color='sys1'
+                            color={props.sysCode}
                             sx={{
                                 pr:1,
                                 mt:1,
@@ -136,7 +136,7 @@ function ApprovalLine (props) {
                                             <Chip
                                             size="small"
                                             icon={<DrawIcon size="small"/>}
-                                            color='sys1'
+                                            color={props.sysCode}
                                             sx={{
                                                 width:150,
                                                 mb:0.4,
@@ -151,7 +151,7 @@ function ApprovalLine (props) {
                                             <Chip
                                             size="small"
                                             icon={<AccountCircleIcon size="small"/>}
-                                            color='sys1'
+                                            color={props.sysCode}
                                             variant="outlined"
                                             sx={{
                                                 width: 150,
@@ -168,7 +168,7 @@ function ApprovalLine (props) {
                                             <Chip
                                             size="small"
                                             icon={<WorkIcon size="small"/>}
-                                            color='sys1'
+                                            color={props.sysCode}
                                             variant="outlined"
                                             sx={{
                                                 width: 150,
@@ -186,7 +186,7 @@ function ApprovalLine (props) {
                                         <Chip
                                         size="small"
                                         icon={<BadgeIcon size="small"/>}
-                                        color='sys1'
+                                        color={props.sysCode}
                                         variant="outlined"
                                         sx={{
                                             width: 130,
@@ -205,7 +205,7 @@ function ApprovalLine (props) {
                                         <Chip
                                         size="small"
                                         icon={<Diversity3Icon size="small"/>}
-                                        color='sys1'
+                                        color={props.sysCode}
                                         variant="outlined"
                                         sx={{
                                             width: 120,
@@ -248,16 +248,17 @@ function ApprovalLine (props) {
                 ))
             }
             <AprvModalButton
+            sysCode = { props.sysCode }
             disabled = { props.immediateEffective }
             inheritedArr = { props.inheritedArr }
             updateValue = { props.updateValue }/>
             <FormControlLabel
-            control={ <Switch checked={ props.immediateEffective } onChange={ ( e ) => props.setImmediateEffective( e.target.checked ) } name="setImmediate_effective" /> }
+            control={ <Switch color = {props.sysCode} checked={ props.immediateEffective } onChange={ ( e ) => props.setImmediateEffective( e.target.checked ) } name="setImmediate_effective" /> }
             label={
                 <Typography size="small" sx = {{ fontSize : '10px', color : (props.immediateEffective ? 'red' : 'black') }}> { approvalLineLang.approvalPaper.switch.immediateEffective[cookies.load('site-lang')] } </Typography>     
             }
             />
-            <Button fullwidth sx={style.submitButton} variant="contained" color = 'sys1' size="small" type='submit' form={props.forId}>Submit</Button>
+            <Button fullwidth sx={style.submitButton} variant="contained" color = {props.sysCode} size="small" type='submit' form={props.forId}>Submit</Button>
         </Paper>
     )
 

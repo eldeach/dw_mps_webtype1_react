@@ -30,6 +30,12 @@ const langConfig = {
                 eng : "Company Name"
             },
         },
+        job_description : {
+            placeholder :{
+                kor : "업무설명",
+                eng : "Job Description"
+            },
+        },
     },
     button : {
         subForm:{
