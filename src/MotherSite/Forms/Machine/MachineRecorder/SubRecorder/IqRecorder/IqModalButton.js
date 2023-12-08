@@ -114,7 +114,7 @@ function IqModalButton(props){
                         onSubmit={formikProps.handleSubmit}
                         >
                             <div style={style.subtitle.box}>
-                                <VerifiedIcon color='sys2'/>
+                                <VerifiedIcon color='sys1'/>
                                 <div style={style.subtitle.text}>Add IQ Information</div>
                             </div>
                             <TextField
@@ -209,7 +209,7 @@ function IqModalButton(props){
                                 color='sys2'/>}
                                 />
                             </LocalizationProvider>
-                            <Button sx={{mt:1}} fullWidth variant="contained" color = 'sys2' size="small" type="submit" form="addIqOneInfo">ADD</Button>
+                            <Button sx={{mt:1}} fullWidth variant="contained" color = 'sys1' size="small" type="submit" form="addIqOneInfo">ADD</Button>
                         </form>
                     </Paper>
                 </Modal>

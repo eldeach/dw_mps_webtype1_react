@@ -4,7 +4,7 @@ import cookies from 'react-cookies'
 // ======================================================================================== [Import Component] js
 import objArrAddElementByArrLang from './objArrAddElementByArrLang'
 
-const objArrAddElement = function (arr, newElementByArr, pkStr) {
+const objArrAddElementByArr = function (arr, newElementByArr, pkStr) {
     
     let duplication = 0
     let tempArr = [...arr];
@@ -28,4 +28,4 @@ const objArrAddElement = function (arr, newElementByArr, pkStr) {
     return tempArr;
 };
 
-export default objArrAddElement;
+export default objArrAddElementByArr;

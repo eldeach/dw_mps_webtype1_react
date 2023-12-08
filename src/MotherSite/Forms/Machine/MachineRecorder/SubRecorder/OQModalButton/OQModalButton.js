@@ -11,7 +11,7 @@ import { Button, Modal, Paper } from '@mui/material';
 
 import GppGoodIcon from '@mui/icons-material/GppGood';
 // ======================================================================================== [Import Component] js
-import authModalButtonLang from './authModalButtonLang'
+import oqModalButtonLang from './oqModalButtonLang'
 // objArrHandler
 import objArrAddElement from '../../../../../../System/Funcs/ArrHandler/objArrAddElement/objArrAddElement'
 
@@ -23,7 +23,7 @@ import columnDef from './columnDef' // this form's columnDef
 // ======================================================================================== [Import Component] CSS
 
 
-function AuthModalButton (props){
+function OQModalButton (props){
     
     const style = {
         pageTitle : {
@@ -79,11 +79,23 @@ function AuthModalButton (props){
     // 테이블 데이터 얻기
     const [tableData,setTableData] = useState([])
     const getAuthList = async function () {
-        let rs = await axios.get('/getauthlist')
-        .then(( res ) => {
-            return res.data
+        let rs = await axios({
+            method : 'get',
+            url : '/getcdmsdoclist',
+            params : {qualAtt : 'OQ'},
+            headers : {
+              'Content-Type':'application/json'
+            }
         })
-        setTableData( rs )
+        .then(( res ) => {
+            setTableData( res.data )
+            return res.data;
+        })
+        .catch(( error ) => {
+            console.log(error)
+            alert (error.response.data)
+            return error.response;
+        })
     }
 
     // 팝업 핸들러
@@ -113,11 +125,11 @@ function AuthModalButton (props){
                     <Modal open={( popup === 1 )} onClose={ handleModalClose }>
                         <form
                         noValidate
-                        id = "authModal"
+                        id = "oqModal"
                         autoComplete='off'
                         onSubmit={formikProps.handleSubmit}
                         >
-                            <Paper id='authModalPaper' sx={ style.popupPaper } elevation={3}>
+                            <Paper id='opModalPaper' sx={ style.popupPaper } elevation={3}>
                                 <div className = "popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
                                 <div style={ style.pageTitle.box }>
                                     <GppGoodIcon color='sys1' sx = {{ fontSize : 'xx-large' }}/>
@@ -140,7 +152,7 @@ function AuthModalButton (props){
                                     size="small"
                                     sx = {{ m : 0.5 }}
                                     onClick={() => {
-                                        let tempArr = objArrAddElement(props.inheritedArr, tableSelected, "auth_code")
+                                        let tempArr = objArrAddElement(props.inheritedArr, tableSelected, null)
                                         props.updateValue( tempArr )
                                         handleModalClose()
                                     }}
@@ -157,4 +169,4 @@ function AuthModalButton (props){
     )
 }
 
-export default AuthModalButton;
+export default OQModalButton;

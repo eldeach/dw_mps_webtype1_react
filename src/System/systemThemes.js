@@ -12,14 +12,14 @@ const globalTheme = createTheme({
   },
   palette : {
     sys1 : {
-      main : '#0971f1',
-      darker : '#053e85',
-      contrastText : '#fff',
+        main : '#3f50b5',
+        darker : '#002884',
+        contrastText : '#fff',
     },
     sys2 : {
-      main : '#3f50b5',
-      darker : '#002884',
-      contrastText : '#fff',
+        main : '#0971f1',
+        darker : '#053e85',
+        contrastText : '#fff',
     },
     sys3 : {
       main : '#0971f1',

@@ -216,7 +216,7 @@ function LoginButton(){
                                         InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                         />
                                     </div>
-                                    <Button sx={{mt:1}} fullWidth variant="contained" size='small' type="submit" form="loginForm">{loginButtonLang.loginForm.button.submit[cookies.load('site-lang')]}</Button>
+                                    <Button sx={{mt:1}} color='sys1' fullWidth variant="contained" size='small' type="submit" form="loginForm">{loginButtonLang.loginForm.button.submit[cookies.load('site-lang')]}</Button>
                                 </form>
                             )}
                     </Formik>

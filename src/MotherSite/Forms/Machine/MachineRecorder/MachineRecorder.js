@@ -24,6 +24,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import machineRecorderLang from './machineRecorderLang'
 
 // Sub Recorder
+import OQModalButton from './SubRecorder/OQModalButton/OQModalButton'
 import IqModalButton from './SubRecorder/IqRecorder/IqModalButton'
 
 // Popup Form
@@ -163,7 +164,7 @@ function MachineRecorder(props){
 
     useEffect(()=>{
         handlePageTitle(machineRecorderLang.formTitle[cookies.load('site-lang')])
-        handleSystemCode('sys2')
+        handleSystemCode('sys1')
     },[])
 
 
@@ -185,7 +186,7 @@ function MachineRecorder(props){
                 >
                     <div id='MachineRecorderA' style={{display:'flex', flexDirection:'column', marginLeft:'auto', boxSizing:'border-box'}} >
                         <ApprovalLine
-                        sysCode = 'sys2'
+                        sysCode = 'sys1'
                         forId = 'machine_recorder'
                         inheritedArr = { formikProps.values.approval_payload }
                         updateValue = { function ( newValue ) { formikProps.setFieldValue( 'approval_payload', newValue )}}
@@ -275,7 +276,7 @@ function MachineRecorder(props){
                         </Paper>
                         <Paper id='iqPaper' sx={style.paper} elevation={3}>
                             <div style={style.subtitle.box}>
-                                <VerifiedIcon color='sys2'/>
+                                <VerifiedIcon color='sys1'/>
                                 <div style={style.subtitle.text}>Installation Qualification</div>
                             </div>
                             <div>
@@ -284,17 +285,17 @@ function MachineRecorder(props){
                                 <div style={style.arrItem.oneItem}>
                                 <div style={style.arrItem.itemInfo}>
                                     <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<SummarizeIcon size="small"/>} color='sys2' variant="outlined" label={`Doc # : ${oneItem.doc_no}`}/>
-                                        <Chip size="small" sx={{ml:0.8}} icon={<SummarizeIcon size="small"/>} color='sys2' variant="outlined" label={`Rev # ${oneItem.doc_rev_no}`}/>
+                                        <Chip size="small" icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Doc # : ${oneItem.doc_no}`}/>
+                                        <Chip size="small" sx={{ml:0.8}} icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Rev # ${oneItem.doc_rev_no}`}/>
                                     </div>
                                     <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys2' label={`Perfromed From : ${moment(oneItem.perform_date_start).format('YYYY-MM-DD')}`}/>
+                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.perform_date_start).format('YYYY-MM-DD')}`}/>
                                     </div>
                                     <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys2' label={`Perfromed From : ${moment(oneItem.perform_date_end).format('YYYY-MM-DD')}`}/>
+                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.perform_date_end).format('YYYY-MM-DD')}`}/>
                                     </div>
                                     <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys2' label={`Approved : ${moment(oneItem.doc_approval_date).format('YYYY-MM-DD')}`}/>
+                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Approved : ${moment(oneItem.doc_approval_date).format('YYYY-MM-DD')}`}/>
                                     </div>
                                 </div>
                                 <div style={style.arrItem.delItem}>
@@ -307,6 +308,43 @@ function MachineRecorder(props){
                             <IqModalButton
                             inheritedArr = { formikProps.values.iq }
                             updateValue = { function ( newValue ) { formikProps.setFieldValue( 'iq', newValue )}}
+                            />
+                        </Paper>
+                        <Paper id='oqPaper' sx={style.paper} elevation={3}>
+                            <div style={style.subtitle.box}>
+                                <GppGoodIcon color='sys1'/>
+                                <div style={style.subtitle.text}>Operational Qualification</div>
+                            </div>
+                            { // 현재 배열 객체 정보 출력 iterator
+                                formikProps.values.iq.map((oneItem, index)=>(
+                                <div style={style.arrItem.oneItem}>
+                                <div style={style.arrItem.itemInfo}>
+                                    <div style={style.arrItem.subInfo}>
+                                        <Chip size="small" icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Doc # : ${oneItem.doc_no}`}/>
+                                        <Chip size="small" sx={{ml:0.8}} icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Rev # ${oneItem.rev_no}`}/>
+                                    </div>
+                                    <div style={style.arrItem.subInfo}>
+                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${oneItem.doc_title}`}/>
+                                    </div>
+                                    <div style={style.arrItem.subInfo}>
+                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.imp_start_date).format('YYYY-MM-DD')}`}/>
+                                    </div>
+                                    <div style={style.arrItem.subInfo}>
+                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.imp_completion_date).format('YYYY-MM-DD')}`}/>
+                                    </div>
+                                    <div style={style.arrItem.subInfo}>
+                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Approved : ${moment(oneItem.approval_date).format('YYYY-MM-DD')}`}/>
+                                    </div>
+                                </div>
+                                <div style={style.arrItem.delItem}>
+                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'iq', arrDelElement(formikProps.values.iq, index))}><DeleteForeverIcon/></Button>
+                                </div>
+                            </div>
+                            ))
+                            }
+                            <OQModalButton
+                            inheritedArr = { formikProps.values.user_auth }
+                            updateValue = { function ( newValue ) { formikProps.setFieldValue( 'oq', newValue )}}
                             />
                         </Paper>
                     </div>
