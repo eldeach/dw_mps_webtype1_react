@@ -9,6 +9,18 @@ const langConfig = {
         kor : "사용자 추가",
         eng : "Add user"
     },
+    allFoldButton : {
+        kor : "모두 접기",
+        eng : "Fold everything"
+    },
+    fold : {
+        kor : "접기",
+        eng : "Fold"
+    },
+    unfold : {
+        kor : "펼치기",
+        eng : "Unfold"
+    },
     mcInfoPaper : {
         inputField : {
             eq_code:{

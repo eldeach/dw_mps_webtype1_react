@@ -35,6 +35,14 @@ const langConfig = {
                     eng : 'End date of execution'
                 }
             }
+        },
+        openButton : {
+            kor : '펼치기',
+            eng : 'Unfold'
+        },
+        foldButton : {
+            kor : '접기',
+            eng : 'Fold'
         }
     }
 }

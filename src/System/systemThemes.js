@@ -46,7 +46,10 @@ const globalTheme = createTheme({
       darker : '#053e85',
       contrastText : '#fff',
     },
-    
+    avmFold : {
+      main : '#3d5afe',
+      contrastText : '#fff',
+    },
     white :{
       main : '#fff',
     },

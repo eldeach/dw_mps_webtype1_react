@@ -125,6 +125,7 @@ function QualModalButton (props){
                                 <Tbl1NoFooterSelectable
                                 getUrl = {'/getcdmsqualdoclist'}
                                 params = {{
+                                    colName : props.colName,
                                     qualAtt : props.qualAtt,
                                 }}
                                 columnDef = {columnDef}
