@@ -13,7 +13,7 @@ import GppGoodIcon from '@mui/icons-material/GppGood';
 // ======================================================================================== [Import Component] js
 import authModalButtonLang from './authModalButtonLang'
 // objArrHandler
-import objArrAddElement from '../../../../../../System/Funcs/ArrHandler/objArrAddElement/objArrAddElement'
+import objArrAddElementByArr from '../../../../../../System/Funcs/ArrHandler/objArrAddElementByArr/objArrAddElementByArr'
 
 // Table
 import TableType1 from '../../../../../../System/TableObj/TableType1/Template/TableType1' // System Component
@@ -140,7 +140,7 @@ function AuthModalButton (props){
                                     size="small"
                                     sx = {{ m : 0.5 }}
                                     onClick={() => {
-                                        let tempArr = objArrAddElement(props.inheritedArr, tableSelected, "auth_code")
+                                        let tempArr = objArrAddElementByArr(props.inheritedArr, tableSelected, "auth_code")
                                         props.updateValue( tempArr )
                                         handleModalClose()
                                     }}

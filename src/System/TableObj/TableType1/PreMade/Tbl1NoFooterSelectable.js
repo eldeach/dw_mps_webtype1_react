@@ -14,7 +14,7 @@ import TableType1 from '../Template/TableType1'
 
 // ======================================================================================== [Import Component] CSS
 
-function Tbl1NoFooter (props) {
+function Tbl1NoFooterSelectable (props) {
 
     const style = {
         inputTexstField : {
@@ -23,7 +23,6 @@ function Tbl1NoFooter (props) {
         }
     }
 
-    const [tableSelected,setTableSelected] = useState([]);
     const [listData, setListData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchWord,setSearchWord] = useState('');
@@ -105,11 +104,11 @@ function Tbl1NoFooter (props) {
                 headerStyle = { props.headerStyle }
                 rowStyle = {props.rowStyle} // 일괄 모든 row에 스타일 적용, columnDef의 cell 렌더가 우선순위가 높음
                 footerOn = { false }
-                setTableSelected = { setTableSelected }
+                setTableSelected = { props.setTableSelected }
                 />
             </div>
         </div>
     )
 }
 
-export default Tbl1NoFooter;
+export default Tbl1NoFooterSelectable;

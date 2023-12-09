@@ -11,19 +11,19 @@ import { Button, Modal, Paper } from '@mui/material';
 
 import GppGoodIcon from '@mui/icons-material/GppGood';
 // ======================================================================================== [Import Component] js
-import oqModalButtonLang from './oqModalButtonLang'
+import qualModalButtonLang from './qualModalButtonLang'
 // objArrHandler
-import objArrAddElement from '../../../../../../System/Funcs/ArrHandler/objArrAddElement/objArrAddElement'
+import objArrAddElementByArr from '../../../../../../System/Funcs/ArrHandler/objArrAddElementByArr/objArrAddElementByArr'
 
 // Table
-import TableType1 from '../../../../../../System/TableObj/TableType1/Template/TableType1' // System Component
+import Tbl1NoFooterSelectable from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooterSelectable' // System Component
 import columnDef from './columnDef' // this form's columnDef
 
 
 // ======================================================================================== [Import Component] CSS
 
 
-function OQModalButton (props){
+function QualModalButton (props){
     
     const style = {
         pageTitle : {
@@ -49,8 +49,19 @@ function OQModalButton (props){
             marginTop : '0px',
             marginBottom : '6px',
         },
+        descriptionBox : {
+            marginTop:'20px',
+            marginBottom : '46px',
+            boxSizing : 'border-box',
+            fontSzie : 'small',
+            color : 'orange',
+            whiteSpace : 'pre-wrap',
+            worWrap : 'break-word',
+            textAlign : 'center',
+            flexGrow : 1
+        },
         popupPaper : {
-            width : 650,
+            width : '80vw',
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -75,33 +86,9 @@ function OQModalButton (props){
 
     }
 
-    
-    // 테이블 데이터 얻기
-    const [tableData,setTableData] = useState([])
-    const getAuthList = async function () {
-        let rs = await axios({
-            method : 'get',
-            url : '/getcdmsdoclist',
-            params : {qualAtt : 'OQ'},
-            headers : {
-              'Content-Type':'application/json'
-            }
-        })
-        .then(( res ) => {
-            setTableData( res.data )
-            return res.data;
-        })
-        .catch(( error ) => {
-            console.log(error)
-            alert (error.response.data)
-            return error.response;
-        })
-    }
-
     // 팝업 핸들러
     const [popup,setPopup] = useState(0);
     const handleModalOpen = () => {
-        getAuthList() // popup 열렸을 때만 axios.get & setTableData 실행
         setPopup(1);
     }
     const handleModalClose = () => setPopup(0);
@@ -133,17 +120,19 @@ function OQModalButton (props){
                                 <div className = "popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
                                 <div style={ style.pageTitle.box }>
                                     <GppGoodIcon color='sys1' sx = {{ fontSize : 'xx-large' }}/>
-                                    <div style={style.pageTitle.text}>{authModalButtonLang.pageTitle[cookies.load('site-lang')]}</div>
+                                    <div style={style.pageTitle.text}>{qualModalButtonLang.pageTitle[cookies.load('site-lang')]}</div>
                                 </div>
-                                <TableType1
-                                tableData = { tableData }
-                                columnsDef = { columnDef }
-                                divStyle={{ marginLeft : '5px', marginTop : '10px', divMaxWidth : '600px', divMaxHeight : '600px', overflow : 'auto'}}
+                                <Tbl1NoFooterSelectable
+                                getUrl = {'/getcdmsqualdoclist'}
+                                params = {{
+                                    qualAtt : props.qualAtt,
+                                }}
+                                columnDef = {columnDef}
+                                setTableSelected = { setTableSelected }
+                                divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '80vw', maxHeight : '70vh', overflow : 'auto'}}
                                 tableStyle = {{ }}
                                 headerStyle = {{ fontSize : '12px' }}
                                 rowStyle = {{ fontSize : '12px' }} // 일괄 모든 row에 스타일 적용, columnDef의 cell 렌더가 우선순위가 높음
-                                footerOn = { false }
-                                setTableSelected = { setTableSelected }
                                 />
                                 <div style ={ style.approvalStepBox }>
                                     <Button
@@ -152,7 +141,7 @@ function OQModalButton (props){
                                     size="small"
                                     sx = {{ m : 0.5 }}
                                     onClick={() => {
-                                        let tempArr = objArrAddElement(props.inheritedArr, tableSelected, null)
+                                        let tempArr = objArrAddElementByArr(props.inheritedArr, tableSelected, 'uuid_binary')
                                         props.updateValue( tempArr )
                                         handleModalClose()
                                     }}
@@ -169,4 +158,4 @@ function OQModalButton (props){
     )
 }
 
-export default OQModalButton;
+export default QualModalButton;

@@ -50,6 +50,10 @@ const globalTheme = createTheme({
     white :{
       main : '#fff',
     },
+    start : {
+      main : '#00e5ff',
+      contrastText : '#fff',
+    },
     accepted : {
       main : '#76ff03',
       contrastText : '#fff',

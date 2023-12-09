@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, IconButton, Chip, Paper, TextField } from '@mui/material';
+import { Button, Box, IconButton, Chip, Paper, TextField } from '@mui/material';
 //icon
 import ClearIcon from '@mui/icons-material/Clear';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
@@ -24,8 +24,10 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import machineRecorderLang from './machineRecorderLang'
 
 // Sub Recorder
-import OQModalButton from './SubRecorder/OQModalButton/OQModalButton'
-import IqModalButton from './SubRecorder/IqRecorder/IqModalButton'
+import QualModalButton from './SubRecorder/QualModalButton/QualModalButton'
+
+// Component
+import DocItemDiv from '../../../Component/DocItemDiv/DocItemDiv';
 
 // Popup Form
 import ApprovalLine from '../../../../System/ApprovalSystem/ApprovalLine/ApprovalLine';
@@ -37,7 +39,7 @@ import arrDelElement from '../../../../System/Funcs/ArrHandler/arrDelElement'
 
 
 function MachineRecorder(props){
-
+    
     const style = {
         subtitle:{ // SubRecorder subtitle div 스타일
             box : {
@@ -50,7 +52,9 @@ function MachineRecorder(props){
         paper : { // SubRecorder Paper 객체 스타일
             width:500,
             p: 2,
-            mb:2
+            mb:2,
+            ml:2,
+            flexGrow : 0
         },
         inputTexstField : {
             fontSize: 14,
@@ -179,12 +183,12 @@ function MachineRecorder(props){
             { formikProps => (
                 <form
                 noValidate
-                style={{width:'100%', hegith:'100%', display:'flex', flexDirection:'row'}}
+                style={{width:'100%', hegith:'100%', display:'flex', flexDirection:'column'}}
                 id = "machine_recorder"
                 autoComplete='off'
                 onSubmit={formikProps.handleSubmit}
                 >
-                    <div id='MachineRecorderA' style={{display:'flex', flexDirection:'column', marginLeft:'auto', boxSizing:'border-box'}} >
+                    <div id='MachineRecorderA' style={{display:'flex', flexDirection:'row', marginLeft:'16px', boxSizing:'border-box'}} >
                         <ApprovalLine
                         sysCode = 'sys1'
                         forId = 'machine_recorder'
@@ -193,8 +197,6 @@ function MachineRecorder(props){
                         immediateEffective = { immediateEffective }
                         setImmediateEffective = { setImmediateEffective }
                         />
-                    </div>
-                    <div id='MachineRecorderB' style={{marginLeft:'20px', marginRight:'auto', marginBottom:'20px' ,display:'flex', flexDirection:'column', boxSizing:'border-box'}} >
                         <Paper id='mcInfoPaper' sx={style.paper} elevation={3}>
                             <div style={style.subtitle.box}>
                                 <FingerprintIcon color='sys1'/>
@@ -274,77 +276,113 @@ function MachineRecorder(props){
                             InputLabelProps={{style: style.inputTexstField}} // font size of input label
                             />
                         </Paper>
+                    </div>
+                    <div id='MachineRecorderB' style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
+                        <Paper id='pqualPaper' sx={style.paper} elevation={3}>
+                            <div style={style.subtitle.box}>
+                                <VerifiedIcon color='sys1'/>
+                                <div style={style.subtitle.text}>Periodic Qualification X</div>
+                            </div>
+                            { // 현재 배열 객체 정보 출력 iterator
+                                formikProps.values.oq.map((oneItem, index)=>(
+                                    <div style={style.arrItem.oneItem}>
+                                        <DocItemDiv oneItem = { oneItem }/>
+                                        <div style={style.arrItem.delItem}>
+                                            <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                            <QualModalButton
+                            qualAtt = 'PQ'
+                            inheritedArr = { formikProps.values.oq }
+                            updateValue = { function ( newValue ) { formikProps.setFieldValue( 'pq', newValue )}}
+                            />
+                        </Paper>
                         <Paper id='iqPaper' sx={style.paper} elevation={3}>
                             <div style={style.subtitle.box}>
                                 <VerifiedIcon color='sys1'/>
                                 <div style={style.subtitle.text}>Installation Qualification</div>
                             </div>
-                            <div>
                             { // 현재 배열 객체 정보 출력 iterator
                                 formikProps.values.iq.map((oneItem, index)=>(
-                                <div style={style.arrItem.oneItem}>
-                                <div style={style.arrItem.itemInfo}>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Doc # : ${oneItem.doc_no}`}/>
-                                        <Chip size="small" sx={{ml:0.8}} icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Rev # ${oneItem.doc_rev_no}`}/>
+                                    <div style={style.arrItem.oneItem}>
+                                        <DocItemDiv oneItem = { oneItem }/>
+                                        <div style={style.arrItem.delItem}>
+                                            <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                        </div>
                                     </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.perform_date_start).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.perform_date_end).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Approved : ${moment(oneItem.doc_approval_date).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                </div>
-                                <div style={style.arrItem.delItem}>
-                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'iq', arrDelElement(formikProps.values.iq, index))}><DeleteForeverIcon/></Button>
-                                </div>
-                            </div>
-                            ))
+                                ))
                             }
-                            </div>
-                            <IqModalButton
+                            <QualModalButton
+                            qualAtt = 'IQ'
                             inheritedArr = { formikProps.values.iq }
                             updateValue = { function ( newValue ) { formikProps.setFieldValue( 'iq', newValue )}}
                             />
                         </Paper>
                         <Paper id='oqPaper' sx={style.paper} elevation={3}>
                             <div style={style.subtitle.box}>
-                                <GppGoodIcon color='sys1'/>
+                                <VerifiedIcon color='sys1'/>
                                 <div style={style.subtitle.text}>Operational Qualification</div>
                             </div>
                             { // 현재 배열 객체 정보 출력 iterator
-                                formikProps.values.iq.map((oneItem, index)=>(
-                                <div style={style.arrItem.oneItem}>
-                                <div style={style.arrItem.itemInfo}>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Doc # : ${oneItem.doc_no}`}/>
-                                        <Chip size="small" sx={{ml:0.8}} icon={<SummarizeIcon size="small"/>} color='sys1' variant="outlined" label={`Rev # ${oneItem.rev_no}`}/>
+                                formikProps.values.oq.map((oneItem, index)=>(
+                                    <div style={style.arrItem.oneItem}>
+                                        <DocItemDiv oneItem = { oneItem }/>
+                                        <div style={style.arrItem.delItem}>
+                                            <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                        </div>
                                     </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${oneItem.doc_title}`}/>
-                                    </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EditCalendarIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.imp_start_date).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Perfromed From : ${moment(oneItem.imp_completion_date).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                    <div style={style.arrItem.subInfo}>
-                                        <Chip size="small" icon={<EventAvailableIcon size="small"/>} color='sys1' label={`Approved : ${moment(oneItem.approval_date).format('YYYY-MM-DD')}`}/>
-                                    </div>
-                                </div>
-                                <div style={style.arrItem.delItem}>
-                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'iq', arrDelElement(formikProps.values.iq, index))}><DeleteForeverIcon/></Button>
-                                </div>
-                            </div>
-                            ))
+                                ))
                             }
-                            <OQModalButton
-                            inheritedArr = { formikProps.values.user_auth }
+                            <QualModalButton
+                            qualAtt = 'OQ'
+                            inheritedArr = { formikProps.values.oq }
                             updateValue = { function ( newValue ) { formikProps.setFieldValue( 'oq', newValue )}}
+                            />
+                        </Paper>
+                        <Paper id='pqPaper' sx={style.paper} elevation={3}>
+                            <div style={style.subtitle.box}>
+                                <VerifiedIcon color='sys1'/>
+                                <div style={style.subtitle.text}>Performance Qualification</div>
+                            </div>
+                            { // 현재 배열 객체 정보 출력 iterator
+                                formikProps.values.oq.map((oneItem, index)=>(
+                                    <div style={style.arrItem.oneItem}>
+                                        <DocItemDiv oneItem = { oneItem }/>
+                                        <div style={style.arrItem.delItem}>
+                                            <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                            <QualModalButton
+                            qualAtt = 'PQ'
+                            inheritedArr = { formikProps.values.oq }
+                            updateValue = { function ( newValue ) { formikProps.setFieldValue( 'pq', newValue )}}
+                            />
+                        </Paper>
+                    </div>
+                    <div id='MachineRecorderC' style={{marginLeft:'20px', marginRight:'auto', marginBottom:'20px' ,display:'flex', flexDirection:'column', boxSizing:'border-box'}} >
+                        <Paper id='cvPaper' sx={style.paper} elevation={3}>
+                            <div style={style.subtitle.box}>
+                                <VerifiedIcon color='sys1'/>
+                                <div style={style.subtitle.text}>Cleaning Validation X</div>
+                            </div>
+                            { // 현재 배열 객체 정보 출력 iterator
+                                formikProps.values.oq.map((oneItem, index)=>(
+                                    <div style={style.arrItem.oneItem}>
+                                        <DocItemDiv oneItem = { oneItem }/>
+                                        <div style={style.arrItem.delItem}>
+                                            <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                            <QualModalButton
+                            qualAtt = 'PQ'
+                            inheritedArr = { formikProps.values.oq }
+                            updateValue = { function ( newValue ) { formikProps.setFieldValue( 'pq', newValue )}}
                             />
                         </Paper>
                     </div>

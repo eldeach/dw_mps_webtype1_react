@@ -6,8 +6,8 @@ const langConfig = {
         }
     },
     pageTitle : {
-        kor : "권한 추가",
-        eng : "Add Auth"
+        kor : "근거 문서 추가",
+        eng : "Add rationale documents"
     },
 }
 

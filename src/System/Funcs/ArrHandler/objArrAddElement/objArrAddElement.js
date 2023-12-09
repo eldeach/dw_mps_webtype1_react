@@ -23,6 +23,7 @@ const objArrAddElement = function (arr, newElement, pkStr) {
     else {
         
     }
+    console.log(tempArr)
     return tempArr;
 };
 
