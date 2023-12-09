@@ -254,103 +254,113 @@ function MachineRecorder(props){
                         immediateEffective = { immediateEffective }
                         setImmediateEffective = { setImmediateEffective }
                         />
-                        <Paper id='mcInfoPaper' sx={style.paper} elevation={3}>
-                            <div style={style.subtitle.box}>
-                                <FingerprintIcon color='sys1'/>
-                                <div style={style.subtitle.text}>{"Personal Identifiable Information (PII)"}</div>
-                            </div>
-                            <TextField
-                            required
-                            disabled = {!(props.preparedType == "NEW")}
-                            variant="outlined"
-                            id="eq_code"
-                            name="eq_code"
-                            label={machineRecorderLang.mcInfoPaper.inputField.eq_code.placeholder[cookies.load('site-lang')]}
-                            value={formikProps.values.eq_code}
-                            onChange={formikProps.handleChange}
-                            onBlur={formikProps.handleBlur}
-                            helperText={formikProps.touched.eq_code ? formikProps.errors.eq_code : ""}
-                            error={formikProps.touched.eq_code && Boolean(formikProps.errors.eq_code)}
-                            size='small'
-                            margin="dense"
-                            fullWidth
-                            InputProps={{
-                                endAdornment:(
-                                    <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code','')}}>
-                                        <ClearIcon size='small'/>
-                                    </IconButton>
-                                ),
-                                style: style.inputTexstField // font size of input text
-                            }}
-                            InputLabelProps={{style: style.inputTexstField}} // font size of input label
-                            />
-                            <TextField
-                            required
-                            variant="outlined"
-                            id="eq_code_alt"
-                            name="eq_code_alt"
-                            label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt.placeholder[cookies.load('site-lang')]}
-                            value={formikProps.values.eq_code_alt}
-                            onChange={formikProps.handleChange}
-                            onBlur={formikProps.handleBlur}
-                            helperText={formikProps.touched.eq_code_alt ? formikProps.errors.eq_code_alt : ""}
-                            error={formikProps.touched.eq_code_alt && Boolean(formikProps.errors.eq_code_alt)}
-                            size='small'
-                            margin="dense"
-                            fullWidth
-                            InputProps={{
-                                endAdornment:(
-                                    <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt','')}}>
-                                        <ClearIcon size='small'/>
-                                    </IconButton>
-                                ),
-                                style: style.inputTexstField // font size of input text
-                            }}
-                            InputLabelProps={{style: style.inputTexstField}} // font size of input label
-                            />
-                            <TextField
-                            required
-                            variant="outlined"
-                            id="eq_code_alt2"
-                            name="eq_code_alt2"
-                            label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt2.placeholder[cookies.load('site-lang')]}
-                            value={formikProps.values.eq_code_alt2}
-                            onChange={formikProps.handleChange}
-                            onBlur={formikProps.handleBlur}
-                            helperText={formikProps.touched.eq_code_alt2 ? formikProps.errors.eq_code_alt2 : ""}
-                            error={formikProps.touched.eq_code_alt2 && Boolean(formikProps.errors.eq_code_alt2)}
-                            size='small'
-                            margin="dense"
-                            fullWidth
-                            InputProps={{
-                                endAdornment:(
-                                    <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt2','')}}>
-                                        <ClearIcon size='small'/>
-                                    </IconButton>
-                                ),
-                                style: style.inputTexstField // font size of input text
-                            }}
-                            InputLabelProps={{style: style.inputTexstField}} // font size of input label
-                            />
-
-                            <FormControlLabel
-                            color='sys1'
-                            fontSize='inherit'
-                            control={
-                                <Checkbox
-                                size="small"
-                                checked = {formikProps.values.prm_list[0].prm_bathsize}
-                                onChange={(e)=>{
-                                    let temp = [...formikProps.values.prm_list]
-                                    temp[0].prm_bathsize = Boolean(e.target.checked)
-                                    console.log(temp)
-                                    formikProps.setFieldValue('prm_list', temp)
+                        <div>
+                            <Paper id='mcInfoPaper' sx={style.paper} elevation={3}>
+                                <div style={style.subtitle.box}>
+                                    <FingerprintIcon color='sys1'/>
+                                    <div style={style.subtitle.text}>{"Personal Identifiable Information (PII)"}</div>
+                                </div>
+                                <TextField
+                                required
+                                disabled = {!(props.preparedType == "NEW")}
+                                variant="outlined"
+                                id="eq_code"
+                                name="eq_code"
+                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.eq_code}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.eq_code ? formikProps.errors.eq_code : ""}
+                                error={formikProps.touched.eq_code && Boolean(formikProps.errors.eq_code)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
                                 }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
-                            }
-                            label={<Typography fontSize={12}>prm_bathsize</Typography> }/>
-                        </Paper>
+                                <TextField
+                                required
+                                variant="outlined"
+                                id="eq_code_alt"
+                                name="eq_code_alt"
+                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.eq_code_alt}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.eq_code_alt ? formikProps.errors.eq_code_alt : ""}
+                                error={formikProps.touched.eq_code_alt && Boolean(formikProps.errors.eq_code_alt)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
+                                <TextField
+                                required
+                                variant="outlined"
+                                id="eq_code_alt2"
+                                name="eq_code_alt2"
+                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt2.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.eq_code_alt2}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.eq_code_alt2 ? formikProps.errors.eq_code_alt2 : ""}
+                                error={formikProps.touched.eq_code_alt2 && Boolean(formikProps.errors.eq_code_alt2)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt2','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
+                            </Paper>
+                        </div>
+                        <div>
+                            <Paper id='prmListPaper' sx={style.paper} elevation={3}>
+                                <div style={style.subtitle.box}>
+                                    <VerifiedIcon color='sys1'/>
+                                    <div style={style.subtitle.text}>{`Param List`}</div>
+                                </div>
+                                <FormControlLabel
+                                color='sys1'
+                                fontSize='inherit'
+                                control={
+                                    <Checkbox
+                                    size="small"
+                                    checked = {formikProps.values.prm_list[0].prm_bathsize}
+                                    onChange={(e)=>{
+                                        let temp = [...formikProps.values.prm_list]
+                                        temp[0].prm_bathsize = Boolean(e.target.checked)
+                                        console.log(temp)
+                                        formikProps.setFieldValue('prm_list', temp)
+                                    }}
+                                    />
+                                }
+                                label={<Typography fontSize={12}>prm_bathsize</Typography> }/>
+                            </Paper>
+                        </div>
                     </div>
+                    
 
                     <div id='MachineRecorderB'>
                         <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setBRowFold(!bRowFold)}>{`Periodic Qualification (${bRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
