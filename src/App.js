@@ -109,6 +109,7 @@ function App() {
                             mc_mt : [],
                             prm_list : [{
                                 prm_bathsize : false,
+                                prm_bathsize_kg : false,
                                 prm_gentlewing : false,
                                 prm_chopper : false,
                                 prm_spray : false,
@@ -126,6 +127,7 @@ function App() {
                                 prm_fill : false,
                             }],
                             prm_bathsize : [],
+                            prm_bathsize_kg : [],
                             prm_gentlewing : [],
                             prm_chopper : [],
                             prm_spray : [],

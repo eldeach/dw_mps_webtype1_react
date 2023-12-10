@@ -185,6 +185,7 @@ function MachineRecorder(props){
                 mc_mt : values.mc_mt,
                 prm_list : values.prm_list,
                 prm_bathsize : values.prm_bathsize,
+                prm_bathsize_kg : values.prm_bathsize_kg,
                 prm_gentlewing : values.prm_gentlewing,
                 prm_chopper : values.prm_chopper,
                 prm_spray : values.prm_spray,
@@ -418,6 +419,27 @@ function MachineRecorder(props){
                                             />
                                         }
                                         label={<Typography fontSize={12}>Worst Batch Size</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_bathsize_kg}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_bathsize_kg = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>{`Worst Batch Size (kg)`}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -988,6 +1010,35 @@ function MachineRecorder(props){
                                     qualAtt = 'Q'
                                     inheritedArr = { formikProps.values.prm_bathsize }
                                     updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_bathsize', newValue )}}
+                                    />
+                                </Paper>
+                            }
+                            </div>
+                            <div id = 'paramItem1'>
+                            {
+                                !formikProps.values.prm_list[0].prm_bathsize_kg ? <div/> : 
+                                <Paper sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`Qualifying Batch Size (kg) (Items : ${formikProps.values.prm_bathsize_kg.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.prm_bathsize_kg.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <ParamItemDiv
+                                                valueUnit = { oneItem.valueUnit }
+                                                oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_bathsize_kg', arrDelElement(formikProps.values.prm_bathsize_kg, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'Q'
+                                    inheritedArr = { formikProps.values.prm_bathsize_kg }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_bathsize_kg', newValue )}}
                                     />
                                 </Paper>
                             }

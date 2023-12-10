@@ -10,7 +10,7 @@ import Crop32Icon from '@mui/icons-material/Crop32';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 // ======================================================================================== [Import Component] js
 // its lang Object
-import viewUserLang from './viewUserLang'
+import viewMachineLang from './viewMachineLang'
 
 // external page
 import NoCardVeiw from '../../../../System/RedirectPage/NoCardView/NoCardVeiw'
@@ -31,7 +31,7 @@ function ViewUser (props) {
     };
 
     useEffect(() =>{
-        handlePageTitle(viewUserLang.formTitle[cookies.load('site-lang')])
+        handlePageTitle(viewMachineLang.formTitle[cookies.load('site-lang')])
         handleSystemCode('sys1')
     },[])
     return (
