@@ -16,7 +16,7 @@ function FinalApproval (){
         <Tbl1NoFooter
         getUrl = {'/getmyreviewlist'}
         params = {{
-            sys_code : 'sys1',
+            sys_code : 'avm',
             approval_type : 'FINAL_APPROVAL',
         }}
         columnDef = {columnDef}

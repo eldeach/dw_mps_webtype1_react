@@ -45,8 +45,8 @@ function ParamItemDiv (props) {
     }
 
     useEffect(() => {
-        props.oneItem.minValue = 0
-        props.oneItem.maxValue = 0
+        if ( !props.oneItem.minValue ) props.oneItem.minValue = parseInt(0)
+        if ( !props.oneItem.maxValue ) props.oneItem.maxValue = parseInt(0)
     }, [])
 
     return (

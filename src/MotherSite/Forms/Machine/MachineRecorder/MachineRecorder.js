@@ -11,13 +11,14 @@ import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
 import { Button, Checkbox, FormControlLabel, IconButton, Paper, TextField, Typography } from '@mui/material';
+import { pink } from '@mui/material/colors';
 //icon
 import ClearIcon from '@mui/icons-material/Clear';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
+import BallotIcon from '@mui/icons-material/Ballot';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SaveIcon from '@mui/icons-material/Save';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -98,8 +99,8 @@ function MachineRecorder(props){
     }
 
     const yupSchema = yup.object().shape({
-        eq_code: yup.string()
-        .required(machineRecorderLang.mcInfoPaper.inputField.eq_code.valMsg.required[cookies.load('site-lang')]),
+        mng_code: yup.string()
+        .required(machineRecorderLang.mcInfoPaper.inputField.mng_code.valMsg.required[cookies.load('site-lang')]),
     });
 
     // 제정/개정에서 같이 쓰기 위해 initialValues는 외부에서 props로 전달함
@@ -108,9 +109,11 @@ function MachineRecorder(props){
     //     approval_payload :[[]],
     //     revision_history : '',
     //     previous_approval_payload_id : null,
-    //     eq_code : '',
-    //     eq_code_alt : '',
-    //     eq_code_alt2 : '',
+    //     mng_code : '',
+    //     mng_code_alt : '',
+    //     mng_code_alt2 : '',
+    //     mng_name : '',
+    //     mng_team : '',
     //     periodic_qual : [],
     //     periodic_ster : [],
     //     periodic_review : [],
@@ -131,11 +134,20 @@ function MachineRecorder(props){
     const [fRowFold, setFRowFold] = useState(true);
 
     const handleAllFold = function (){
-        setBRowFold(true)
-        setCRowFold(true)
-        setDRowFold(true)
-        setERowFold(true)
-        setFRowFold(true)
+        if (bRowFold && cRowFold && dRowFold && eRowFold && fRowFold){
+            setBRowFold(false)
+            setCRowFold(false)
+            setDRowFold(false)
+            setERowFold(false)
+            setFRowFold(false)
+        } else {
+            setBRowFold(true)
+            setCRowFold(true)
+            setDRowFold(true)
+            setERowFold(true)
+            setFRowFold(true)
+        }
+
     }
 
     
@@ -156,19 +168,21 @@ function MachineRecorder(props){
                 approval_payload : values.approval_payload,
                 revision_history : values.revision_history,
                 previous_approval_payload_id : values.previous_approval_payload_id,
-                eq_code : values.eq_code,
-                eq_code_alt : values.eq_code_alt,
-                eq_code_alt2 : values.eq_code_alt2,
-                periodic_qual : values.periodic_qual,
-                periodic_ster : values.periodic_ster,
-                periodic_review : values.periodic_review,
-                iq : values.iq,
-                oq : values.oq,
-                pq : values.pq,
-                periodic_cv : values.periodic_cv,
-                cv : values.cv,
-                periodic_mt : values.periodic_mt,
-                mt : values.mt,
+                mng_code : values.mng_code,
+                mng_code_alt : values.mng_code_alt,
+                mng_code_alt2 : values.mng_code_alt2,
+                mng_name : values.mng_name,
+                mng_team : values.mng_team,
+                mc_periodic_qual : values.mc_periodic_qual,
+                mc_periodic_ster : values.mc_periodic_ster,
+                mc_periodic_review : values.mc_periodic_review,
+                mc_iq : values.mc_iq,
+                mc_oq : values.mc_oq,
+                mc_pq : values.mc_pq,
+                mc_periodic_cv : values.mc_periodic_cv,
+                mc_cv : values.mc_cv,
+                mc_periodic_mt : values.mc_periodic_mt,
+                mc_mt : values.mc_mt,
                 prm_list : values.prm_list,
                 prm_bathsize : values.prm_bathsize,
                 prm_gentlewing : values.prm_gentlewing,
@@ -178,10 +192,12 @@ function MachineRecorder(props){
                 prm_grate : values.prm_grate,
                 prm_blendrpm : values.prm_blendrpm,
                 prm_cforece : values.prm_cforece,
-                prm_turret : values.prm_turret,
                 prm_feeder : values.prm_feeder,
-                prm_mforce : values.prm_mforce,
+                prm_turret : values.prm_turret,
                 prm_pforce : values.prm_pforce,
+                prm_mforce : values.prm_mforce,
+                prm_pforce_kgf : values.prm_pforce_kgf,
+                prm_mforce_kgf : values.prm_mforce_kgf,
                 prm_drum : values.prm_drum,
                 prm_paair : values.prm_paair,
                 prm_atair : values.prm_atair,
@@ -237,47 +253,41 @@ function MachineRecorder(props){
                 autoComplete='off'
                 onSubmit={formikProps.handleSubmit}
                 >
-                    <Button
-                    color='avmFold'
-                    variant='contained' size = 'small'
-                    sx={{ position: 'absolute', top: 70, right: 16 }}
-                    onClick={()=>handleAllFold()}
-                    >
-                        {machineRecorderLang.allFoldButton[cookies.load('site-lang')]}
-                    </Button>
-                    <div id='MachineRecorderA' style={{display:'flex', flexDirection:'row', marginLeft:'16px', boxSizing:'border-box'}} >
-                        <ApprovalLine
-                        sysCode = 'sys1'
-                        forId = 'machine_recorder'
-                        inheritedArr = { formikProps.values.approval_payload }
-                        updateValue = { function ( newValue ) { formikProps.setFieldValue( 'approval_payload', newValue )}}
-                        immediateEffective = { immediateEffective }
-                        setImmediateEffective = { setImmediateEffective }
-                        />
+                    <div id='machine-recorder-row-a' style={{display:'flex', flexDirection:'row', marginLeft:'16px', boxSizing:'border-box'}} >
+                        <div>
+                            <ApprovalLine
+                            sysCode = 'sys1'
+                            forId = 'machine_recorder'
+                            inheritedArr = { formikProps.values.approval_payload }
+                            updateValue = { function ( newValue ) { formikProps.setFieldValue( 'approval_payload', newValue )}}
+                            immediateEffective = { immediateEffective }
+                            setImmediateEffective = { setImmediateEffective }
+                            />
+                        </div>
                         <div>
                             <Paper id='mcInfoPaper' sx={style.paper} elevation={3}>
                                 <div style={style.subtitle.box}>
                                     <FingerprintIcon color='sys1'/>
-                                    <div style={style.subtitle.text}>{"Personal Identifiable Information (PII)"}</div>
+                                    <div style={style.subtitle.text}>{"System Identifiable Information (SII)"}</div>
                                 </div>
                                 <TextField
                                 required
                                 disabled = {!(props.preparedType == "NEW")}
                                 variant="outlined"
-                                id="eq_code"
-                                name="eq_code"
-                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code.placeholder[cookies.load('site-lang')]}
-                                value={formikProps.values.eq_code}
+                                id="mng_code"
+                                name="mng_code"
+                                label={machineRecorderLang.mcInfoPaper.inputField.mng_code.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.mng_code}
                                 onChange={formikProps.handleChange}
                                 onBlur={formikProps.handleBlur}
-                                helperText={formikProps.touched.eq_code ? formikProps.errors.eq_code : ""}
-                                error={formikProps.touched.eq_code && Boolean(formikProps.errors.eq_code)}
+                                helperText={formikProps.touched.mng_code ? formikProps.errors.mng_code : ""}
+                                error={formikProps.touched.mng_code && Boolean(formikProps.errors.mng_code)}
                                 size='small'
                                 margin="dense"
                                 fullWidth
                                 InputProps={{
                                     endAdornment:(
-                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code','')}}>
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('mng_code','')}}>
                                             <ClearIcon size='small'/>
                                         </IconButton>
                                     ),
@@ -286,22 +296,21 @@ function MachineRecorder(props){
                                 InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
                                 <TextField
-                                required
                                 variant="outlined"
-                                id="eq_code_alt"
-                                name="eq_code_alt"
-                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt.placeholder[cookies.load('site-lang')]}
-                                value={formikProps.values.eq_code_alt}
+                                id="mng_code_alt"
+                                name="mng_code_alt"
+                                label={machineRecorderLang.mcInfoPaper.inputField.mng_code_alt.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.mng_code_alt}
                                 onChange={formikProps.handleChange}
                                 onBlur={formikProps.handleBlur}
-                                helperText={formikProps.touched.eq_code_alt ? formikProps.errors.eq_code_alt : ""}
-                                error={formikProps.touched.eq_code_alt && Boolean(formikProps.errors.eq_code_alt)}
+                                helperText={formikProps.touched.mng_code_alt ? formikProps.errors.mng_code_alt : ""}
+                                error={formikProps.touched.mng_code_alt && Boolean(formikProps.errors.mng_code_alt)}
                                 size='small'
                                 margin="dense"
                                 fullWidth
                                 InputProps={{
                                     endAdornment:(
-                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt','')}}>
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('mng_code_alt','')}}>
                                             <ClearIcon size='small'/>
                                         </IconButton>
                                     ),
@@ -310,22 +319,67 @@ function MachineRecorder(props){
                                 InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
                                 <TextField
-                                required
                                 variant="outlined"
-                                id="eq_code_alt2"
-                                name="eq_code_alt2"
-                                label={machineRecorderLang.mcInfoPaper.inputField.eq_code_alt2.placeholder[cookies.load('site-lang')]}
-                                value={formikProps.values.eq_code_alt2}
+                                id="mng_code_alt2"
+                                name="mng_code_alt2"
+                                label={machineRecorderLang.mcInfoPaper.inputField.mng_code_alt2.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.mng_code_alt2}
                                 onChange={formikProps.handleChange}
                                 onBlur={formikProps.handleBlur}
-                                helperText={formikProps.touched.eq_code_alt2 ? formikProps.errors.eq_code_alt2 : ""}
-                                error={formikProps.touched.eq_code_alt2 && Boolean(formikProps.errors.eq_code_alt2)}
+                                helperText={formikProps.touched.mng_code_alt2 ? formikProps.errors.mng_code_alt2 : ""}
+                                error={formikProps.touched.mng_code_alt2 && Boolean(formikProps.errors.mng_code_alt2)}
                                 size='small'
                                 margin="dense"
                                 fullWidth
                                 InputProps={{
                                     endAdornment:(
-                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('eq_code_alt2','')}}>
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('mng_code_alt2','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
+                                <TextField
+                                variant="outlined"
+                                id="mng_name"
+                                name="mng_name"
+                                label={machineRecorderLang.mcInfoPaper.inputField.mng_name.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.mng_name}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.mng_name ? formikProps.errors.mng_name : ""}
+                                error={formikProps.touched.mng_name && Boolean(formikProps.errors.mng_name)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('mng_name','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
+                                <TextField
+                                variant="outlined"
+                                id="mng_team"
+                                name="mng_team"
+                                label={machineRecorderLang.mcInfoPaper.inputField.mng_team.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.mng_team}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.mng_team ? formikProps.errors.mng_team : ""}
+                                error={formikProps.touched.mng_team && Boolean(formikProps.errors.mng_team)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('mng_team','')}}>
                                             <ClearIcon size='small'/>
                                         </IconButton>
                                     ),
@@ -338,48 +392,431 @@ function MachineRecorder(props){
                         <div>
                             <Paper id='prmListPaper' sx={style.paper} elevation={3}>
                                 <div style={style.subtitle.box}>
-                                    <VerifiedIcon color='sys1'/>
+                                    <BallotIcon color='sys1'/>
                                     <div style={style.subtitle.text}>{`Param List`}</div>
                                 </div>
-                                <FormControlLabel
-                                color='sys1'
-                                fontSize='inherit'
-                                control={
-                                    <Checkbox
-                                    size="small"
-                                    checked = {formikProps.values.prm_list[0].prm_bathsize}
-                                    onChange={(e)=>{
-                                        let temp = [...formikProps.values.prm_list]
-                                        temp[0].prm_bathsize = Boolean(e.target.checked)
-                                        console.log(temp)
-                                        formikProps.setFieldValue('prm_list', temp)
-                                    }}
-                                    />
-                                }
-                                label={<Typography fontSize={12}>prm_bathsize</Typography> }/>
+                                <div style={{display:'flex', flexDirection : 'row'}}>
+                                    <div style={{display : 'flex', flexDirection : 'column'}}>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_bathsize}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_bathsize = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Worst Batch Size</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_gentlewing}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_gentlewing = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Gentlewing RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_chopper}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_chopper = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Chopper RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_spray}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_spray = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Spray Rate</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_spray_rpm}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_spray_rpm = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Spray Rate RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_grate}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_grate = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Grate RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_blendrpm}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_blendrpm = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Blending RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_cforece}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_cforece = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Compact Force</Typography> }/>
+                                    </div>
+                                    <div style={{display : 'flex', flexDirection : 'column'}}>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_turret}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_turret = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Turret RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_feeder}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_feeder = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Feeder RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_pforce}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_pforce = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Pre. Pressure Force</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_mforce}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_mforce = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Main Pressure Force</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_pforce_kgf}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_pforce_kgf = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>{`Pre. Pressure Force (kgf)`}</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_mforce_kgf}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_mforce_kgf = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>{`Main Pressure Force (kgf)`}</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_drum}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_drum = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Drum RPM</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_paair}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_paair = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Pattern Air</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_atair}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_atair = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Atomizing Air</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_fill}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_fill = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>Filling capacity</Typography> }/>
+                                    </div>
+
+                                </div>
                             </Paper>
                         </div>
                     </div>
-                    
-
-                    <div id='MachineRecorderB'>
-                        <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setBRowFold(!bRowFold)}>{`Periodic Qualification (${bRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
+                    <Button
+                    sx={{ ml:2, mb:1, width:260 }}
+                    color='sys1'
+                    variant='contained' 
+                    size ='small'
+                    onClick={()=>handleAllFold()}
+                    startIcon={ bRowFold && cRowFold && dRowFold && eRowFold && fRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>
+                        {<Typography sx={{mr:'auto', fontSize:13}}
+                        >
+                            {
+                                bRowFold && cRowFold && dRowFold && eRowFold && fRowFold ? 
+                                machineRecorderLang.allUnfoldButton[cookies.load('site-lang')] :
+                                machineRecorderLang.allFoldButton[cookies.load('site-lang')]
+                            }
+                        </Typography>}
+                    </Button>
+                    <div id='machine-recorder-row-b'>
+                        <Button sx={{ml:2, mb:1, width:260 }} color='sys1' variant='contained' size ='small' onClick={()=> setBRowFold(!bRowFold)} startIcon={ bRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>{<Typography sx={{mr:'auto', fontSize:13}}>Periodic Qualification</Typography>}</Button>
                     
                     {
                         bRowFold ? <div/> : 
                         <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box' }} >
                             <div>
-                                <Paper id='periodic_qual_Paper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_periodic_qual_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Qualification (Items : ${formikProps.values.periodic_qual.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Periodic Qualification (Items : ${formikProps.values.mc_periodic_qual.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.periodic_qual.map((oneItem, index)=>(
+                                        formikProps.values.mc_periodic_qual.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'periodic_qual', arrDelElement(formikProps.values.periodic_qual, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_qual', arrDelElement(formikProps.values.mc_periodic_qual, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -387,23 +824,23 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'PERIODIC'
-                                    inheritedArr = { formikProps.values.periodic_qual }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'periodic_qual', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_periodic_qual }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_qual', newValue )}}
                                     />
                                 </Paper>
                             </div>
                             <div>
-                                <Paper id='periodic_ster_Paper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_periodic_ster_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Sterilization Qualification (Items : ${formikProps.values.periodic_ster.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Periodic Sterilization Qualification (Items : ${formikProps.values.mc_periodic_ster.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.periodic_ster.map((oneItem, index)=>(
+                                        formikProps.values.mc_periodic_ster.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'periodic_ster', arrDelElement(formikProps.values.periodic_ster, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_ster', arrDelElement(formikProps.values.mc_periodic_ster, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -411,23 +848,23 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'STER'
-                                    inheritedArr = { formikProps.values.periodic_ster }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'periodic_ster', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_periodic_ster }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_ster', newValue )}}
                                     />
                                 </Paper>
                             </div>
                             <div>
-                                <Paper id='periodic_review_Paper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_periodic_review_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Review (Items : ${formikProps.values.periodic_review.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Periodic Review (Items : ${formikProps.values.mc_periodic_review.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.periodic_review.map((oneItem, index)=>(
+                                        formikProps.values.mc_periodic_review.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'periodic_review', arrDelElement(formikProps.values.periodic_review, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_review', arrDelElement(formikProps.values.mc_periodic_review, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -435,31 +872,31 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'Periodic'
-                                    inheritedArr = { formikProps.values.periodic_review }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'periodic_review', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_periodic_review }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_review', newValue )}}
                                     />
                                 </Paper>
                             </div>
                         </div>
                     }
                     </div>
-                    <div id='MachineRecorderC' >
-                        <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setCRowFold(!cRowFold)}>{`Qualification (${cRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
+                    <div id='machine-recorder-row-c' >
+                        <Button sx={{ml:2, mb:1, width:260 }} color='sys1' variant='contained' size ='small' onClick={()=> setCRowFold(!cRowFold)} startIcon={ cRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>{<Typography sx={{mr:'auto', fontSize:13}}>Qualification</Typography>}</Button>
                     {
                         cRowFold ? <div/> : 
                         <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box' }} >
                             <div>
-                                <Paper id='iqPaper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_iqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Installation Qualification (Items : ${formikProps.values.iq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Installation Qualification (Items : ${formikProps.values.mc_iq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.iq.map((oneItem, index)=>(
+                                        formikProps.values.mc_iq.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'iq', arrDelElement(formikProps.values.iq, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_iq', arrDelElement(formikProps.values.mc_iq, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -467,23 +904,23 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'IQ'
-                                    inheritedArr = { formikProps.values.iq }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'iq', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_iq }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_iq', newValue )}}
                                     />
                                 </Paper>
                             </div>
                             <div>                            
-                                <Paper id='oqPaper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_oqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Operational Qualification (Items : ${formikProps.values.oq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Operational Qualification (Items : ${formikProps.values.mc_oq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.oq.map((oneItem, index)=>(
+                                        formikProps.values.mc_oq.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'oq', arrDelElement(formikProps.values.oq, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_oq', arrDelElement(formikProps.values.mc_oq, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -491,23 +928,23 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'OQ'
-                                    inheritedArr = { formikProps.values.oq }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'oq', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_oq }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_oq', newValue )}}
                                     />
                                 </Paper>
                             </div>
                             <div>                            
-                                <Paper id='pqPaper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_pqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Performance Qualification (Items : ${formikProps.values.pq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Performance Qualification (Items : ${formikProps.values.mc_pq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.pq.map((oneItem, index)=>(
+                                        formikProps.values.mc_pq.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'pq', arrDelElement(formikProps.values.pq, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_pq', arrDelElement(formikProps.values.mc_pq, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -515,20 +952,17 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'PQ'
-                                    inheritedArr = { formikProps.values.pq }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'pq', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_pq }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_pq', newValue )}}
                                     />
                                 </Paper>
                             </div>
                         </div>
                     }
                     </div>
-                    <div>
-                        <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setDRowFold(!dRowFold)}>{`Qualifying Process Parameter (${dRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
-                    </div>
-                    {
-                        dRowFold ? <div/> :
-                        <div id='MachineRecorderD' style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
+                    <div id='machine-recorder-row-d' >
+                        <Button sx={{ml:2, mb:1, width:260 }} color='sys1' variant='contained' size ='small' onClick={()=> setDRowFold(!dRowFold)} startIcon={ dRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>{<Typography sx={{mr:'auto', fontSize:13}}>Qualifying Process Parameter</Typography>}</Button>
+                        <div style={{height: dRowFold ? '0px' : 'auto' , visibility : dRowFold ? 'hidden' : 'visible', display : 'flex', flexWrap:'wrap', boxSizing:'border-box'}} >
                             <div id = 'paramItem1'>
                             {
                                 !formikProps.values.prm_list[0].prm_bathsize ? <div/> : 
@@ -542,8 +976,6 @@ function MachineRecorder(props){
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
                                                 valueUnit = { oneItem.valueUnit }
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_bathsize', arrDelElement(formikProps.values.prm_bathsize, index))}><DeleteForeverIcon/></Button>
@@ -572,8 +1004,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_gentlewing.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_gentlewing', arrDelElement(formikProps.values.prm_gentlewing, index))}><DeleteForeverIcon/></Button>
@@ -602,8 +1032,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_chopper.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_chopper', arrDelElement(formikProps.values.prm_chopper, index))}><DeleteForeverIcon/></Button>
@@ -632,8 +1060,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_spray.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_spray', arrDelElement(formikProps.values.prm_spray, index))}><DeleteForeverIcon/></Button>
@@ -662,8 +1088,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_spray_rpm.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_spray_rpm', arrDelElement(formikProps.values.prm_spray_rpm, index))}><DeleteForeverIcon/></Button>
@@ -692,8 +1116,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_grate.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_grate', arrDelElement(formikProps.values.prm_grate, index))}><DeleteForeverIcon/></Button>
@@ -722,8 +1144,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_blendrpm.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_blendrpm', arrDelElement(formikProps.values.prm_blendrpm, index))}><DeleteForeverIcon/></Button>
@@ -752,8 +1172,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_cforece.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_cforece', arrDelElement(formikProps.values.prm_cforece, index))}><DeleteForeverIcon/></Button>
@@ -782,8 +1200,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_turret.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_turret', arrDelElement(formikProps.values.prm_turret, index))}><DeleteForeverIcon/></Button>
@@ -812,8 +1228,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_feeder.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_feeder', arrDelElement(formikProps.values.prm_feeder, index))}><DeleteForeverIcon/></Button>
@@ -832,36 +1246,6 @@ function MachineRecorder(props){
                             </div>
                             <div id = 'paramItem11'>
                             {
-                                !formikProps.values.prm_list[0].prm_mforce ? <div/> : 
-                                <Paper sx={style.paper} elevation={3}>
-                                    <div style={style.subtitle.box}>
-                                        <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Main Compact Force (Items : ${formikProps.values.prm_mforce.length})`}</div>
-                                    </div>
-                                    { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.prm_mforce.map((oneItem, index)=>(
-                                            <div style={style.arrItem.oneItem}>
-                                                <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
-                                                oneItem = { oneItem }/>
-                                                <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_mforce', arrDelElement(formikProps.values.prm_mforce, index))}><DeleteForeverIcon/></Button>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-                                    <QualModalButton
-                                    colName = 'qualAtt'
-                                    qualAtt = 'Q'
-                                    inheritedArr = { formikProps.values.prm_mforce }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_mforce', newValue )}}
-                                    />
-                                </Paper>
-                            }
-                            </div>
-                            <div id = 'paramItem12'>
-                            {
                                 !formikProps.values.prm_list[0].prm_pforce ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
@@ -872,8 +1256,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_pforce.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_pforce', arrDelElement(formikProps.values.prm_pforce, index))}><DeleteForeverIcon/></Button>
@@ -888,9 +1270,95 @@ function MachineRecorder(props){
                                     updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_pforce', newValue )}}
                                     />
                                 </Paper>
+                                
+                            }
+                            </div>
+                            <div id = 'paramItem12'>
+                            {
+                               !formikProps.values.prm_list[0].prm_mforce ? <div/> : 
+                               <Paper sx={style.paper} elevation={3}>
+                                   <div style={style.subtitle.box}>
+                                       <VerifiedIcon color='sys1'/>
+                                       <div style={style.subtitle.text}>{`Qualifying Main Compact Force (Items : ${formikProps.values.prm_mforce.length})`}</div>
+                                   </div>
+                                   { // 현재 배열 객체 정보 출력 iterator
+                                       formikProps.values.prm_mforce.map((oneItem, index)=>(
+                                           <div style={style.arrItem.oneItem}>
+                                               <ParamItemDiv
+                                               oneItem = { oneItem }/>
+                                               <div style={style.arrItem.delItem}>
+                                                   <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_mforce', arrDelElement(formikProps.values.prm_mforce, index))}><DeleteForeverIcon/></Button>
+                                               </div>
+                                           </div>
+                                       ))
+                                   }
+                                   <QualModalButton
+                                   colName = 'qualAtt'
+                                   qualAtt = 'Q'
+                                   inheritedArr = { formikProps.values.prm_mforce }
+                                   updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_mforce', newValue )}}
+                                   />
+                               </Paper> 
                             }
                             </div>
                             <div id = 'paramItem13'>
+                            {
+                                !formikProps.values.prm_list[0].prm_pforce_kgf ? <div/> : 
+                                <Paper sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`Qualifying Pre. Compact Force (kgf) (Items : ${formikProps.values.prm_pforce_kgf.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.prm_pforce_kgf.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <ParamItemDiv
+                                                oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_pforce_kgf', arrDelElement(formikProps.values.prm_pforce_kgf, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'Q'
+                                    inheritedArr = { formikProps.values.prm_pforce_kgf }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_pforce_kgf', newValue )}}
+                                    />
+                                </Paper>
+                                
+                            }
+                            </div>
+                            <div id = 'paramItem14'>
+                            {
+                               !formikProps.values.prm_list[0].prm_mforce_kgf ? <div/> : 
+                               <Paper sx={style.paper} elevation={3}>
+                                   <div style={style.subtitle.box}>
+                                       <VerifiedIcon color='sys1'/>
+                                       <div style={style.subtitle.text}>{`Qualifying Main Compact Force (kgf) (Items : ${formikProps.values.prm_mforce_kgf.length})`}</div>
+                                   </div>
+                                   { // 현재 배열 객체 정보 출력 iterator
+                                       formikProps.values.prm_mforce_kgf.map((oneItem, index)=>(
+                                           <div style={style.arrItem.oneItem}>
+                                               <ParamItemDiv
+                                               oneItem = { oneItem }/>
+                                               <div style={style.arrItem.delItem}>
+                                                   <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_mforce_kgf', arrDelElement(formikProps.values.prm_mforce_kgf, index))}><DeleteForeverIcon/></Button>
+                                               </div>
+                                           </div>
+                                       ))
+                                   }
+                                   <QualModalButton
+                                   colName = 'qualAtt'
+                                   qualAtt = 'Q'
+                                   inheritedArr = { formikProps.values.prm_mforce_kgf }
+                                   updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_mforce_kgf', newValue )}}
+                                   />
+                               </Paper> 
+                            }
+                            </div>
+                            <div id = 'paramItem15'>
                             {
                                 !formikProps.values.prm_list[0].prm_drum ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
@@ -902,8 +1370,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_drum.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_drum', arrDelElement(formikProps.values.prm_drum, index))}><DeleteForeverIcon/></Button>
@@ -920,7 +1386,7 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem14'>
+                            <div id = 'paramItem16'>
                             {
                                 !formikProps.values.prm_list[0].prm_paair ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
@@ -932,8 +1398,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_paair.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_paair', arrDelElement(formikProps.values.prm_paair, index))}><DeleteForeverIcon/></Button>
@@ -950,7 +1414,7 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem15'>
+                            <div id = 'paramItem17'>
                             {
                                 !formikProps.values.prm_list[0].prm_atair ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
@@ -962,8 +1426,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_atair.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_atair', arrDelElement(formikProps.values.prm_atair, index))}><DeleteForeverIcon/></Button>
@@ -980,7 +1442,7 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem16'>
+                            <div id = 'paramItem18'>
                             {
                                 !formikProps.values.prm_list[0].prm_fill ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
@@ -992,8 +1454,6 @@ function MachineRecorder(props){
                                         formikProps.values.prm_fill.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
-                                                minValue = { oneItem.minValue }
-                                                maxValue = { oneItem.maxValue }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
                                                     <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_fill', arrDelElement(formikProps.values.prm_fill, index))}><DeleteForeverIcon/></Button>
@@ -1011,25 +1471,24 @@ function MachineRecorder(props){
                             }
                             </div>
                         </div>
-                    }
-                    <div>
-                        <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setERowFold(!eRowFold)}>{`Cleaning Validation & Periodic CV (${eRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
                     </div>
+                    <div id='machine-recorder-row-e'>
+                        <Button sx={{ ml:2, mb:1, width:260 }} color='sys1' variant='contained' size ='small' onClick={()=> setERowFold(!eRowFold)} startIcon={ eRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>{<Typography sx={{mr:'auto', fontSize:13}}>Cleaning Validation</Typography>}</Button>
                     {
                         eRowFold ? <div/> :
-                        <div id='MachineRecorderD' style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
+                        <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
                             <div>
-                                <Paper id='cvPaper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_periodic_cvPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Cleaning Validation & Periodic CV (Items : ${formikProps.values.periodic_cv.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Cleaning Validation & Periodic CV (Items : ${formikProps.values.mc_periodic_cv.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.periodic_cv.map((oneItem, index)=>(
+                                        formikProps.values.mc_periodic_cv.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'periodic_cv', arrDelElement(formikProps.values.periodic_cv, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_cv', arrDelElement(formikProps.values.mc_periodic_cv, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -1037,31 +1496,31 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'valAtt'
                                     qualAtt = 'CV'
-                                    inheritedArr = { formikProps.values.periodic_cv }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'periodic_cv', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_periodic_cv }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_cv', newValue )}}
                                     />
                                 </Paper>
                             </div>
                         </div>
                     }
-                    <div>
-                        <Button sx={{ml:2, mb:1}} color='sys1' variant='contained' size ='small' onClick={()=> setFRowFold(!fRowFold)}>{`Mapping Test & Periodic MT (${fRowFold ? machineRecorderLang.unfold[cookies.load('site-lang')] : machineRecorderLang.fold[cookies.load('site-lang')]})`}</Button>
                     </div>
+                    <div id='machine-recorder-row-f'>
+                        <Button sx={{ ml:2, mb:1, width:260 }} color='sys1' variant='contained' size ='small' onClick={()=> setFRowFold(!fRowFold)} startIcon={ fRowFold ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon/>}>{<Typography sx={{mr:'auto', fontSize:13}}>Mapping Test</Typography>}</Button>
                     {
                         fRowFold ? <div/> :
-                        <div id='MachineRecorderC' style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
+                        <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
                             <div>
-                                <Paper id='mtPaper' sx={style.paper} elevation={3}>
+                                <Paper id='mc_periodic_mtmtPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Mapping Test & Periodic MT (Items : ${formikProps.values.periodic_mt.length})`}</div>
+                                        <div style={style.subtitle.text}>{`Mapping Test & Periodic MT (Items : ${formikProps.values.mc_periodic_mt.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.periodic_mt.map((oneItem, index)=>(
+                                        formikProps.values.mc_periodic_mt.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <DocItemDiv oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'periodic_mt', arrDelElement(formikProps.values.periodic_mt, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_mt', arrDelElement(formikProps.values.mc_periodic_mt, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -1069,13 +1528,14 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'MT'
-                                    inheritedArr = { formikProps.values.periodic_mt }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'periodic_mt', newValue )}}
+                                    inheritedArr = { formikProps.values.mc_periodic_mt }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_mt', newValue )}}
                                     />
                                 </Paper>
                             </div>
                         </div>
                     }
+                    </div>
                 </form>
             )}
         </Formik>

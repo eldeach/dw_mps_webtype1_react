@@ -10,7 +10,8 @@ import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import tablesLang from './tablesLang'
 
 // Table
-import Prepared from './Prepared/Prepared'
+import UserPrepared from './UserPrepared/UserPrepared'
+import MachinePrepared from './MachinePrepared/MachinePrepared'
 
 
 // ======================================================================================== [Import Component] CSS
@@ -30,12 +31,16 @@ function Tables () {
                     onChange={handleChange}
                     size = 'small'
                     >
-                    <ToggleButton value={1} >{tablesLang.buttonGroup.prepared[cookies.load('site-lang')]}</ToggleButton>
+                    <ToggleButton value={1} >{tablesLang.buttonGroup.userPrepared[cookies.load('site-lang')]}</ToggleButton>
+                    <ToggleButton value={2} >{tablesLang.buttonGroup.machinePrepared[cookies.load('site-lang')]}</ToggleButton>
                 </ToggleButtonGroup>
             </div>
             <div>
                 {
-                    viewSelect === 1 ? <Prepared/> :<div/>
+                    viewSelect === 1 ? <UserPrepared/> :<div/>
+                }
+                {
+                    viewSelect === 2 ? <MachinePrepared/> :<div/>
                 }
             </div>
         </div>      

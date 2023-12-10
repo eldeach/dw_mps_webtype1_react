@@ -13,6 +13,10 @@ const langConfig = {
         kor : "모두 접기",
         eng : "Fold everything"
     },
+    allUnfoldButton : {
+        kor : "모두 펼치기",
+        eng : "Unfold everything"
+    },
     fold : {
         kor : "접기",
         eng : "Fold"
@@ -23,28 +27,40 @@ const langConfig = {
     },
     mcInfoPaper : {
         inputField : {
-            eq_code:{
+            mng_code:{
                 placeholder : {
-                    kor : "설비코드",
-                    eng : "Machine Code"
+                    kor : "관리코드",
+                    eng : "Management ccode"
                 },
                 valMsg : {
                     required : {
                         kor : "설비코드를 입력해주세요.",
-                        eng : "Please enter machine code."
+                        eng : "Please enter management code."
                     }
                 }
             },
-            eq_code_alt : {
+            mng_code_alt : {
                 placeholder : {
                     kor : "대체 설비코드",
-                    eng : "Alternative Machine Code"
+                    eng : "Alternative management code"
                 },
             },
-            eq_code_alt2 : {
+            mng_code_alt2 : {
                 placeholder : {
-                    kor : "대체 설비코드 2",
-                    eng : "Alternative Machine Code 2"
+                    kor : "두번째 대체 설비코드",
+                    eng : "2nd alternative management code"
+                },
+            },
+            mng_name : {
+                placeholder : {
+                    kor : "관리명",
+                    eng : "Management name"
+                },
+            },
+            mng_team : {
+                placeholder : {
+                    kor : "관리팀",
+                    eng : "Management team"
                 },
             },
         },

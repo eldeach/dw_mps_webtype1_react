@@ -11,13 +11,13 @@ import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
-function Areement (){
+function Prepared (){
     return (
         <Tbl1NoFooter
-        getUrl = {'/getmyreviewlist'}
+        getUrl = {'/getmypreparedlist'}
         params = {{
+            data_tbl_name : 'tb_user',
             sys_code : 'avm',
-            approval_type : 'AGREEMENT',
         }}
         columnDef = {columnDef}
         divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '100vw', maxHeight : '100vh', overflow : 'auto'}}
@@ -28,4 +28,4 @@ function Areement (){
     )
 }
 
-export default Areement;
+export default Prepared;

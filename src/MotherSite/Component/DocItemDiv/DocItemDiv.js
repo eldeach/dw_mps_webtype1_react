@@ -41,11 +41,11 @@ function DocItemDiv (props) {
                         <NumbersIcon fontSize='inherit'/>
                     </div>
                     <div className='doc-item-div-field-name-text'>
-                        {docItemDivLang.row.field.name.rev_no[cookies.load('site-lang')]}
+                        {docItemDivLang.row.field.name.doc_rev_no[cookies.load('site-lang')]}
                     </div>
                 </div>
                 <div className='doc-item-div-field-value' style={{width : '36px'}}>
-                    {props.oneItem.rev_no}
+                    {props.oneItem.doc_rev_no}
                 </div>
             </div>
             <div className='doc-item-div-row'>

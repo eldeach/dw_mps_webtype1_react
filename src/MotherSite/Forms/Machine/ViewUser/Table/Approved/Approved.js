@@ -6,18 +6,17 @@
 
 
 // ======================================================================================== [Import Component] js
-import Tbl1NoFooter from '../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
+import Tbl1NoFooter from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
 import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
-function Areement (){
+function Approved (){
     return (
         <Tbl1NoFooter
-        getUrl = {'/getmyreviewlist'}
+        getUrl = {'/getuserlist'}
         params = {{
-            sys_code : 'avm',
-            approval_type : 'AGREEMENT',
+            approval_status : 'APPROVED',
         }}
         columnDef = {columnDef}
         divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '100vw', maxHeight : '100vh', overflow : 'auto'}}
@@ -28,4 +27,4 @@ function Areement (){
     )
 }
 
-export default Areement;
+export default Approved;

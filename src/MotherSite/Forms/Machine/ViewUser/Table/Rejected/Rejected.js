@@ -6,17 +6,17 @@
 
 
 // ======================================================================================== [Import Component] js
-import Tbl1NoFooter from '../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
+import Tbl1NoFooter from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
 import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
-function Prepared (){
+function Rejected (){
     return (
         <Tbl1NoFooter
-        getUrl = {'/getmypreparedlist'}
+        getUrl = '/getuserlist'
         params = {{
-            sys_code : 'sys1',
+            approval_status : 'REJECTED',
         }}
         columnDef = {columnDef}
         divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '100vw', maxHeight : '100vh', overflow : 'auto'}}
@@ -27,4 +27,4 @@ function Prepared (){
     )
 }
 
-export default Prepared;
+export default Rejected;

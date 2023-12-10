@@ -6,7 +6,7 @@ const langConfig = {
                     kor : '문서번호',
                     eng : 'Doc. No.'
                 },
-                rev_no : {
+                doc_rev_no : {
                     kor : '개정번호',
                     eng : 'Rev. No.'
                 },
