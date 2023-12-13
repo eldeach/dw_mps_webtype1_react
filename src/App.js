@@ -28,6 +28,7 @@ import UserRecorder from './MotherSite/Forms/User/UserRecorder/UserRecorder';
 import ViewUser from './MotherSite/Forms/User/ViewUser/ViewUser';
 
 // AVM Forms
+import ViewMachine from './MotherSite/Forms/Machine/ViewMachine/ViewMachine'
 import MachineRecorder from './MotherSite/Forms/Machine/MachineRecorder/MachineRecorder'
 
 // ======================================================================================== [Import Component] CSS
@@ -85,6 +86,8 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     
+
+                    <Route path='/machinelist' element={<ViewMachine handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/addmachine' element={
                         <MachineRecorder
                         preparedType = 'NEW'
@@ -97,8 +100,17 @@ function App() {
                             mng_code_alt2 : '',
                             mng_name : '',
                             mng_team : '',
+                            machine_type : 'EQ',
+                            gmp_impact : true,
+                            periodic_mng_qual : true,
+                            periodic_mng_ster : true,
+                            periodic_mng_vhp : true,
+                            periodic_mng_review : true,
+                            periodic_mng_cv : true,
+                            periodic_mng_mt : true,
                             mc_periodic_qual : [],
                             mc_periodic_ster : [],
+                            mc_periodic_vhp : [],
                             mc_periodic_review : [],
                             mc_iq : [],
                             mc_oq : [],
@@ -108,8 +120,8 @@ function App() {
                             mc_periodic_mt : [],
                             mc_mt : [],
                             prm_list : [{
-                                prm_bathsize : false,
-                                prm_bathsize_kg : false,
+                                prm_batchsize : false,
+                                prm_batchsize_kg : false,
                                 prm_gentlewing : false,
                                 prm_chopper : false,
                                 prm_spray : false,
@@ -126,11 +138,12 @@ function App() {
                                 prm_atair : false,
                                 prm_fill : false,
                             }],
-                            prm_bathsize : [],
-                            prm_bathsize_kg : [],
+                            prm_batchsize : [],
+                            prm_batchsize_kg : [],
                             prm_gentlewing : [],
                             prm_chopper : [],
                             prm_spray : [],
+                            prm_spray_kgmin : [],
                             prm_spray_rpm : [],
                             prm_grate : [],
                             prm_blendrpm : [],
@@ -150,7 +163,7 @@ function App() {
                         handleSystemCode = { handleSystemCode } />
                     } />
 
-                    <Route path='/userlist'element = { <ViewUser approvalStatus = {'APPROVED'} handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
+                    <Route path='/userlist'element = { <ViewUser handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
                     <Route path='/adduser' element={
                         <UserRecorder
                         preparedType = 'NEW'

@@ -1,5 +1,6 @@
 // ======================================================================================== [Import Libaray]
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ======================================================================================== [Import Material UI Libaray]
 
@@ -12,6 +13,9 @@ import { useState, useEffect } from "react";
 
 
 function SessionTimer (props) { 
+
+    const nevigate = useNavigate();
+
     useEffect(() => {
         const countdown = setInterval(() => {
             if ( parseInt( props.expireTimeSec ) > 0 ) {
@@ -23,6 +27,7 @@ function SessionTimer (props) {
                 if ( parseInt( props.expireTimeMin ) === 0 ) {
                     // 여기에 clearInterval을 넣으면 숫자가 정신을 못차림, 이유는 모르겠음
                     props.setLoginStatus ( false )
+                    nevigate('/sessionexpired')
                 } else {
                     let updateMin =  parseInt( props.expireTimeMin )  - 1
                     props.setExpireTimeMin ( updateMin )

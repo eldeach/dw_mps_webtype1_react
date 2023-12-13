@@ -12,8 +12,8 @@ const sys1ListLang = {
         eng : "My Review"
     },
     viewMachine : {
-        kor : "설비",
-        eng : "Machine"
+        kor : "설비/시스템 목록",
+        eng : "Machine/System List"
     },
     viewUser : {
         kor : "사용자 목록",

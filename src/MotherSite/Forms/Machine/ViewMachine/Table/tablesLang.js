@@ -26,7 +26,11 @@ const langConfig = {
         void : {
             kor : "무효",
             eng : "Void"
-        }
+        },
+        periodicqual : {
+            kor : "정기적 재적격성 평가",
+            eng : "Periodic Re-Qual"
+        },
     }
 
 }

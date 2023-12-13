@@ -1,0 +1,21 @@
+.prm_item {
+    width : 200px;
+    display : flex;
+    align-items : center;
+    padding-left : 5px;
+    padding-right : 5px;
+    border-radius : 15px;
+    margin-bottom: 6px;
+    background : #3f50b5;
+    color : #fff;
+}
+
+.prm_item_text { 
+    margin-left : 2px;
+}
+
+.prm_item_icon {
+    margin-top : 5px;
+    font-size : 16px;
+    box-sizing: border-box;
+}

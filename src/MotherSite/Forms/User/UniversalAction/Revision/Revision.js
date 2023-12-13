@@ -25,7 +25,7 @@ function Revision (props) {
             overflow:'hidden'
         },
         detailedBigCardPaper : {
-            width:'90vw',
+            width:'100vw',
             height:'90vh',
             position: 'absolute',
             top: '50%',
@@ -41,19 +41,20 @@ function Revision (props) {
     const handleModalClose = () => setPopup(0);
 
     const handlePageTitleDummy = function (value) {
-        console.log(value)
+
     }
     const handleSystemCodeDummy = function (value) {
-        console.log(value)
+
     }
 
     return (
         <div>
             <Button variant="contained" color = 'sys1' size="small" onClick={()=>setPopup(1)}>
-                {{ kor : "개정", eng : "Revies" }[cookies.load('site-lang')]}
+                {{ kor : "개정", eng : "Revise" }[cookies.load('site-lang')]}
             </Button>
             <Modal open={(popup === 1)} onClose={handleModalClose}>
                 <Paper sx={style.detailedBigCardPaper} elevation={3}>
+                <div className = "big-popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
                 <AddUser
                     preparedType = 'REVISE'
                     initialValues = {{

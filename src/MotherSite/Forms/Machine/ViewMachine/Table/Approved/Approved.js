@@ -14,7 +14,7 @@ import columnDef from './columnDef'
 function Approved (){
     return (
         <Tbl1NoFooter
-        getUrl = {'/getuserlist'}
+        getUrl = {'/getmachinelist'}
         params = {{
             approval_status : 'APPROVED',
         }}

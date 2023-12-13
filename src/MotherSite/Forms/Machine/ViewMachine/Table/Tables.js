@@ -16,6 +16,7 @@ import UnderApproved from './UnderApproved/UnderApproved'
 import Prepared from './Prepared/Prepared'
 import Rejected from './Rejected/Rejected'
 import Void from './Void/Void'
+import PeriodicQual from './PeriodicQual/PeriodicQual'
 
 //onClick={() => setViewSelect(2)}
 
@@ -41,6 +42,7 @@ function Tables () {
                     <ToggleButton value={3} >{tablesLang.buttonGroup.prepared[cookies.load('site-lang')]}</ToggleButton>
                     <ToggleButton value={4} >{tablesLang.buttonGroup.rejected[cookies.load('site-lang')]}</ToggleButton>
                     <ToggleButton value={5} >{tablesLang.buttonGroup.void[cookies.load('site-lang')]}</ToggleButton>
+                    <ToggleButton value={6} >{tablesLang.buttonGroup.periodicqual[cookies.load('site-lang')]}</ToggleButton>
                 </ToggleButtonGroup>
             </div>
             <div>
@@ -58,6 +60,9 @@ function Tables () {
                 }
                 {
                     viewSelect === 5 ? <Void/> :<div/>
+                }
+                {
+                    viewSelect === 6 ? <PeriodicQual/> :<div/>
                 }
 
             </div>

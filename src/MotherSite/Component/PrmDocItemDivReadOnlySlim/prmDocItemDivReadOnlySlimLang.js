@@ -2,6 +2,14 @@ const langConfig = {
     row : {
         field : {
             name : {
+                min_value : {
+                    kor : '최소값',
+                    eng : 'Min. Value'
+                },
+                max_value : {
+                    kor : '최대값',
+                    eng : 'Max. Value'
+                },
                 doc_no : {
                     kor : '문서번호',
                     eng : 'Doc. No.'

@@ -7,14 +7,14 @@
 
 // ======================================================================================== [Import Component] js
 import Tbl1NoFooter from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
-import columnDef from './columnDef'
+import columnDef from '../Approved/columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
 function Rejected (){
     return (
         <Tbl1NoFooter
-        getUrl = '/getuserlist'
+        getUrl = '/getmachinelist'
         params = {{
             approval_status : 'REJECTED',
         }}

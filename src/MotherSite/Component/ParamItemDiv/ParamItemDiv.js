@@ -26,27 +26,27 @@ function ParamItemDiv (props) {
     }
 
     const initialValues = {
-        minValue : 0,
-        maxValue : 0
+        min_value : props.oneItem.min_value,
+        max_value : props.oneItem.max_value
     }
 
     const yupSchema = yup.object().shape({
-        minValue: yup.string()
+        min_value: yup.string()
         .required('필수'),
-        maxValue: yup.string()
+        max_value: yup.string()
         .required('필수'),
     });
 
     const handleMinValue = function(newValue){
-        props.oneItem.minValue = parseInt(newValue)
+        props.oneItem.min_value = parseInt(newValue)
     }
     const handleMaxValue = function(newValue){
-        props.oneItem.maxValue = parseInt(newValue)
+        props.oneItem.max_value = parseInt(newValue)
     }
 
     useEffect(() => {
-        if ( !props.oneItem.minValue ) props.oneItem.minValue = parseInt(0)
-        if ( !props.oneItem.maxValue ) props.oneItem.maxValue = parseInt(0)
+        if ( !props.oneItem.min_value ) props.oneItem.min_value = parseInt(0)
+        if ( !props.oneItem.max_value ) props.oneItem.max_value = parseInt(0)
     }, [])
 
     return (
@@ -70,25 +70,25 @@ function ParamItemDiv (props) {
                     required
                     sx={{width : '200px'}}
                     variant="outlined"
-                    id="minValue"
-                    name="minValue"
+                    id="min_value"
+                    name="min_value"
                     type='number'
-                    label={paramItemDivLang.inputField.minValue.placeholder[cookies.load('site-lang')]}
-                    value={formikProps.values.minValue}
+                    label={paramItemDivLang.inputField.min_value.placeholder[cookies.load('site-lang')]}
+                    value={formikProps.values.min_value}
                     onChange={(e) => {
                         e.target.value = parseInt(e.target.value)
                         formikProps.handleChange(e);
                         handleMinValue(e.target.value);
                     }}
                     onBlur={formikProps.handleBlur}
-                    helperText={formikProps.touched.minValue ? formikProps.errors.minValue : ""}
-                    error={formikProps.touched.minValue && Boolean(formikProps.errors.minValue)}
+                    helperText={formikProps.touched.min_value ? formikProps.errors.min_value : ""}
+                    error={formikProps.touched.min_value && Boolean(formikProps.errors.min_value)}
                     size='small'
                     margin="dense"
                     fullWidth
                     InputProps={{
                         endAdornment:(
-                            <IconButton size='small' onClick={()=>{formikProps.setFieldValue('minValue','')}}>
+                            <IconButton size='small' onClick={()=>{formikProps.setFieldValue('min_value','')}}>
                                 <ClearIcon size='small'/>
                             </IconButton>
                         ),
@@ -100,25 +100,25 @@ function ParamItemDiv (props) {
                     required
                     sx={{width : '200px'}}
                     variant="outlined"
-                    id="maxValue"
-                    name="maxValue"
+                    id="max_value"
+                    name="max_value"
                     type='number'
-                    label={paramItemDivLang.inputField.maxValue.placeholder[cookies.load('site-lang')]}
-                    value={formikProps.values.maxValue}
+                    label={paramItemDivLang.inputField.max_value.placeholder[cookies.load('site-lang')]}
+                    value={formikProps.values.max_value}
                     onChange={(e) => {
                         e.target.value = parseInt(e.target.value)
                         formikProps.handleChange(e);
                         handleMaxValue(e.target.value);
                     }}
                     onBlur={formikProps.handleBlur}
-                    helperText={formikProps.touched.maxValue ? formikProps.errors.maxValue : ""}
-                    error={formikProps.touched.maxValue && Boolean(formikProps.errors.maxValue)}
+                    helperText={formikProps.touched.max_value ? formikProps.errors.max_value : ""}
+                    error={formikProps.touched.max_value && Boolean(formikProps.errors.max_value)}
                     size='small'
                     margin="dense"
                     fullWidth
                     InputProps={{
                         endAdornment:(
-                            <IconButton size='small' onClick={()=>{formikProps.setFieldValue('maxValue','')}}>
+                            <IconButton size='small' onClick={()=>{formikProps.setFieldValue('max_value','')}}>
                                 <ClearIcon size='small'/>
                             </IconButton>
                         ),

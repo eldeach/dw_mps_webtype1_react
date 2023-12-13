@@ -76,6 +76,10 @@ const globalTheme = createTheme({
     denied : {
       main : '#e53e3e',
       contrastText : '#fff',
+    },
+    recording : {
+      main : '#ff0048',
+      contrastText : '#fff',
     }
   },
 });

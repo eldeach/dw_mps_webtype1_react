@@ -6,8 +6,8 @@ const langConfig = {
         }
     },
     formTitle : {
-        kor : "사용자 추가",
-        eng : "Add user"
+        kor : "설비 시스템 추가",
+        eng : "Add Machine System"
     },
     allFoldButton : {
         kor : "모두 접기",
@@ -30,7 +30,7 @@ const langConfig = {
             mng_code:{
                 placeholder : {
                     kor : "관리코드",
-                    eng : "Management ccode"
+                    eng : "Management code"
                 },
                 valMsg : {
                     required : {
@@ -53,17 +53,79 @@ const langConfig = {
             },
             mng_name : {
                 placeholder : {
-                    kor : "관리명",
-                    eng : "Management name"
+                    kor : "설비 시스템 명칭",
+                    eng : "Machine System name"
                 },
+                valMsg : {
+                    required : {
+                        kor : "설비 시스템 명칭을 입력해주세요.",
+                        eng : "Please enter management name."
+                    }
+                }
             },
             mng_team : {
                 placeholder : {
                     kor : "관리팀",
                     eng : "Management team"
                 },
+                valMsg : {
+                    required : {
+                        kor : "관리 팀을 입력해주세요.",
+                        eng : "Please enter management team."
+                    }
+                }
+            },
+            revision_history : {
+                placeholder : {
+                    kor : "제/개정이력",
+                    eng : "Revision History"
+                },
+            },
+            machine_type : {
+                placeholder : {
+                    kor : "설비/시스템 유형",
+                    eng : "Machine/System Type"
+                },
+                eq : {
+                    kor : "설비",
+                    eng : "Equipment"
+                },
+                room : {
+                    kor : "Room",
+                    eng : "Room"
+                },
+                com : {
+                    kor : "컴퓨터화 시스템",
+                    eng : "Computerized Sytem"
+                }
             },
         },
+        checkbox : {
+            periodic_mng_qual : {
+                kor : '정기적 재적격성 평가',
+                eng : 'Periodic Re-Qual'
+            },
+            periodic_mng_ster : {
+                kor : '정기적 멸균 재적격성 평가',
+                eng : 'Periodic Sterilization Re-Qual'
+            },
+            periodic_mng_vhp : {
+                kor : '정기적 VHP 재적격성 평가',
+                eng : 'Periodic VHP Re-Qual'
+            },
+            periodic_mng_review : {
+                kor : '정기적 검토',
+                eng : 'Periodic Review'
+            },
+            periodic_mng_cv : {
+                kor : '정기적 CV',
+                eng : 'Periodic CV'
+            },
+            periodic_mng_mt : {
+                kor : '정기적 Mapping Test',
+                eng : 'Periodic Mapping Test'
+            },
+        }
     }
 }
 

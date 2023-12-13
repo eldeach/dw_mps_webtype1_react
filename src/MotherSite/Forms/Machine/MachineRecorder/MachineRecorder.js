@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, Checkbox, FormControlLabel, IconButton, Paper, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup, Switch, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { pink } from '@mui/material/colors';
 //icon
 import ClearIcon from '@mui/icons-material/Clear';
@@ -22,13 +22,15 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SaveIcon from '@mui/icons-material/Save';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 // ======================================================================================== [Import Component] js
 import machineRecorderLang from './machineRecorderLang'
 
 // Sub Recorder
 import QualModalButton from './ModalRecorder/QualModalButton/QualModalButton'
+
+// Const Object
+import prmCodeBook from '../PrmCodeBook/prmCodeBook'
 
 // Component
 import ParamItemDiv from '../../../Component/ParamItemDiv/ParamItemDiv'
@@ -101,6 +103,10 @@ function MachineRecorder(props){
     const yupSchema = yup.object().shape({
         mng_code: yup.string()
         .required(machineRecorderLang.mcInfoPaper.inputField.mng_code.valMsg.required[cookies.load('site-lang')]),
+        mng_name: yup.string()
+        .required(machineRecorderLang.mcInfoPaper.inputField.mng_name.valMsg.required[cookies.load('site-lang')]),
+        mng_team: yup.string()
+        .required(machineRecorderLang.mcInfoPaper.inputField.mng_team.valMsg.required[cookies.load('site-lang')]),
     });
 
     // 제정/개정에서 같이 쓰기 위해 initialValues는 외부에서 props로 전달함
@@ -173,8 +179,17 @@ function MachineRecorder(props){
                 mng_code_alt2 : values.mng_code_alt2,
                 mng_name : values.mng_name,
                 mng_team : values.mng_team,
+                machine_type : values.machine_type,
+                gmp_impact : values.gmp_impact,
+                periodic_mng_qual : values.periodic_mng_qual,
+                periodic_mng_ster : values.periodic_mng_ster,
+                periodic_mng_vhp : values.periodic_mng_vhp,
+                periodic_mng_review : values.periodic_mng_review,
+                periodic_mng_cv : values.periodic_mng_cv,
+                periodic_mng_mt : values.periodic_mng_mt,
                 mc_periodic_qual : values.mc_periodic_qual,
                 mc_periodic_ster : values.mc_periodic_ster,
+                mc_periodic_vhp : values.mc_periodic_vhp,
                 mc_periodic_review : values.mc_periodic_review,
                 mc_iq : values.mc_iq,
                 mc_oq : values.mc_oq,
@@ -184,11 +199,12 @@ function MachineRecorder(props){
                 mc_periodic_mt : values.mc_periodic_mt,
                 mc_mt : values.mc_mt,
                 prm_list : values.prm_list,
-                prm_bathsize : values.prm_bathsize,
-                prm_bathsize_kg : values.prm_bathsize_kg,
+                prm_batchsize : values.prm_batchsize,
+                prm_batchsize_kg : values.prm_batchsize_kg,
                 prm_gentlewing : values.prm_gentlewing,
                 prm_chopper : values.prm_chopper,
                 prm_spray : values.prm_spray,
+                prm_spray_kgmin : values.prm_spray_kgmin,
                 prm_spray_rpm : values.prm_spray_rpm,
                 prm_grate : values.prm_grate,
                 prm_blendrpm : values.prm_blendrpm,
@@ -222,7 +238,7 @@ function MachineRecorder(props){
                 alert (rs.data[cookies.load('site-lang')])
             }
             console.log(rs)
-            if (props.handleModalClose) props.handleModalClose() // 부모가 modal이면 닫아주기
+            if (props.preparedType == "REVISE") props.handleModalClose() // 부모가 modal이면 닫아주기
         }
     }
 
@@ -234,6 +250,7 @@ function MachineRecorder(props){
 
 
     useEffect(()=>{
+        console.log(props.initialValues.prm_batchsize)
         handlePageTitle(machineRecorderLang.formTitle[cookies.load('site-lang')])
         handleSystemCode('sys1')
     },[])
@@ -343,6 +360,7 @@ function MachineRecorder(props){
                                 InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
                                 <TextField
+                                required
                                 variant="outlined"
                                 id="mng_name"
                                 name="mng_name"
@@ -366,6 +384,7 @@ function MachineRecorder(props){
                                 InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
                                 <TextField
+                                required
                                 variant="outlined"
                                 id="mng_team"
                                 name="mng_team"
@@ -388,6 +407,178 @@ function MachineRecorder(props){
                                 }}
                                 InputLabelProps={{style: style.inputTexstField}} // font size of input label
                                 />
+                                <FormControl style={{ border:'#D3D3D3 solid 1px', borderRadius:'5px', marginTop:'5px', marginBottom:'2px', paddingLeft:'10px', width:'100%', boxSizing:'border-box', display: 'flex', flexDirection: 'row', alignItems:'center' }}>
+                                    <FormLabel
+                                    id="machine_type"
+                                    sx={{mr:1}}
+                                    color='sys1'
+                                    >
+                                        {<Typography sx={{fontSize:14}}>{machineRecorderLang.mcInfoPaper.inputField.machine_type.placeholder[cookies.load('site-lang')]}</Typography>}
+                                    </FormLabel>
+                                    <RadioGroup
+                                    row
+                                    name="machine_type"
+                                    value={formikProps.values.machine_type}
+                                    onChange={formikProps.handleChange}
+                                    >
+                                        <FormControlLabel
+                                        value="EQ"
+                                        control={<Radio color='sys1' />}
+                                        label={<Typography sx={{fontSize:14}}>{machineRecorderLang.mcInfoPaper.inputField.machine_type.eq[cookies.load('site-lang')]}</Typography>}
+                                        />
+                                        <FormControlLabel
+                                        value="ROOM"
+                                        control={<Radio color='sys1' />}
+                                        label={<Typography sx={{fontSize:14}}>{machineRecorderLang.mcInfoPaper.inputField.machine_type.room[cookies.load('site-lang')]}</Typography>}
+                                        />     
+                                        <FormControlLabel
+                                        value="COM"
+                                        control={<Radio color='sys1' />}
+                                        label={<Typography sx={{fontSize:14}}>{machineRecorderLang.mcInfoPaper.inputField.machine_type.com[cookies.load('site-lang')]}</Typography>}
+                                        />     
+                                    </RadioGroup>
+                                </FormControl>
+                                <FormControlLabel
+                                control={ <Switch color = 'sys1' checked={ formikProps.values.gmp_impact } onChange={ ( e ) => {formikProps.setFieldValue('gmp_impact',e.target.checked)} } name="gmp_impact" /> }
+                                label={
+                                    <Typography size="small" sx = {{ fontSize : '14px', color : (formikProps.values.gmp_impact ? 'orange' : 'black') }}>{`GMP IMPACT System`}</Typography>     
+                                }
+                                />
+                                <div>
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_qual}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_qual', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_qual[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_ster}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_ster', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_ster[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_vhp}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_vhp', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_vhp[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_review}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_review', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_review[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_cv}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_cv', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_cv[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_mt}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_mt', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_mt[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                </div>
+                                <TextField
+                                multiline
+                                maxRows={4}
+                                variant="outlined"
+                                id="revision_history"
+                                name="revision_history"
+                                label={machineRecorderLang.mcInfoPaper.inputField.revision_history.placeholder[cookies.load('site-lang')]}
+                                value={formikProps.values.revision_history}
+                                onChange={formikProps.handleChange}
+                                onBlur={formikProps.handleBlur}
+                                helperText={formikProps.touched.revision_history ? formikProps.errors.revision_history : ""}
+                                error={formikProps.touched.revision_history && Boolean(formikProps.errors.revision_history)}
+                                size='small'
+                                margin="dense"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment:(
+                                        <IconButton size='small' onClick={()=>{formikProps.setFieldValue('revision_history','')}}>
+                                            <ClearIcon size='small'/>
+                                        </IconButton>
+                                    ),
+                                    style: style.inputTexstField // font size of input text
+                                }}
+                                InputLabelProps={{style: style.inputTexstField}} // font size of input label
+                                />
                             </Paper>
                         </div>
                         <div>
@@ -396,8 +587,8 @@ function MachineRecorder(props){
                                     <BallotIcon color='sys1'/>
                                     <div style={style.subtitle.text}>{`Param List`}</div>
                                 </div>
-                                <div style={{display:'flex', flexDirection : 'row'}}>
-                                    <div style={{display : 'flex', flexDirection : 'column'}}>
+                                <div id = 'prmListPaper_row_A' style={{display:'flex', flexDirection : 'row'}}>
+                                    <div id = 'prmListPaper_col_A' style={{display : 'flex', flexDirection : 'column'}}>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -410,15 +601,15 @@ function MachineRecorder(props){
                                                   color: pink[600],
                                                 },
                                             }}
-                                            checked = {formikProps.values.prm_list[0].prm_bathsize}
+                                            checked = {formikProps.values.prm_list[0].prm_batchsize}
                                             onChange={(e)=>{
                                                 let temp = [...formikProps.values.prm_list]
-                                                temp[0].prm_bathsize = Boolean(e.target.checked)
+                                                temp[0].prm_batchsize = Boolean(e.target.checked)
                                                 formikProps.setFieldValue('prm_list', temp)
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Worst Batch Size</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_batchsize[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -431,15 +622,15 @@ function MachineRecorder(props){
                                                   color: pink[600],
                                                 },
                                             }}
-                                            checked = {formikProps.values.prm_list[0].prm_bathsize_kg}
+                                            checked = {formikProps.values.prm_list[0].prm_batchsize_kg}
                                             onChange={(e)=>{
                                                 let temp = [...formikProps.values.prm_list]
-                                                temp[0].prm_bathsize_kg = Boolean(e.target.checked)
+                                                temp[0].prm_batchsize_kg = Boolean(e.target.checked)
                                                 formikProps.setFieldValue('prm_list', temp)
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>{`Worst Batch Size (kg)`}</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_batchsize_kg[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -460,7 +651,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Gentlewing RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_gentlewing[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -481,7 +672,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Chopper RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_chopper[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -502,7 +693,28 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Spray Rate</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_spray[cookies.load('site-lang')]}</Typography> }/>
+                                        <FormControlLabel
+                                        color='sys1'
+                                        fontSize='inherit'
+                                        control={
+                                            <Checkbox
+                                            size="small"
+                                            sx={{
+                                                color: pink[800],
+                                                '&.Mui-checked': {
+                                                  color: pink[600],
+                                                },
+                                            }}
+                                            checked = {formikProps.values.prm_list[0].prm_spray_kgmin}
+                                            onChange={(e)=>{
+                                                let temp = [...formikProps.values.prm_list]
+                                                temp[0].prm_spray_kgmin = Boolean(e.target.checked)
+                                                formikProps.setFieldValue('prm_list', temp)
+                                            }}
+                                            />
+                                        }
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_spray_kgmin[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -523,7 +735,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Spray Rate RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_spray_rpm[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -544,7 +756,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Grate RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_grate[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -565,7 +777,9 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Blending RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_blendrpm[cookies.load('site-lang')]}</Typography> }/>
+                                    </div>
+                                    <div id = 'prmListPaper_col_B'style={{display : 'flex', flexDirection : 'column'}}>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -586,9 +800,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Compact Force</Typography> }/>
-                                    </div>
-                                    <div style={{display : 'flex', flexDirection : 'column'}}>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_cforece[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -609,7 +821,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Turret RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_turret[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -630,7 +842,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Feeder RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_feeder[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -651,7 +863,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Pre. Pressure Force</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_pforce[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -672,7 +884,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Main Pressure Force</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_mforce[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -693,7 +905,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>{`Pre. Pressure Force (kgf)`}</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_pforce_kgf[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -714,7 +926,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>{`Main Pressure Force (kgf)`}</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_mforce_kgf[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -735,7 +947,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Drum RPM</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_drum[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -756,7 +968,9 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Pattern Air</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_paair[cookies.load('site-lang')]}</Typography> }/>
+                                    </div>
+                                    <div id = 'prmListPaper_col_C'style={{display : 'flex', flexDirection : 'column'}}>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -777,7 +991,7 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Atomizing Air</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_atair[cookies.load('site-lang')]}</Typography> }/>
                                         <FormControlLabel
                                         color='sys1'
                                         fontSize='inherit'
@@ -787,7 +1001,7 @@ function MachineRecorder(props){
                                             sx={{
                                                 color: pink[800],
                                                 '&.Mui-checked': {
-                                                  color: pink[600],
+                                                color: pink[600],
                                                 },
                                             }}
                                             checked = {formikProps.values.prm_list[0].prm_fill}
@@ -798,9 +1012,8 @@ function MachineRecorder(props){
                                             }}
                                             />
                                         }
-                                        label={<Typography fontSize={12}>Filling capacity</Typography> }/>
+                                        label={<Typography fontSize={12}>{prmCodeBook.prm_fill[cookies.load('site-lang')]}</Typography> }/>
                                     </div>
-
                                 </div>
                             </Paper>
                         </div>
@@ -845,7 +1058,7 @@ function MachineRecorder(props){
                                     }
                                     <QualModalButton
                                     colName = 'qualAtt'
-                                    qualAtt = 'PERIODIC'
+                                    qualAtt = 'Periodic'
                                     inheritedArr = { formikProps.values.mc_periodic_qual }
                                     updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_qual', newValue )}}
                                     />
@@ -872,6 +1085,30 @@ function MachineRecorder(props){
                                     qualAtt = 'STER'
                                     inheritedArr = { formikProps.values.mc_periodic_ster }
                                     updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_ster', newValue )}}
+                                    />
+                                </Paper>
+                            </div>
+                            <div>
+                                <Paper id='mc_periodic_vhp_Paper' sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`Periodic VHP Qualification (Items : ${formikProps.values.mc_periodic_vhp.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.mc_periodic_vhp.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <DocItemDiv oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_vhp', arrDelElement(formikProps.values.mc_periodic_vhp, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'VHP'
+                                    inheritedArr = { formikProps.values.mc_periodic_vhp }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_vhp', newValue )}}
                                     />
                                 </Paper>
                             </div>
@@ -987,20 +1224,20 @@ function MachineRecorder(props){
                         <div style={{height: dRowFold ? '0px' : 'auto' , visibility : dRowFold ? 'hidden' : 'visible', display : 'flex', flexWrap:'wrap', boxSizing:'border-box'}} >
                             <div id = 'paramItem1'>
                             {
-                                !formikProps.values.prm_list[0].prm_bathsize ? <div/> : 
+                                !formikProps.values.prm_list[0].prm_batchsize ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Batch Size (Items : ${formikProps.values.prm_bathsize.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_batchsize[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_batchsize.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.prm_bathsize.map((oneItem, index)=>(
+                                        formikProps.values.prm_batchsize.map((oneItem, index)=>(
                                             <div style={style.arrItem.oneItem}>
                                                 <ParamItemDiv
                                                 valueUnit = { oneItem.valueUnit }
                                                 oneItem = { oneItem }/>
                                                 <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_bathsize', arrDelElement(formikProps.values.prm_bathsize, index))}><DeleteForeverIcon/></Button>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_batchsize', arrDelElement(formikProps.values.prm_batchsize, index))}><DeleteForeverIcon/></Button>
                                                 </div>
                                             </div>
                                         ))
@@ -1008,48 +1245,48 @@ function MachineRecorder(props){
                                     <QualModalButton
                                     colName = 'qualAtt'
                                     qualAtt = 'Q'
-                                    inheritedArr = { formikProps.values.prm_bathsize }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_bathsize', newValue )}}
-                                    />
-                                </Paper>
-                            }
-                            </div>
-                            <div id = 'paramItem1'>
-                            {
-                                !formikProps.values.prm_list[0].prm_bathsize_kg ? <div/> : 
-                                <Paper sx={style.paper} elevation={3}>
-                                    <div style={style.subtitle.box}>
-                                        <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Batch Size (kg) (Items : ${formikProps.values.prm_bathsize_kg.length})`}</div>
-                                    </div>
-                                    { // 현재 배열 객체 정보 출력 iterator
-                                        formikProps.values.prm_bathsize_kg.map((oneItem, index)=>(
-                                            <div style={style.arrItem.oneItem}>
-                                                <ParamItemDiv
-                                                valueUnit = { oneItem.valueUnit }
-                                                oneItem = { oneItem }/>
-                                                <div style={style.arrItem.delItem}>
-                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_bathsize_kg', arrDelElement(formikProps.values.prm_bathsize_kg, index))}><DeleteForeverIcon/></Button>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-                                    <QualModalButton
-                                    colName = 'qualAtt'
-                                    qualAtt = 'Q'
-                                    inheritedArr = { formikProps.values.prm_bathsize_kg }
-                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_bathsize_kg', newValue )}}
+                                    inheritedArr = { formikProps.values.prm_batchsize }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_batchsize', newValue )}}
                                     />
                                 </Paper>
                             }
                             </div>
                             <div id = 'paramItem2'>
                             {
+                                !formikProps.values.prm_list[0].prm_batchsize_kg ? <div/> : 
+                                <Paper sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_batchsize_kg[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_batchsize_kg.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.prm_batchsize_kg.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <ParamItemDiv
+                                                valueUnit = { oneItem.valueUnit }
+                                                oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_batchsize_kg', arrDelElement(formikProps.values.prm_batchsize_kg, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'Q'
+                                    inheritedArr = { formikProps.values.prm_batchsize_kg }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_batchsize_kg', newValue )}}
+                                    />
+                                </Paper>
+                            }
+                            </div>
+                            <div id = 'paramItem3'>
+                            {
                                 !formikProps.values.prm_list[0].prm_gentlewing ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying GentleWing RPM (Items : ${formikProps.values.prm_gentlewing.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_gentlewing[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_gentlewing.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_gentlewing.map((oneItem, index)=>(
@@ -1071,13 +1308,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem3'>
+                            <div id = 'paramItem4'>
                             {
                                 !formikProps.values.prm_list[0].prm_chopper ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Chopper RPM (Items : ${formikProps.values.prm_chopper.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_chopper[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_chopper.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_chopper.map((oneItem, index)=>(
@@ -1099,13 +1336,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem4'>
+                            <div id = 'paramItem5'>
                             {
                                 !formikProps.values.prm_list[0].prm_spray ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Spray Rate (Items : ${formikProps.values.prm_spray.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_spray[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_spray.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_spray.map((oneItem, index)=>(
@@ -1127,13 +1364,41 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem5'>
+                            <div id = 'paramItem6'>
+                            {
+                                !formikProps.values.prm_list[0].prm_spray_kgmin ? <div/> : 
+                                <Paper sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_spray_kgmin[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_spray_kgmin.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.prm_spray_kgmin.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <ParamItemDiv
+                                                oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'prm_spray_kgmin', arrDelElement(formikProps.values.prm_spray_kgmin, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'Q'
+                                    inheritedArr = { formikProps.values.prm_spray_kgmin }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'prm_spray_kgmin', newValue )}}
+                                    />
+                                </Paper>
+                            }
+                            </div>
+                            <div id = 'paramItem7'>
                             {
                                 !formikProps.values.prm_list[0].prm_spray_rpm ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Spray RPM (Items : ${formikProps.values.prm_spray_rpm.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_spray_rpm[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_spray_rpm.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_spray_rpm.map((oneItem, index)=>(
@@ -1155,13 +1420,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem6'>
+                            <div id = 'paramItem8'>
                             {
                                 !formikProps.values.prm_list[0].prm_grate ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Grate RPM (Items : ${formikProps.values.prm_grate.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_grate[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_grate.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_grate.map((oneItem, index)=>(
@@ -1183,13 +1448,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem7'>
+                            <div id = 'paramItem9'>
                             {
                                 !formikProps.values.prm_list[0].prm_blendrpm ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Blending RPM (Items : ${formikProps.values.prm_blendrpm.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_blendrpm[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_blendrpm.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_blendrpm.map((oneItem, index)=>(
@@ -1211,13 +1476,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem8'>
+                            <div id = 'paramItem10'>
                             {
                                 !formikProps.values.prm_list[0].prm_cforece ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Compact Force (Items : ${formikProps.values.prm_cforece.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_cforece[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_cforece.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_cforece.map((oneItem, index)=>(
@@ -1239,13 +1504,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem9'>
+                            <div id = 'paramItem11'>
                             {
                                 !formikProps.values.prm_list[0].prm_turret ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Turret RPM (Items : ${formikProps.values.prm_turret.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_turret[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_turret.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_turret.map((oneItem, index)=>(
@@ -1267,13 +1532,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem10'>
+                            <div id = 'paramItem12'>
                             {
                                 !formikProps.values.prm_list[0].prm_feeder ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Feeder RPM (Items : ${formikProps.values.prm_feeder.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_feeder[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_feeder.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_feeder.map((oneItem, index)=>(
@@ -1295,13 +1560,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem11'>
+                            <div id = 'paramItem13'>
                             {
                                 !formikProps.values.prm_list[0].prm_pforce ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Pre. Compact Force (Items : ${formikProps.values.prm_pforce.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_pforce[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_pforce.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_pforce.map((oneItem, index)=>(
@@ -1324,13 +1589,13 @@ function MachineRecorder(props){
                                 
                             }
                             </div>
-                            <div id = 'paramItem12'>
+                            <div id = 'paramItem14'>
                             {
                                !formikProps.values.prm_list[0].prm_mforce ? <div/> : 
                                <Paper sx={style.paper} elevation={3}>
                                    <div style={style.subtitle.box}>
                                        <VerifiedIcon color='sys1'/>
-                                       <div style={style.subtitle.text}>{`Qualifying Main Compact Force (Items : ${formikProps.values.prm_mforce.length})`}</div>
+                                       <div style={style.subtitle.text}>{`${prmCodeBook.prm_mforce[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_mforce.length})`}</div>
                                    </div>
                                    { // 현재 배열 객체 정보 출력 iterator
                                        formikProps.values.prm_mforce.map((oneItem, index)=>(
@@ -1352,13 +1617,13 @@ function MachineRecorder(props){
                                </Paper> 
                             }
                             </div>
-                            <div id = 'paramItem13'>
+                            <div id = 'paramItem15'>
                             {
                                 !formikProps.values.prm_list[0].prm_pforce_kgf ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Pre. Compact Force (kgf) (Items : ${formikProps.values.prm_pforce_kgf.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_pforce_kgf[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_pforce_kgf.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_pforce_kgf.map((oneItem, index)=>(
@@ -1381,13 +1646,13 @@ function MachineRecorder(props){
                                 
                             }
                             </div>
-                            <div id = 'paramItem14'>
+                            <div id = 'paramItem16'>
                             {
                                !formikProps.values.prm_list[0].prm_mforce_kgf ? <div/> : 
                                <Paper sx={style.paper} elevation={3}>
                                    <div style={style.subtitle.box}>
                                        <VerifiedIcon color='sys1'/>
-                                       <div style={style.subtitle.text}>{`Qualifying Main Compact Force (kgf) (Items : ${formikProps.values.prm_mforce_kgf.length})`}</div>
+                                       <div style={style.subtitle.text}>{`${prmCodeBook.prm_mforce_kgf[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_mforce_kgf.length})`}</div>
                                    </div>
                                    { // 현재 배열 객체 정보 출력 iterator
                                        formikProps.values.prm_mforce_kgf.map((oneItem, index)=>(
@@ -1409,13 +1674,13 @@ function MachineRecorder(props){
                                </Paper> 
                             }
                             </div>
-                            <div id = 'paramItem15'>
+                            <div id = 'paramItem17'>
                             {
                                 !formikProps.values.prm_list[0].prm_drum ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Drum RPM (Items : ${formikProps.values.prm_drum.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_drum[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_drum.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_drum.map((oneItem, index)=>(
@@ -1437,13 +1702,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem16'>
+                            <div id = 'paramItem18'>
                             {
                                 !formikProps.values.prm_list[0].prm_paair ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Pattern Air (Items : ${formikProps.values.prm_paair.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_paair[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_paair.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_paair.map((oneItem, index)=>(
@@ -1465,13 +1730,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem17'>
+                            <div id = 'paramItem19'>
                             {
                                 !formikProps.values.prm_list[0].prm_atair ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Atomizing Air (Items : ${formikProps.values.prm_atair.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_atair[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_atair.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_atair.map((oneItem, index)=>(
@@ -1493,13 +1758,13 @@ function MachineRecorder(props){
                                 </Paper>
                             }
                             </div>
-                            <div id = 'paramItem18'>
+                            <div id = 'paramItem20'>
                             {
                                 !formikProps.values.prm_list[0].prm_fill ? <div/> : 
                                 <Paper sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Qualifying Filling capacity (Items : ${formikProps.values.prm_fill.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${prmCodeBook.prm_fill[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_fill.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.prm_fill.map((oneItem, index)=>(

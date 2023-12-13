@@ -29,7 +29,7 @@ function Sys1List() {
       </List>
       <Divider />
       <List>
-        <ListItemNavPath navPath={'/addmachine'} icon={<RecentActorsIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewMachine[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/machinelist'} icon={<RecentActorsIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewMachine[cookies.load('site-lang')] }/>
       </List>
       <Divider />
       <List>

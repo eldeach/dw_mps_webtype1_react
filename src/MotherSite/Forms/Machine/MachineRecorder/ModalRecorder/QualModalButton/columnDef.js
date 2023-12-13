@@ -39,7 +39,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "rev_no",
+    columnHelper.accessor( "doc_rev_no",
         {
             header: { kor : "개정번호", eng : "Rev. No." },
             size: 100,
@@ -53,21 +53,21 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "user_name",
+    columnHelper.accessor( "doc_author",
         {
             header: { kor : "작성자", eng : "Written By" },
             size: 150,
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "written_by_team",
+    columnHelper.accessor( "author_team",
         {
             header: { kor : "작성팀", eng : "Written By (Team)" },
             size: 150,
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "approval_date",
+    columnHelper.accessor( "doc_approval_date",
         {
             header: { kor : "승인일", eng : "Approval Date" },
             size: 150,
@@ -87,7 +87,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
                 }</div>
         }
     ),
-    columnHelper.accessor( "imp_start_date",
+    columnHelper.accessor( "perform_date_start",
         {
             header: { kor : "수행 시작일", eng : "Start date of execution" },
             size: 150,
@@ -95,7 +95,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             cell : renderValue =><div>{String(renderValue.getValue()).split("T")[0]}</div>
         }
     ),
-    columnHelper.accessor( "imp_completion_date",
+    columnHelper.accessor( "perform_date_end",
         {
             header: { kor : "수행 종료일", eng : "End date of execution" },
             size: 150,

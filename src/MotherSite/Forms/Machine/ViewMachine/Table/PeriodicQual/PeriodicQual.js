@@ -7,16 +7,15 @@
 
 // ======================================================================================== [Import Component] js
 import Tbl1NoFooter from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
-import columnDef from '../Approved/columnDef'
+import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
-function Prepared (){
+function PeriodicQual (){
     return (
         <Tbl1NoFooter
-        getUrl = '/getmachinelist'
+        getUrl = {'/getmachineprquallist'}
         params = {{
-            approval_status : 'PREPARED',
         }}
         columnDef = {columnDef}
         divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '100vw', maxHeight : '100vh', overflow : 'auto'}}
@@ -27,4 +26,4 @@ function Prepared (){
     )
 }
 
-export default Prepared;
+export default PeriodicQual;

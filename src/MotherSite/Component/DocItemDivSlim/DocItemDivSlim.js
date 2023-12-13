@@ -15,24 +15,24 @@ import WhereToVoteIcon from '@mui/icons-material/WhereToVote';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 // ======================================================================================== [Import Component] js
-import docItemDivLang from './docItemDivLang'
+import docItemDivSlimLang from './docItemDivSlimLang'
 
 // ======================================================================================== [Import Component] CSS
-import './DocItemDiv.css'
+import './DocItemDivSlim.css'
 
 function DocItemDiv (props) {
 
     const [foldInfo, setFoldInfo] = useState(true);
 
     return (
-        <div style={{ fontSize: '14px', display : 'flex', flexDirection : 'column'}}>
+        <div style={{ fontSize: '14px', display : 'flex', flexDirection : 'column', marginBottom:'10px', boxSizing:'border-box'}}>
             <div className='doc-item-div-row'>
                 <div className='doc-item-div-field-name'>
                     <div className='doc-item-div-field-icon'>
                         <InsertDriveFileIcon fontSize='inherit'/>
                     </div>
                     <div className='doc-item-div-field-name-text'>
-                        {docItemDivLang.row.field.name.doc_no[cookies.load('site-lang')]}
+                        {docItemDivSlimLang.row.field.name.doc_no[cookies.load('site-lang')]}
                     </div>
                 </div>
                 <div className='doc-item-div-field-value' style={{width : '186px'}}>
@@ -43,35 +43,35 @@ function DocItemDiv (props) {
                         <NumbersIcon fontSize='inherit'/>
                     </div>
                     <div className='doc-item-div-field-name-text'>
-                        {docItemDivLang.row.field.name.doc_rev_no[cookies.load('site-lang')]}
+                        {docItemDivSlimLang.row.field.name.doc_rev_no[cookies.load('site-lang')]}
                     </div>
                 </div>
                 <div className='doc-item-div-field-value' style={{width : '36px'}}>
                     {props.oneItem.doc_rev_no}
                 </div>
             </div>
+            { foldInfo ? <div/> :  
+            <div>
             <div className='doc-item-div-row'>
                 <div className='doc-item-div-field-name'>
                     <div className='doc-item-div-field-icon'>
                         <TitleIcon fontSize='inherit'/>
                     </div>
                     <div className='doc-item-div-field-name-text'>
-                        {docItemDivLang.row.field.name.doc_title[cookies.load('site-lang')]}
+                        {docItemDivSlimLang.row.field.name.doc_title[cookies.load('site-lang')]}
                     </div>
                 </div>
                 <div className='doc-item-div-field-value' style={{ width : '300px' }}>
                     {props.oneItem.doc_title}
                 </div>
             </div>
-            { foldInfo ? <div/> :  
-            <div>
                 <div className='doc-item-div-row'>
                     <div className='doc-item-div-field-name'>
                         <div className='doc-item-div-field-icon'>
                             <Face6Icon fontSize='inherit'/>
                         </div>
                         <div className='doc-item-div-field-name-text'>
-                            {docItemDivLang.row.field.name.doc_author[cookies.load('site-lang')]}
+                            {docItemDivSlimLang.row.field.name.doc_author[cookies.load('site-lang')]}
                         </div>
                     </div>
                     <div className='doc-item-div-field-value' style={{ width : '300px' }}>
@@ -84,7 +84,7 @@ function DocItemDiv (props) {
                             <Diversity3Icon fontSize='inherit'/>
                         </div>
                         <div className='doc-item-div-field-name-text'>
-                            {docItemDivLang.row.field.name.author_team[cookies.load('site-lang')]}
+                            {docItemDivSlimLang.row.field.name.author_team[cookies.load('site-lang')]}
                         </div>
                     </div>
                     <div className='doc-item-div-field-value' style={{ width : '300px' }}>
@@ -97,7 +97,7 @@ function DocItemDiv (props) {
                             <RunCircleIcon color='start' fontSize='inherit'/>
                         </div>
                         <div className='doc-item-div-field-name-text'>
-                            {docItemDivLang.row.field.name.perform_date_start[cookies.load('site-lang')]}
+                            {docItemDivSlimLang.row.field.name.perform_date_start[cookies.load('site-lang')]}
                         </div>
                     </div>
                     <div className='doc-item-div-field-value' style={{ width : '100px'}}>
@@ -113,7 +113,7 @@ function DocItemDiv (props) {
                             <WhereToVoteIcon color='accepted' fontSize='inherit'/>
                         </div>
                         <div className='doc-item-div-field-name-text'>
-                            {docItemDivLang.row.field.name.perform_date_end[cookies.load('site-lang')]}
+                            {docItemDivSlimLang.row.field.name.perform_date_end[cookies.load('site-lang')]}
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ function DocItemDiv (props) {
                             <TaskAltIcon color='accepted' fontSize='inherit'/>
                         </div>
                         <div className='doc-item-div-field-name-text'>
-                            {docItemDivLang.row.field.name.doc_approval_date[cookies.load('site-lang')]}
+                            {docItemDivSlimLang.row.field.name.doc_approval_date[cookies.load('site-lang')]}
                         </div>
                     </div>
                     <div className='doc-item-div-field-value' style={{ width : '260px' }}>

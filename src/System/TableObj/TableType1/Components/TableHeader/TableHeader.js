@@ -85,12 +85,12 @@ function TableHeader(props) {
             {
                 header.column.getCanFilter() ? (
                     filterOn ? <div style={{ marginLeft:'3px', marginRight:'3px', display : 'flex', flexDirection:'column'}}>
-                    <select onChange={({ currentTarget: { value } }) => onFilterChange(value)} >
+                    {/* <select onChange={({ currentTarget: { value } }) => onFilterChange(value)} >
                         <option value="null">{tableHeaderLang.filter.option[cookies.load('site-lang')]}</option>
                         {
                             sortedUniqueValues.map(( value ) => ( <option key = { value }> { value } </option> ))
                         }
-                    </select>
+                    </select> */}
                     <input onChange = {({ currentTarget : { value }}) => onFilterChange( value ) }/>
                 </div> : null
                 ) : null

@@ -16,6 +16,14 @@ div {
     box-sizing: border-box;
 }
 
+.big-popup-close-button-box {
+    width: 100%;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+}
+
 .popup-close-button {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -53,4 +61,62 @@ div {
     background-color: transparent;
     color:#D62600;
     
+}
+
+
+
+/* Machine/System 화면상의 GMP IMPACT 대상 여부 표기 라벨 CSS */
+.gmp_label {
+    width : 100px;
+    display : flex;
+    align-items : center;
+    padding-left : 5px;
+    padding-right : 5px;
+    border-radius : 15px;
+    margin-bottom: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background : #3f50b5;
+    color : #fff;
+    box-sizing: border-box;
+}
+
+.gmp_label_text { 
+    margin-left : auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.gmp_label_icon {
+    margin-top : 3px;
+    font-size : 16px;
+    box-sizing: border-box;
+}
+
+/* Machine/System 화면상의 여러 종류의 주기적 관리 대상 여부 표기 라벨 CSS */
+.monitoring_label {
+    width : 140px;
+    display : flex;
+    align-items : center;
+    padding-left : 5px;
+    padding-right : 5px;
+    border-radius : 15px;
+    margin-bottom: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background : #3f50b5;
+    color : #fff;
+    box-sizing: border-box;
+}
+
+.monitoring_label_text { 
+    margin-left : auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.monitoring_label_icon {
+    margin-top : 3px;
+    font-size : 16px;
+    box-sizing: border-box;
 }

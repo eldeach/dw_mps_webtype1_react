@@ -142,6 +142,19 @@ function LoginButton(){
         })
     }
 
+    const extentionSession = async function () {
+        if ( expireTimeMin < 1) {
+            sessioncheck()
+        }
+    }
+
+    window.addEventListener('mousedown', (e)=>{
+        extentionSession()
+    });
+    window.addEventListener('keydown', (e)=>{
+        extentionSession()
+    });
+
     useEffect(() => {
         sessioncheck()
     }, [])
