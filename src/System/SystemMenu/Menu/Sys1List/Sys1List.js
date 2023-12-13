@@ -12,6 +12,7 @@ import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
 import BorderOuterIcon from '@mui/icons-material/BorderOuter';
 import ListIcon from '@mui/icons-material/List';
 import ShowerIcon from '@mui/icons-material/Shower';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
 
 // ======================================================================================== [Import Component] js
 import ListItemNavPath from '../ListItemWrapper/ListItemNavPath';
@@ -45,8 +46,8 @@ function Sys1List() {
       </List>
       <Divider />
       <List>
-        <ListItemNavPath navPath={'/productlist'} icon={<ShowerIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewProd[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/viewpv'} icon={<ShowerIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewPrPV[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewProd[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/viewpv'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewPrPV[cookies.load('site-lang')] }/>
       </List>
       <Divider />
       <List>
