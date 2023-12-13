@@ -9,16 +9,10 @@ import IndeterminateCheckbox from '../../../../../../System/TableObj/TableType1/
     
 const columnHelper = createColumnHelper();
 const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
-    // { // row selection 할꺼면
-    //     id: 'edit',
-    //     header : 'aaa',
-    //     accessor: '[row identifier to be passed to button]',
-    //     cell: ({ row }) => (<button onClick={(e) => console.log(row.original)}>Click Me</button>),
-    // },
-    columnHelper.accessor( "uuid_binary",
+    columnHelper.accessor( "approval_payload_id",
         {
-            header: { kor : "UUID", eng : "UUID" },
-            size: 150,
+            header: { kor : "승인 고유 번호", eng : "Approval Unique ID" },
+            size: 100,
             enableColumnFilter: true,
         }
     ),
@@ -124,6 +118,13 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "user_position",
         {
             header: { kor : "소속", eng : "Position" },
+            size: 150,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "uuid_binary",
+        {
+            header: { kor : "UUID", eng : "UUID" },
             size: 150,
             enableColumnFilter: true,
         }

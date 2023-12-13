@@ -16,16 +16,9 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     {
         id: "rowview",
         size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
-        header: { kor : '내용보기', eng :'View content'},
+        header: { kor : '개정', eng :'Revision'},
         cell: ({ row }) =>  <Revision oneItem = {row.original}/>
     },
-    columnHelper.accessor( "uuid_binary",
-        {
-            header: { kor : "UUID", eng : "UUID" },
-            size: 150,
-            enableColumnFilter: true,
-        }
-    ),
     columnHelper.accessor( "data_ver",
         {
             header: { kor : "Data Ver", eng : "Data Ver" },
@@ -128,6 +121,13 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "user_position",
         {
             header: { kor : "소속", eng : "Position" },
+            size: 150,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "uuid_binary",
+        {
+            header: { kor : "UUID", eng : "UUID" },
             size: 150,
             enableColumnFilter: true,
         }

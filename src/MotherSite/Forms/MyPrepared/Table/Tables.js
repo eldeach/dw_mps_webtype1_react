@@ -12,6 +12,7 @@ import tablesLang from './tablesLang'
 // Table
 import UserPrepared from './UserPrepared/UserPrepared'
 import MachinePrepared from './MachinePrepared/MachinePrepared'
+import ProductPrepared from './ProductPrepared/ProductPrepared'
 
 
 // ======================================================================================== [Import Component] CSS
@@ -33,6 +34,7 @@ function Tables () {
                     >
                     <ToggleButton value={1} >{tablesLang.buttonGroup.userPrepared[cookies.load('site-lang')]}</ToggleButton>
                     <ToggleButton value={2} >{tablesLang.buttonGroup.machinePrepared[cookies.load('site-lang')]}</ToggleButton>
+                    <ToggleButton value={3} >{tablesLang.buttonGroup.productPrepared[cookies.load('site-lang')]}</ToggleButton>
                 </ToggleButtonGroup>
             </div>
             <div>
@@ -41,6 +43,9 @@ function Tables () {
                 }
                 {
                     viewSelect === 2 ? <MachinePrepared/> :<div/>
+                }
+                {
+                    viewSelect === 3 ? <ProductPrepared/> :<div/>
                 }
             </div>
         </div>      

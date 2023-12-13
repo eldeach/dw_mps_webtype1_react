@@ -28,8 +28,15 @@ import UserRecorder from './MotherSite/Forms/User/UserRecorder/UserRecorder';
 import ViewUser from './MotherSite/Forms/User/ViewUser/ViewUser';
 
 // AVM Forms
+import ViewPrm from './MotherSite/Forms/Machine/ViewPrm/ViewPrm'
+import ViewCV from './MotherSite/Forms/Machine/ViewCV/ViewCV'
+import ViewMt from './MotherSite/Forms/Machine/ViewMt/ViewMt'
 import ViewMachine from './MotherSite/Forms/Machine/ViewMachine/ViewMachine'
+import ViewReQual from './MotherSite/Forms/Machine/ViewReQual/ViewReQual'
 import MachineRecorder from './MotherSite/Forms/Machine/MachineRecorder/MachineRecorder'
+import ViewProduct from './MotherSite/Forms/Product/ViewProduct/ViewProduct'
+import ViewPV from './MotherSite/Forms/Product/ViewPV/ViewPV'
+import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductRecorder'
 
 // ======================================================================================== [Import Component] CSS
 import './App.css';
@@ -86,7 +93,6 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     
-
                     <Route path='/machinelist' element={<ViewMachine handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/addmachine' element={
                         <MachineRecorder
@@ -102,12 +108,15 @@ function App() {
                             mng_team : '',
                             machine_type : 'EQ',
                             gmp_impact : true,
+                            periodic_mng_1y_qual : true,
                             periodic_mng_qual : true,
                             periodic_mng_ster : true,
                             periodic_mng_vhp : true,
                             periodic_mng_review : true,
                             periodic_mng_cv : true,
+                            periodic_mng_1y_mt : true,
                             periodic_mng_mt : true,
+                            mc_periodic_1y_qual : [],
                             mc_periodic_qual : [],
                             mc_periodic_ster : [],
                             mc_periodic_vhp : [],
@@ -117,6 +126,7 @@ function App() {
                             mc_pq : [],
                             mc_periodic_cv : [],
                             mc_cv : [],
+                            mc_periodic_1y_mt : [],
                             mc_periodic_mt : [],
                             mc_mt : [],
                             prm_list : [{
@@ -125,6 +135,7 @@ function App() {
                                 prm_gentlewing : false,
                                 prm_chopper : false,
                                 prm_spray : false,
+                                prm_spray_kgmin : false,
                                 prm_spray_rpm : false,
                                 prm_grate : false,
                                 prm_blendrpm : false,
@@ -133,6 +144,8 @@ function App() {
                                 prm_feeder : false,
                                 prm_pforce : false,
                                 prm_mforce : false,
+                                prm_pforce_kgf : false,
+                                prm_mforce_kgf : false,
                                 prm_drum : false,
                                 prm_paair : false,
                                 prm_atair : false,
@@ -163,6 +176,11 @@ function App() {
                         handleSystemCode = { handleSystemCode } />
                     } />
 
+                    <Route path='/viewrequal'element = { <ViewReQual handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
+                    <Route path='/viewmt'element = { <ViewMt handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
+                    <Route path='/viewprm'element = { <ViewPrm handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
+                    <Route path='/viewcv'element = { <ViewCV handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
+                    
                     <Route path='/userlist'element = { <ViewUser handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> }/>
                     <Route path='/adduser' element={
                         <UserRecorder
@@ -182,6 +200,27 @@ function App() {
                             user_position:[],
                             user_auth : [],
                             revision_history : ''
+                        }}
+                        handlePageTitle={handlePageTitle}
+                        handleSystemCode={handleSystemCode}/>
+                    }/>
+
+                    <Route path='/productlist' element={<ViewProduct handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/viewpv' element={<ViewPV handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/addproduct' element={
+                        <ProductRecorder
+                        preparedType = 'NEW'
+                        initialValues = {{
+                            approval_payload :[[]],
+                            revision_history : '',
+                            previous_approval_payload_id : null,
+                            mng_code : '',
+                            mng_code_alt : '',
+                            mng_code_alt2 : '',
+                            mng_name : '',
+                            periodic_mng_pv : true,
+                            prod_periodic_pv : [],
+                            prod_pv : []
                         }}
                         handlePageTitle={handlePageTitle}
                         handleSystemCode={handleSystemCode}/>

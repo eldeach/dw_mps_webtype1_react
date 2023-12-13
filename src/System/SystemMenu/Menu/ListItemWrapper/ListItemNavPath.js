@@ -16,7 +16,7 @@ function ListItemNavPath(props) {
             <ListItem disablePadding={true}>
                 <ListItemButton href = {props.navPath}>
                     <ListItemIcon> {props.icon}</ListItemIcon>
-                    <ListItemText primary={props.text} />
+                    <ListItemText primary={<div style={{fontSize:'13px'}}>{props.text}</div>} />
                 </ListItemButton>
             </ListItem>
         </div>

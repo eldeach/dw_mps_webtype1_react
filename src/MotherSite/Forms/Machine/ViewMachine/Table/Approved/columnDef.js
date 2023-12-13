@@ -17,6 +17,7 @@ import PrmDocs from '../../PopupCellView/PrmDocs/PrmDocs'
 import Docs from '../../PopupCellView/Docs/Docs'
 
 // Component Object
+import actCodeBook from '../../../ActCodeBook/actCodeBook'
 import prmCodeBook from '../../../PrmCodeBook/prmCodeBook'
 
 // ======================================================================================== [Import Component] CSS
@@ -27,7 +28,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     {
         id: "rowview",
         size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
-        header: { kor : '개정', eng :'View content'},
+        header: { kor : '개정', eng :'Revision'},
         cell: ({ row }) =>  <Revision oneItem = {row.original}/>
     },
     columnHelper.accessor( "data_ver",
@@ -120,9 +121,26 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             )
         }
     ),
+    columnHelper.accessor( "periodic_mng_1y_qual",
+        {
+            header: actCodeBook.mc_periodic_1y_qual.mng_check,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => (
+                <div className='monitoring_label'>
+                    <div className='monitoring_label_icon'>
+                        <CircleIcon color={renderValue.getValue() ? 'recording' : 'white' } fontSize='inherit'/>
+                    </div>
+                    <div className='monitoring_label_text'>
+                        {renderValue.getValue() ? `NOW MONITORING` : `N/A`}
+                    </div>
+                </div>
+            )
+        }
+    ),
     columnHelper.accessor( "periodic_mng_qual",
         {
-            header: { kor : "주기적 Re-Qual 관리", eng : "Periodic Re-Qual Management" },
+            header: actCodeBook.mc_periodic_qual.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -139,7 +157,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "periodic_mng_ster",
         {
-            header: { kor : "주기적 멸균 Re-Qual 관리", eng : "Periodic Sterilizaion Re-Qual Management" },
+            header: actCodeBook.mc_periodic_ster.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -156,7 +174,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "periodic_mng_vhp",
         {
-            header: { kor : "주기적 VHP Re-Qual 관리", eng : "Periodic VHP Re-Qual Management" },
+            header: actCodeBook.mc_periodic_vhp.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -173,7 +191,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "periodic_mng_review",
         {
-            header: { kor : "주기적 검토 관리", eng : "Periodic Review Management" },
+            header: actCodeBook.mc_periodic_review.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -190,7 +208,24 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "periodic_mng_cv",
         {
-            header: { kor : "주기적 CV 관리", eng : "Periodic CV Management" },
+            header: actCodeBook.mc_periodic_cv.mng_check,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => (
+                <div className='monitoring_label'>
+                    <div className='monitoring_label_icon'>
+                        <CircleIcon color={renderValue.getValue() ? 'recording' : 'white' } fontSize='inherit'/>
+                    </div>
+                    <div className='monitoring_label_text'>
+                        {renderValue.getValue() ? `NOW MONITORING` : `N/A`}
+                    </div>
+                </div>
+            )
+        }
+    ),
+    columnHelper.accessor( "periodic_mng_1y_mt",
+        {
+            header: actCodeBook.mc_periodic_1y_mt.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -207,7 +242,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "periodic_mng_mt",
         {
-            header: { kor : "주기적 Mapping Test 관리", eng : "Periodic Mapping Test Management" },
+            header: actCodeBook.mc_periodic_mt.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -222,9 +257,18 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             )
         }
     ),
+    columnHelper.accessor( "mc_periodic_1y_qual",
+        {
+            header:actCodeBook.mc_periodic_1y_qual,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <Docs docList={renderValue.getValue()} />,
+
+        }
+    ),
     columnHelper.accessor( "mc_periodic_qual",
         {
-            header: { kor : "정기적 재적격성 평가", eng : "Periodic Re-Qual" },
+            header: actCodeBook.mc_periodic_qual,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -233,7 +277,15 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_periodic_ster",
         {
-            header: { kor : "정기적 멸균 재적격성 평가", eng : "Periodic Sterilizaion Re-Qual" },
+            header: actCodeBook.mc_periodic_ster,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <Docs docList={renderValue.getValue()} />,
+        }
+    ),
+    columnHelper.accessor( "mc_periodic_vhp",
+        {
+            header: actCodeBook.mc_periodic_vhp,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -241,7 +293,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_periodic_review",
         {
-            header: { kor : "주기적 검토", eng : "Periodic Review" },
+            header: actCodeBook.mc_periodic_review,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -249,7 +301,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_iq",
         {
-            header: { kor : "IQ", eng : "IQ" },
+            header: actCodeBook.mc_iq,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -257,7 +309,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_oq",
         {
-            header: { kor : "OQ", eng : "OQ" },
+            header: actCodeBook.mc_oq,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -265,7 +317,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_pq",
         {
-            header: { kor : "PQ", eng : "PQ" },
+            header: actCodeBook.mc_pq,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -273,7 +325,15 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_periodic_cv",
         {
-            header: { kor : "주기적 CV", eng : "Periodic CV" },
+            header: actCodeBook.mc_periodic_cv,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <Docs docList={renderValue.getValue()} />,
+        }
+    ),
+    columnHelper.accessor( "mc_periodic_1y_mt",
+        {
+            header: actCodeBook.mc_periodic_1y_mt,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,
@@ -281,7 +341,15 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     ),
     columnHelper.accessor( "mc_periodic_mt",
         {
-            header: { kor : "주기적 Mapping", eng : "Periodic Mapping" },
+            header: actCodeBook.mc_periodic_mt,
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <Docs docList={renderValue.getValue()} />,
+        }
+    ),
+    columnHelper.accessor( "mc_mt",
+        {
+            header: actCodeBook.mc_mt,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <Docs docList={renderValue.getValue()} />,

@@ -101,6 +101,10 @@ const langConfig = {
             },
         },
         checkbox : {
+            periodic_mng_1y_qual : {
+                kor : '1년 정기적 재적격성 평가',
+                eng : 'Annual Periodic Re-Qual'
+            },
             periodic_mng_qual : {
                 kor : '정기적 재적격성 평가',
                 eng : 'Periodic Re-Qual'
@@ -120,6 +124,10 @@ const langConfig = {
             periodic_mng_cv : {
                 kor : '정기적 CV',
                 eng : 'Periodic CV'
+            },
+            periodic_mng_1y_mt : {
+                kor : '1년 정기적 Mapping Test',
+                eng : 'Annual Periodic Mapping Test'
             },
             periodic_mng_mt : {
                 kor : '정기적 Mapping Test',

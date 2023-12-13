@@ -12,9 +12,6 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 // its lang Object
 import viewMachineLang from './viewMachineLang'
 
-// external page
-import NoCardVeiw from '../../../../System/RedirectPage/NoCardView/NoCardVeiw'
-
 // Table
 import Tables from './Table/Tables'
 // Cards
@@ -22,7 +19,7 @@ import Cards from './Card/Cards'
 
 // ======================================================================================== [Import Component] CSS
 
-function ViewUser (props) {
+function ViewMachine (props) {
     const { handlePageTitle, handleSystemCode } = props
 
     const [viewSelect, setViewSelect] = useState(1);
@@ -63,4 +60,4 @@ function ViewUser (props) {
     )
 }
 
-export default ViewUser;
+export default ViewMachine;

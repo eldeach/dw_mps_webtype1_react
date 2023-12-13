@@ -7,7 +7,7 @@
 
 // ======================================================================================== [Import Component] js
 import Tbl1NoFooter from '../../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
-import columnDef from '../Approved/columnDef'
+import columnDef from '../Prepared/columnDef'
 
 // ======================================================================================== [Import Component] CSS
 

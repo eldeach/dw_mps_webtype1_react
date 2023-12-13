@@ -6,7 +6,10 @@ import cookies from 'react-cookies'
 //icon
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CircleIcon from '@mui/icons-material/Circle';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 // ======================================================================================== [Import Component] js
+// Component Object
+import actCodeBook from '../../../ActCodeBook/actCodeBook'
 
 // ======================================================================================== [Import Component] CSS
 
@@ -66,9 +69,9 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             )
         }
     ),
-    columnHelper.accessor( "periodic_mng_qual",
+    columnHelper.accessor( "periodic_mng_1y_qual",
         {
-            header: { kor : "주기적 Re-Qual 관리", eng : "Periodic Re-Qual Management" },
+            header: actCodeBook.mc_periodic_1y_mt.mng_check,
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => (
@@ -81,6 +84,13 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
                     </div>
                 </div>
             )
+        }
+    ),
+    columnHelper.accessor( "period_month",
+        {
+            header: { kor : "주기 [월]", eng : "Period [Month]" },
+            size: 150,
+            enableColumnFilter: true,
         }
     ),
     columnHelper.accessor( "latest_approval_date",
@@ -106,6 +116,25 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             header: { kor : "남은 일수", eng : "Remaining days" },
             size: 150,
             enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "exceed",
+        {
+            header: { kor : "초과", eng : "Exceed" },
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => (
+                renderValue.getValue() ? 
+                <div className='exceed_label'>
+                    <div className='exceed_label_icon'>
+                        <WarningAmberIcon color='white' fontSize='inherit'/>
+                    </div>
+                    <div className='exceed_label_text'>
+                        {renderValue.getValue()}
+                    </div>
+                </div>
+                :<div/>
+            )
         }
     ),
 ]

@@ -11,10 +11,10 @@ import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
-function PeriodicQual (){
+function PeriodicVHP (){
     return (
         <Tbl1NoFooter
-        getUrl = {'/getmachineprquallist'}
+        getUrl = {'/getrequalvhp'}
         params = {{
         }}
         columnDef = {columnDef}
@@ -26,4 +26,4 @@ function PeriodicQual (){
     )
 }
 
-export default PeriodicQual;
+export default PeriodicVHP;

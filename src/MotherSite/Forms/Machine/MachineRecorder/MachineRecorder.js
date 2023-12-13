@@ -30,6 +30,7 @@ import machineRecorderLang from './machineRecorderLang'
 import QualModalButton from './ModalRecorder/QualModalButton/QualModalButton'
 
 // Const Object
+import actCodeBook from '../ActCodeBook/actCodeBook'
 import prmCodeBook from '../PrmCodeBook/prmCodeBook'
 
 // Component
@@ -55,7 +56,7 @@ function MachineRecorder(props){
                 display:'flex', flexDirection:'row', alignItems:'center', fontSize:'medium'
             },
             text : {
-                marginTop:'4px', marginLeft:'2px'
+                marginTop:'4px', marginLeft:'2px', fontSize: '13px'
             }
         },
         paper : { // SubRecorder Paper 객체 스타일
@@ -155,7 +156,6 @@ function MachineRecorder(props){
         }
 
     }
-
     
     const [ immediateEffective, setImmediateEffective ] = useState(false);
 
@@ -181,12 +181,16 @@ function MachineRecorder(props){
                 mng_team : values.mng_team,
                 machine_type : values.machine_type,
                 gmp_impact : values.gmp_impact,
+                vmp_group : values.vmp_group,
+                periodic_mng_1y_qual : values.periodic_mng_1y_qual,
                 periodic_mng_qual : values.periodic_mng_qual,
                 periodic_mng_ster : values.periodic_mng_ster,
                 periodic_mng_vhp : values.periodic_mng_vhp,
                 periodic_mng_review : values.periodic_mng_review,
                 periodic_mng_cv : values.periodic_mng_cv,
+                periodic_mng_1y_mt : values.periodic_mng_1y_mt,
                 periodic_mng_mt : values.periodic_mng_mt,
+                mc_periodic_1y_qual : values.mc_periodic_1y_qual,
                 mc_periodic_qual : values.mc_periodic_qual,
                 mc_periodic_ster : values.mc_periodic_ster,
                 mc_periodic_vhp : values.mc_periodic_vhp,
@@ -196,6 +200,7 @@ function MachineRecorder(props){
                 mc_pq : values.mc_pq,
                 mc_periodic_cv : values.mc_periodic_cv,
                 mc_cv : values.mc_cv,
+                mc_periodic_1y_mt : values.mc_periodic_1y_mt,
                 mc_periodic_mt : values.mc_periodic_mt,
                 mc_mt : values.mc_mt,
                 prm_list : values.prm_list,
@@ -457,11 +462,29 @@ function MachineRecorder(props){
                                                 color: pink[600],
                                             },
                                         }}
+                                        checked = {formikProps.values.periodic_mng_1y_qual}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_1y_qual', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_1y_qual[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
                                         checked = {formikProps.values.periodic_mng_qual}
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_qual', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_qual[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_qual[cookies.load('site-lang')]}</Typography> }
                                     />
                                     <FormControlLabel
                                     color='sys1'
@@ -479,7 +502,7 @@ function MachineRecorder(props){
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_ster', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_ster[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_ster[cookies.load('site-lang')]}</Typography> }
                                     />
                                     <FormControlLabel
                                     color='sys1'
@@ -497,7 +520,7 @@ function MachineRecorder(props){
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_vhp', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_vhp[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_vhp[cookies.load('site-lang')]}</Typography> }
                                     />
                                     <FormControlLabel
                                     color='sys1'
@@ -515,7 +538,7 @@ function MachineRecorder(props){
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_review', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_review[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_review[cookies.load('site-lang')]}</Typography> }
                                     />
                                     <FormControlLabel
                                     color='sys1'
@@ -533,7 +556,25 @@ function MachineRecorder(props){
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_cv', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_cv[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_cv[cookies.load('site-lang')]}</Typography> }
+                                    />
+                                    <FormControlLabel
+                                    color='sys1'
+                                    fontSize='inherit'
+                                    control={
+                                        <Checkbox
+                                        size="small"
+                                        sx={{
+                                            color: pink[800],
+                                            '&.Mui-checked': {
+                                                color: pink[600],
+                                            },
+                                        }}
+                                        checked = {formikProps.values.periodic_mng_1y_mt}
+                                        onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_1y_mt', Boolean(e.target.checked))}}
+                                        />
+                                    }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_1y_mt[cookies.load('site-lang')]}</Typography> }
                                     />
                                     <FormControlLabel
                                     color='sys1'
@@ -551,7 +592,7 @@ function MachineRecorder(props){
                                         onChange={(e)=>{ formikProps.setFieldValue('periodic_mng_mt', Boolean(e.target.checked))}}
                                         />
                                     }
-                                    label={<Typography fontSize={12}>{machineRecorderLang.mcInfoPaper.checkbox.periodic_mng_mt[cookies.load('site-lang')]}</Typography> }
+                                    label={<Typography fontSize={12}>{actCodeBook.mc_periodic_mt[cookies.load('site-lang')]}</Typography> }
                                     />
                                 </div>
                                 <TextField
@@ -1039,12 +1080,36 @@ function MachineRecorder(props){
                     
                     {
                         bRowFold ? <div/> : 
-                        <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box' }} >
+                        <div style={{display : 'flex', flexWrap:'wrap', boxSizing:'border-box' }} >
+                            <div>
+                                <Paper id='mc_periodic_1y_qual_Paper' sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_1y_qual[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_1y_qual.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.mc_periodic_1y_qual.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <DocItemDiv oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_1y_qual', arrDelElement(formikProps.values.mc_periodic_1y_qual, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'Periodic'
+                                    inheritedArr = { formikProps.values.mc_periodic_1y_qual }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_1y_qual', newValue )}}
+                                    />
+                                </Paper>
+                            </div>
                             <div>
                                 <Paper id='mc_periodic_qual_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Qualification (Items : ${formikProps.values.mc_periodic_qual.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_qual[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_qual.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_qual.map((oneItem, index)=>(
@@ -1068,7 +1133,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_periodic_ster_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Sterilization Qualification (Items : ${formikProps.values.mc_periodic_ster.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_ster[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_ster.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_ster.map((oneItem, index)=>(
@@ -1092,7 +1157,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_periodic_vhp_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic VHP Qualification (Items : ${formikProps.values.mc_periodic_vhp.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_vhp[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_vhp.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_vhp.map((oneItem, index)=>(
@@ -1116,7 +1181,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_periodic_review_Paper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Periodic Review (Items : ${formikProps.values.mc_periodic_review.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_review[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_review.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_review.map((oneItem, index)=>(
@@ -1148,7 +1213,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_iqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Installation Qualification (Items : ${formikProps.values.mc_iq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_iq[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_iq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_iq.map((oneItem, index)=>(
@@ -1172,7 +1237,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_oqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Operational Qualification (Items : ${formikProps.values.mc_oq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_oq[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_oq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_oq.map((oneItem, index)=>(
@@ -1196,7 +1261,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_pqPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Performance Qualification (Items : ${formikProps.values.mc_pq.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_pq[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_pq.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_pq.map((oneItem, index)=>(
@@ -1797,7 +1862,7 @@ function MachineRecorder(props){
                                 <Paper id='mc_periodic_cvPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Cleaning Validation & Periodic CV (Items : ${formikProps.values.mc_periodic_cv.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_cv[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_cv.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_cv.map((oneItem, index)=>(
@@ -1826,10 +1891,34 @@ function MachineRecorder(props){
                         fRowFold ? <div/> :
                         <div style={{display : 'flex', flexDirection:'row', boxSizing:'border-box'}} >
                             <div>
+                                <Paper id='mc_periodic_1y_mtPaper' sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_1y_mt[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_1y_mt.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.mc_periodic_1y_mt.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <DocItemDiv oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_periodic_1y_mt', arrDelElement(formikProps.values.mc_periodic_1y_mt, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'MT'
+                                    inheritedArr = { formikProps.values.mc_periodic_1y_mt }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_1y_mt', newValue )}}
+                                    />
+                                </Paper>
+                            </div>
+                            <div>
                                 <Paper id='mc_periodic_mtmtPaper' sx={style.paper} elevation={3}>
                                     <div style={style.subtitle.box}>
                                         <VerifiedIcon color='sys1'/>
-                                        <div style={style.subtitle.text}>{`Mapping Test & Periodic MT (Items : ${formikProps.values.mc_periodic_mt.length})`}</div>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_periodic_mt[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_periodic_mt.length})`}</div>
                                     </div>
                                     { // 현재 배열 객체 정보 출력 iterator
                                         formikProps.values.mc_periodic_mt.map((oneItem, index)=>(
@@ -1846,6 +1935,30 @@ function MachineRecorder(props){
                                     qualAtt = 'MT'
                                     inheritedArr = { formikProps.values.mc_periodic_mt }
                                     updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_periodic_mt', newValue )}}
+                                    />
+                                </Paper>
+                            </div>
+                            <div>
+                                <Paper id='mc_mtPaper' sx={style.paper} elevation={3}>
+                                    <div style={style.subtitle.box}>
+                                        <VerifiedIcon color='sys1'/>
+                                        <div style={style.subtitle.text}>{`${actCodeBook.mc_mt[cookies.load('site-lang')]} (Items : ${formikProps.values.mc_mt.length})`}</div>
+                                    </div>
+                                    { // 현재 배열 객체 정보 출력 iterator
+                                        formikProps.values.mc_mt.map((oneItem, index)=>(
+                                            <div style={style.arrItem.oneItem}>
+                                                <DocItemDiv oneItem = { oneItem }/>
+                                                <div style={style.arrItem.delItem}>
+                                                    <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'mc_mt', arrDelElement(formikProps.values.mc_mt, index))}><DeleteForeverIcon/></Button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <QualModalButton
+                                    colName = 'qualAtt'
+                                    qualAtt = 'MT'
+                                    inheritedArr = { formikProps.values.mc_mt }
+                                    updateValue = { function ( newValue ) { formikProps.setFieldValue( 'mc_mt', newValue )}}
                                     />
                                 </Paper>
                             </div>
