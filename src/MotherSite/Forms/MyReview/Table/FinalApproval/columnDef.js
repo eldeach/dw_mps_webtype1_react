@@ -54,12 +54,12 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    {
-        id: "rowview",
-        size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
-        header: { kor : '내용보기', eng :'View content'},
-        cell: ({ row }) =>  <RvAccount oneItem = {row.original}/>
-    },
+    // {
+    //     id: "rowview",
+    //     size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
+    //     header: { kor : '내용보기', eng :'View content'},
+    //     cell: ({ row }) =>  <RvAccount oneItem = {row.original}/>
+    // },
     {
         id: "esign",
         size:100, // TanStack Table은 컬럼 사이즈가 20이 최소

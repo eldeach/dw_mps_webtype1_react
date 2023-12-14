@@ -50,7 +50,10 @@ function Revision (props) {
     return (
         <div>
             <Button variant="contained" color = 'sys1' size="small" onClick={()=>setPopup(1)}>
-                {{ kor : "개정", eng : "Revise" }[cookies.load('site-lang')]}
+                {
+                    props.readOnly ? { kor : "읽기", eng : "Read" }[cookies.load('site-lang')] :
+                    { kor : "개정", eng : "Revise" }[cookies.load('site-lang')]
+                }
             </Button>
             <Modal open={(popup === 1)} onClose={handleModalClose}>
                 <Paper sx={style.detailedBigCardPaper} elevation={3}>
@@ -66,6 +69,7 @@ function Revision (props) {
                         user_name : props.oneItem.user_name,
                         user_nickname : props.oneItem.user_nickname,
                         user_birthday : dayjs(props.oneItem.user_birthday),
+                        // user_birthday : !props.oneItem.user_birthday ? null : dayjs(props.oneItem.user_birthday),
                         user_gender : props.oneItem.user_gender,
                         user_email : JSON.parse(props.oneItem.user_email),
                         user_phone : JSON.parse(props.oneItem.user_phone),

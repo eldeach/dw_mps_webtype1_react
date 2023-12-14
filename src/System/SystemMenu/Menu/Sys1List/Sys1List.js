@@ -35,6 +35,8 @@ function Sys1List() {
       </List>
       <Divider />
       <List>
+        <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewUser[cookies.load('site-lang')] }/>
+        <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewProd[cookies.load('site-lang')] }/>
         <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewMachine[cookies.load('site-lang')] }/>
       </List>
       <Divider />
@@ -46,13 +48,9 @@ function Sys1List() {
       </List>
       <Divider />
       <List>
-        <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewProd[cookies.load('site-lang')] }/>
         <ListItemNavPath navPath={'/viewpv'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewPrPV[cookies.load('site-lang')] }/>
       </List>
       <Divider />
-      <List>
-        <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewUser[cookies.load('site-lang')] }/>
-      </List>
     </div>
   )
 }

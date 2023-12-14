@@ -20,6 +20,7 @@ import systemThemes from './System/systemThemes';
 // System Redirect page
 import NoAuthPage from './System/RedirectPage/NoAuthPage/NoAuthPage';
 import SessionExpired from './System/RedirectPage/SessionExpired/SessionExpired';
+import SubmitSuccess from './System/RedirectPage/SubmitSuccess/SubmitSuccess';
 
 // Sys 1 Forms
 import MyPrepared from './MotherSite/Forms/MyPrepared/MyPrepared'
@@ -89,6 +90,7 @@ function App() {
                     <Route path='/' element={<div/>} />
                     <Route path='/noauth' element={<NoAuthPage/>} />
                     <Route path='/sessionexpired' element={<SessionExpired/>} />
+                    <Route path='/submitsuccess' element={<SubmitSuccess/>} />
 
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />

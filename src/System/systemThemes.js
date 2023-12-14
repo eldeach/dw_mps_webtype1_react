@@ -80,6 +80,10 @@ const globalTheme = createTheme({
     recording : {
       main : '#ff0048',
       contrastText : '#fff',
+    },
+    submitted : {
+      main : '#00e242',
+      contrastText : '#fff',
     }
   },
 });

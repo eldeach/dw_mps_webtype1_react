@@ -74,12 +74,12 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             cell: renderValue =>  <div>{renderValue.getValue()?.split("T")[0]}</div>
         }
     ),
-    {
-        id: "rowview",
-        size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
-        header: { kor : '내용보기', eng :'View content'},
-        cell: ({ row }) =>  <button>내용보기</button>
-    },
+    // {
+    //     id: "rowview",
+    //     size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
+    //     header: { kor : '내용보기', eng :'View content'},
+    //     cell: ({ row }) =>  <button>내용보기</button>
+    // },
     {
         id: "rowview",
         size:100, // TanStack Table은 컬럼 사이즈가 20이 최소

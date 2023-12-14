@@ -1,13 +1,10 @@
 // ======================================================================================== [Import Libaray]
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import cookies from 'react-cookies'
 import * as yup from 'yup';
-
 import axios from 'axios';
-
-import moment from 'moment';
-import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
 import { Button, Checkbox, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup, Switch, IconButton, Paper, TextField, Typography } from '@mui/material';
@@ -49,6 +46,8 @@ import arrDelElement from '../../../../System/Funcs/ArrHandler/arrDelElement'
 function MachineRecorder(props){
 
     const { handlePageTitle, handleSystemCode } = props
+
+    let navigate = useNavigate()
     
     const style = {
         subtitle:{ // SubRecorder subtitle div 스타일
@@ -166,7 +165,7 @@ function MachineRecorder(props){
         }
 
         if ( !immediateEffective && values.approval_payload.length===1 && values.approval_payload[0].length === 0) {
-            alert ("결재라인!")
+            alert ({kor:'결재라인을 확인해주세요.', eng : 'Please check the approval line.'}[cookies.load('site-lang')])
         } else {          
             const valuePayload = {
                 immediate_effective : immediateEffective,
@@ -229,6 +228,7 @@ function MachineRecorder(props){
             
             let rs = await axios.post('/addmachine', valuePayload)
             .then(( res ) => {
+                navigate('/submitsuccess')
                return res
             })
             .catch( (error) => {

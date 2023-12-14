@@ -1,13 +1,14 @@
 // ======================================================================================== [Import Libaray]
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import cookies from 'react-cookies'
 import * as yup from 'yup';
 
 import axios from 'axios';
 
-import moment from 'moment';
-import 'moment/locale/ko';	//대한민국
+// import moment from 'moment';
+// import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
 import { IconButton, Button, Chip, Paper, TextField, Typography } from '@mui/material';
@@ -58,7 +59,9 @@ import arrDelElement from '../../../../System/Funcs/ArrHandler/arrDelElement'
 
 
 function UserRecorder(props){
+
     const { handlePageTitle, handleSystemCode } = props
+    let navigate = useNavigate()
 
     const style = {
         subtitle:{
@@ -150,7 +153,7 @@ function UserRecorder(props){
 
 
         if ( !immediateEffective && values.approval_payload.length===1 && values.approval_payload[0].length === 0) {
-            alert ("결재라인!")
+            alert ({kor:'결재라인을 확인해주세요.', eng : 'Please check the approval line.'}[cookies.load('site-lang')])
         } else {          
             const valuePayload = {
                 prepared_type : props.preparedType,
@@ -161,7 +164,8 @@ function UserRecorder(props){
                 user_pw : values.user_pw,
                 user_name : values.user_name,
                 user_nickname : values.user_nickname,
-                user_birthday : moment(new Date(values.user_birthday)).format('YYYY-MM-DD'),
+                // user_birthday : moment(new Date(values.user_birthday)).format('YYYY-MM-DD'),
+                user_birthday : values.user_birthday,
                 user_gender : values.user_gender,
                 user_email : values.user_email,
                 user_phone : values.user_phone,
@@ -172,6 +176,7 @@ function UserRecorder(props){
             
             let rs = await axios.post('/addaccount', valuePayload)
             .then(( res ) => {
+                navigate('/submitsuccess')
                return res
             })
             .catch( (error) => {
@@ -518,7 +523,7 @@ function UserRecorder(props){
                                             <Chip size="small" icon={<Diversity3Icon size="small"/>} color='sys1' variant="outlined" label={oneItem.job_team}/>
                                             <Chip size="small" sx={{width:'100%',ml:0.8}} icon={<BusinessIcon size="small"/>} color='sys1' variant="outlined" label={oneItem.job_company}/>
                                         </div>
-                                        <Chip size="small" icon={<WorkIcon size="small"/>} color='sys1' label={oneItem.job_description}/>
+                                        <Chip size="small" sx={{ mt:0.8}} icon={<InfoIcon size="small"/>} color='sys1' label={oneItem.job_description}/>
                                     </div>
                                     <div style={style.arrItem.delItem}>
                                         <Button size="small" variant='contained' style={{height:'100%'}} sx={{p: 0}} color='error' onClick={()=>formikProps.setFieldValue( 'user_position', arrDelElement(formikProps.values.user_position, index))}><DeleteForeverIcon/></Button>

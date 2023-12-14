@@ -8,8 +8,11 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 // Universal Actoin
 import Revision from '../../../UniversalAction/Revision/Revision'
-
-import IndeterminateCheckbox from '../../../../../../System/TableObj/TableType1/Components/IndeterminateCheckbox'
+// Cell Component
+import Position from '../../PopupCellView/Position/Position'
+import Phone from '../../PopupCellView/Phone/Phone'
+import Email from '../../PopupCellView/Email/Email'
+import Auth from '../../PopupCellView/Auth/Auth'
     
 const columnHelper = createColumnHelper();
 const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
@@ -17,8 +20,14 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
         id: "rowview",
         size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
         header: { kor : '개정', eng :'Revision'},
-        cell: ({ row }) =>  <Revision oneItem = {row.original}/>
+        cell: ({ row }) =>  <Revision readOnly = {false} oneItem = {row.original}/>
     },
+    // {
+    //     id: "rowview",
+    //     size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
+    //     header: { kor : '읽기', eng :'Read'},
+    //     cell: ({ row }) =>  <Revision readOnly = {true} oneItem = {row.original}/>
+    // },
     columnHelper.accessor( "data_ver",
         {
             header: { kor : "Data Ver", eng : "Data Ver" },
@@ -36,13 +45,6 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "approval_status",
         {
             header: { kor : "승인상태", eng : "Approval Status" },
-            size: 150,
-            enableColumnFilter: true,
-        }
-    ),
-    columnHelper.accessor( "remark",
-        {
-            header: { kor : "비고", eng : "Remark" },
             size: 150,
             enableColumnFilter: true,
         }
@@ -69,13 +71,6 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "user_nickname",
-        {
-            header: { kor : "별칭", eng : "User Nickname" },
-            size: 150,
-            enableColumnFilter: true,
-        }
-    ),
     columnHelper.accessor( "user_birthday",
         {
             header: { kor : "생일", eng : "User Birthday" },
@@ -90,11 +85,12 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    columnHelper.accessor( "approval_payload",
+    columnHelper.accessor( "user_position",
         {
-            header: { kor : "결재라인", eng : "Approval Line" },
+            header: { kor : "소속", eng : "Position" },
             size: 150,
             enableColumnFilter: true,
+            cell: renderValue => <Position objList={renderValue.getValue()} />,
         }
     ),
     columnHelper.accessor( "user_auth",
@@ -102,6 +98,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             header: { kor : "사용자 권한", eng : "User Auth" },
             size: 150,
             enableColumnFilter: true,
+            cell: renderValue => <Auth authList={renderValue.getValue()} />,
         }
     ),
     columnHelper.accessor( "user_email",
@@ -109,6 +106,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             header: { kor : "이메일", eng : "E-Mail" },
             size: 150,
             enableColumnFilter: true,
+            cell: renderValue => <Email objList={renderValue.getValue()} />,
         }
     ),
     columnHelper.accessor( "user_phone",
@@ -116,13 +114,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             header: { kor : "전화", eng : "Phone" },
             size: 150,
             enableColumnFilter: true,
-        }
-    ),
-    columnHelper.accessor( "user_position",
-        {
-            header: { kor : "소속", eng : "Position" },
-            size: 150,
-            enableColumnFilter: true,
+            cell: renderValue => <Phone objList={renderValue.getValue()} />,
         }
     ),
     columnHelper.accessor( "uuid_binary",
