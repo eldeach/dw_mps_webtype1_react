@@ -192,8 +192,6 @@ function MachineRecorder(props){
             } else if ( rs.status === 512 ) {
                 alert (rs.data[cookies.load('site-lang')])
             }
-            console.log(rs)
-            if (props.preparedType == "REVISE") props.handleModalClose() // 부모가 modal이면 닫아주기
         }
     }
 

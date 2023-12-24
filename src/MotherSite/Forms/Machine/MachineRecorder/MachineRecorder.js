@@ -228,6 +228,7 @@ function MachineRecorder(props){
             
             let rs = await axios.post('/addmachine', valuePayload)
             .then(( res ) => {
+                console.log(res)
                 navigate('/submitsuccess')
                return res
             })
@@ -235,6 +236,7 @@ function MachineRecorder(props){
                 return error.response
             })
     
+            console.log(rs.status)
             if (rs.status === 200) {
                 actions.resetForm()
             } else if ( rs.status === 452 ) {
@@ -242,8 +244,9 @@ function MachineRecorder(props){
             } else if ( rs.status === 512 ) {
                 alert (rs.data[cookies.load('site-lang')])
             }
-            console.log(rs)
-            if (props.preparedType == "REVISE") props.handleModalClose() // 부모가 modal이면 닫아주기
+            else {
+                alert(rs)
+            }
         }
     }
 
