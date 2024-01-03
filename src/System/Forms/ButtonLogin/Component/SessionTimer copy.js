@@ -24,15 +24,21 @@ function SessionTimer (props) {
             let remainedMin = moment().diff(props.expireDateTime, 'minutes') * (-1)
             let remainedSec = remainedTotalSec - (remainedMin * 60)
 
-            if ( parseInt( remainedTotalSec ) < 0 ) {
-                // 여기에 clearInterval을 넣으면 숫자가 정신을 못차림, 이유는 모르겠음
-                props.setLoginStatus ( false )
-                props.setExpireTimeMin ( 0 )
-                props.setExpireTimeSec ( 0 )
-                navigate('/sessionexpired')
-            } else {
-                props.setExpireTimeMin ( remainedMin )
-                props.setExpireTimeSec ( remainedSec )
+            if ( parseInt( props.expireTimeSec ) > 0 ) {
+                let updateSec =  parseInt( props.expireTimeSec )  - 1
+                props.setExpireTimeSec( updateSec )
+            }
+
+            if ( parseInt( props.expireTimeSec ) === 0 ) {
+                if ( parseInt( props.expireTimeMin ) === 0 ) {
+                    // 여기에 clearInterval을 넣으면 숫자가 정신을 못차림, 이유는 모르겠음
+                    props.setLoginStatus ( false )
+                    navigate('/sessionexpired')
+                } else {
+                    let updateMin =  parseInt( props.expireTimeMin )  - 1
+                    props.setExpireTimeMin ( updateMin )
+                    props.setExpireTimeSec ( 59 )
+                }
             }
         }, 500)
         return () => clearInterval(countdown);

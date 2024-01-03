@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import cookies from 'react-cookies'
 import * as yup from 'yup';
+import moment from 'moment/moment';
 
 // ======================================================================================== [Import Material UI Libaray]
 import { Button, Modal, Paper, TextField } from '@mui/material';
@@ -67,11 +68,17 @@ function LoginButton(){
     const [loginStatus,setLoginStatus] = useState (false);
     const [expireTimeMin, setExpireTimeMin] = useState (0)
     const [expireTimeSec, setExpireTimeSec] = useState (0)
+    const [receivedDateTime, setReceivedDateTime] = useState('')
+    const [expireDateTime, setExpireDateTime] = useState('')
     
-    const loginStatusUpdate = (expireTime) => {
+    const loginStatusUpdate = (receivedData) => {
         setLoginStatus (true)
-        setExpireTimeMin(Math.floor( expireTime / 1 ))
-        setExpireTimeSec(Math.round(( expireTime % 1 ) * 60))
+        let expireMinCal = Math.floor( receivedData.expireTimeMinutes / 1 )
+        let expireSecCal = Math.round(( receivedData.expireTimeMinutes % 1 ) * 60)
+        setReceivedDateTime(receivedData.nowDateTime)
+        setExpireDateTime(moment(receivedData.nowDateTime).add(expireMinCal,'m').add(expireSecCal,'s'))
+        setExpireTimeMin(expireMinCal)
+        setExpireTimeSec(expireSecCal)
     }
     const loginStatusExpired = () => {
         setLoginStatus (false)
@@ -84,7 +91,7 @@ function LoginButton(){
         .then((res) => {
             if (res.status === 200){
                 console.log(res.data)
-                loginStatusUpdate(res.data.expireTimeMinutes)
+                loginStatusUpdate(res.data)
             }
             else {
 
@@ -124,7 +131,7 @@ function LoginButton(){
         .then((res) => {
             if (res.status === 200){
                 console.log(res.data)
-                loginStatusUpdate(res.data.expireTimeMinutes)
+                loginStatusUpdate(res.data)
             }
             else {
 
@@ -145,6 +152,9 @@ function LoginButton(){
     const extentionSession = async function () {
         if ( expireTimeMin < 1) {
             sessioncheck()
+        }
+        else {
+            navigate('/sessionexpired')
         }
     }
 
@@ -167,7 +177,18 @@ function LoginButton(){
             {
                 ( expireTimeMin + expireTimeSec + loginStatus ) === 0 ? <div/> : 
                 <div style = {{width: '64px', display : 'flex', justifyContent : 'center', alignItems: 'center', marginLeft : '10px', borderRadius : '5px', boxSizing : 'border-box', border : ( expireTimeMin === 0 ? ( expireTimeSec < 30 ? 'red solid 0.5px' : '#98B9F4 solid 1px' ) : '#98B9F4 solid 1px' )}}>
-                    <SessionTimer expireTimeMin = { expireTimeMin } expireTimeSec = { expireTimeSec } setExpireTimeMin = { setExpireTimeMin } setExpireTimeSec = { setExpireTimeSec } loginStatus = { loginStatus } setLoginStatus = { setLoginStatus }/>
+                    <SessionTimer
+                    expireTimeMin = { expireTimeMin }
+                    setExpireTimeMin = { setExpireTimeMin }
+                    expireTimeSec = { expireTimeSec }
+                    setExpireTimeSec = { setExpireTimeSec }
+                    receivedDateTime = { receivedDateTime }
+                    setReceivedDateTime = { setReceivedDateTime }
+                    expireDateTime = { expireDateTime }
+                    setExpireDateTime = { setExpireDateTime }
+                    loginStatus = { loginStatus }
+                    setLoginStatus = { setLoginStatus }
+                    />
                 </div>
             }
             <Modal open={( popup === 1 )} onClose={ handleModalClose }>

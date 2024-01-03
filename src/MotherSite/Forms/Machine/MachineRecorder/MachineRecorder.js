@@ -304,7 +304,11 @@ function MachineRecorder(props){
                                 name="mng_code"
                                 label={machineRecorderLang.mcInfoPaper.inputField.mng_code.placeholder[cookies.load('site-lang')]}
                                 value={formikProps.values.mng_code}
-                                onChange={formikProps.handleChange}
+                                // onChange={formikProps.handleChange}
+                                onChange={(e) => {
+                                    formikProps.handleChange(e);
+                                    formikProps.setFieldValue('mng_code', e.target.value.trim()); // 입력 값의 양 옆 공백 제거 후 저장
+                                }}
                                 onBlur={formikProps.handleBlur}
                                 helperText={formikProps.touched.mng_code ? formikProps.errors.mng_code : ""}
                                 error={formikProps.touched.mng_code && Boolean(formikProps.errors.mng_code)}
