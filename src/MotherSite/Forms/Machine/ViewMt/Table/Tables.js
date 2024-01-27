@@ -1,21 +1,19 @@
 // ======================================================================================== [Import Libaray]
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cookies from 'react-cookies';
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 //icon
-import ClearIcon from '@mui/icons-material/Clear';
+
 // ======================================================================================== [Import Component] js
 // its lang Object
-import actCodeBook from '../../ActCodeBook/actCodeBook';
-import tablesLang from './tablesLang'
+import actCodeBook from '../../../../Component/CodeBook/actCodeBook';
 
 // Table
-import Mt1y from './Mt1y/Mt1y'
-import Mt3y from './Mt3y/Mt3y'
-
-//onClick={() => setViewSelect(2)}
+import Mt1y from './Mt1y'
+import Mt3y from './Mt3y'
+import Mt3yS from './Mt3yS'
 
 // ======================================================================================== [Import Component] CSS
 
@@ -36,6 +34,7 @@ function Tables () {
                     >
                     <ToggleButton value={1} >{actCodeBook.mc_periodic_1y_mt[cookies.load('site-lang')]}</ToggleButton>
                     <ToggleButton value={2} >{actCodeBook.mc_periodic_mt[cookies.load('site-lang')]}</ToggleButton>
+                    <ToggleButton value={3} >{actCodeBook.mc_periodic_season_mt[cookies.load('site-lang')]}</ToggleButton>
                 </ToggleButtonGroup>
             </div>
             <div>
@@ -44,6 +43,9 @@ function Tables () {
                 }
                 {
                     viewSelect === 2 ? <Mt3y/> :<div/>
+                }
+                {
+                    viewSelect === 3 ? <Mt3yS/> :<div/>
                 }
             </div>
         </div>      

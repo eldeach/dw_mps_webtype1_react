@@ -8,7 +8,7 @@ import { Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from '@mui/mater
 import ClearIcon from '@mui/icons-material/Clear';
 // ======================================================================================== [Import Component] js
 // its lang Object
-import actCodeBook from '../../ActCodeBook/actCodeBook';
+import actCodeBook from '../../../../Component/CodeBook/actCodeBook';
 import tablesLang from './tablesLang'
 
 // Table

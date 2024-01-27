@@ -9,7 +9,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 // ======================================================================================== [Import Component] js
 // Component Object
-import prmCodeBook from '../../../PrmCodeBook/prmCodeBook'
+import prmCodeBook from '../../../../../Component/CodeBook/prmCodeBook'
 
 // ======================================================================================== [Import Component] CSS
 
@@ -150,7 +150,118 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    
+    columnHelper.accessor( "prm_gra_spray_air_min_value",
+        {
+            header: prmCodeBook.prm_gra_spray_air.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_gra_spray_air_max_value",
+        {
+            header: prmCodeBook.prm_gra_spray_air.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_gra_micro_prs_min_value",
+        {
+            header: prmCodeBook.prm_gra_micro_prs.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_gra_micro_prs_max_value",
+        {
+            header: prmCodeBook.prm_gra_micro_prs.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_temp_min_value",
+        {
+            header: prmCodeBook.prm_inlet_air_temp.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_temp_max_value",
+        {
+            header: prmCodeBook.prm_inlet_air_temp.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_exh_air_temp_min_value",
+        {
+            header: prmCodeBook.prm_exh_air_temp.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_exh_air_temp_max_value",
+        {
+            header: prmCodeBook.prm_exh_air_temp.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_vol_min_value",
+        {
+            header: prmCodeBook.prm_inlet_air_vol.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_vol_max_value",
+        {
+            header: prmCodeBook.prm_inlet_air_vol.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_vol_rpm_min_value",
+        {
+            header: prmCodeBook.prm_inlet_air_vol_rpm.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_inlet_air_vol_rpm_max_value",
+        {
+            header: prmCodeBook.prm_inlet_air_vol_rpm.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_roller_speed_min_value",
+        {
+            header: prmCodeBook.prm_roller_speed.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_roller_speed_max_value",
+        {
+            header: prmCodeBook.prm_roller_speed.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_roller_gap_min_value",
+        {
+            header: prmCodeBook.prm_roller_gap.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_roller_gap_max_value",
+        {
+            header: prmCodeBook.prm_roller_gap.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
     columnHelper.accessor( "prm_grate_min_value",
         {
             header: prmCodeBook.prm_grate.value.min_value,
@@ -180,7 +291,20 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
-    
+    columnHelper.accessor( "prm_filling_depth_min_value",
+        {
+            header: prmCodeBook.prm_filling_depth.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_filling_depth_max_value",
+        {
+            header: prmCodeBook.prm_filling_depth.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
     columnHelper.accessor( "prm_cforece_min_value",
         {
             header: prmCodeBook.prm_cforece.value.min_value,
@@ -206,6 +330,20 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "prm_feeder_max_value",
         {
             header: prmCodeBook.prm_feeder.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_feeder_2nd_min_value",
+        {
+            header: prmCodeBook.prm_feeder_2nd.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_feeder_2nd_max_value",
+        {
+            header: prmCodeBook.prm_feeder_2nd.value.max_value,
             size: 80,
             enableColumnFilter: true,
         }
@@ -256,6 +394,34 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
         }
     ),
     
+    columnHelper.accessor( "prm_pforce_2nd_min_value",
+        {
+            header: prmCodeBook.prm_pforce_2nd.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_pforce_2nd_max_value",
+        {
+            header: prmCodeBook.prm_pforce_2nd.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_mforce_2nd_min_value",
+        {
+            header: prmCodeBook.prm_mforce_2nd.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_mforce_2nd_max_value",
+        {
+            header: prmCodeBook.prm_mforce_2nd.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
     columnHelper.accessor( "prm_pforce_kgf_min_value",
         {
             header: prmCodeBook.prm_pforce_kgf.value.min_value,
@@ -341,6 +507,20 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "prm_fill_max_value",
         {
             header: prmCodeBook.prm_fill.value.max_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_timer_min_value",
+        {
+            header: prmCodeBook.prm_timer.value.min_value,
+            size: 80,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor( "prm_timer_max_value",
+        {
+            header: prmCodeBook.prm_timer.value.max_value,
             size: 80,
             enableColumnFilter: true,
         }

@@ -32,10 +32,10 @@ import ViewUser from './MotherSite/Forms/User/ViewUser/ViewUser';
 import ViewPrm from './MotherSite/Forms/Machine/ViewPrm/ViewPrm'
 import ViewCV from './MotherSite/Forms/Machine/ViewCV/ViewCV'
 import ViewMt from './MotherSite/Forms/Machine/ViewMt/ViewMt'
-import ViewMachine from './MotherSite/Forms/Machine/ViewMachine/ViewMachine'
+import MachineVMD from './MotherSite/Forms/Machine/ViewMasterData/MachineVMD'
 import ViewReQual from './MotherSite/Forms/Machine/ViewReQual/ViewReQual'
-import MachineRecorder from './MotherSite/Forms/Machine/MachineRecorder/MachineRecorder'
-import ViewProduct from './MotherSite/Forms/Product/ViewProduct/ViewProduct'
+import MachineRecorder from './MotherSite/Forms/Machine/Recorder/MachineRecorder'
+import ProductVMD from './MotherSite/Forms/Product/ViewMasterData/ProductVMD'
 import ViewPV from './MotherSite/Forms/Product/ViewPV/ViewPV'
 import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductRecorder'
 
@@ -95,7 +95,7 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     
-                    <Route path='/machinelist' element={<ViewMachine handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/machinelist' element={<MachineVMD handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/addmachine' element={
                         <MachineRecorder
                         preparedType = 'NEW'
@@ -110,6 +110,7 @@ function App() {
                             mng_team : '',
                             machine_type : 'EQ',
                             gmp_impact : true,
+                            not_in_use : '',
                             periodic_mng_1y_qual : true,
                             periodic_mng_qual : true,
                             periodic_mng_ster : true,
@@ -118,6 +119,7 @@ function App() {
                             periodic_mng_cv : true,
                             periodic_mng_1y_mt : true,
                             periodic_mng_mt : true,
+                            periodic_mng_season_mt : true,
                             mc_periodic_1y_qual : [],
                             mc_periodic_qual : [],
                             mc_periodic_ster : [],
@@ -130,6 +132,7 @@ function App() {
                             mc_cv : [],
                             mc_periodic_1y_mt : [],
                             mc_periodic_mt : [],
+                            mc_periodic_season_mt : [],
                             mc_mt : [],
                             prm_list : [{
                                 prm_batchsize : false,
@@ -139,19 +142,32 @@ function App() {
                                 prm_spray : false,
                                 prm_spray_kgmin : false,
                                 prm_spray_rpm : false,
+                                prm_gra_spray_air : false,
+                                prm_gra_micro_prs : false,
+                                prm_inlet_air_temp : false,
+                                prm_exh_air_temp : false,
+                                prm_inlet_air_vol : false,
+                                prm_inlet_air_vol_rpm : false,
+                                prm_roller_speed : false,
+                                prm_roller_gap : false,
                                 prm_grate : false,
                                 prm_blendrpm : false,
+                                prm_filling_depth : false,
                                 prm_cforece : false,
                                 prm_turret : false,
                                 prm_feeder : false,
+                                prm_feeder_2nd : false,
                                 prm_pforce : false,
                                 prm_mforce : false,
+                                prm_pforce_2nd : false,
+                                prm_mforce_2nd : false,
                                 prm_pforce_kgf : false,
                                 prm_mforce_kgf : false,
                                 prm_drum : false,
                                 prm_paair : false,
                                 prm_atair : false,
                                 prm_fill : false,
+                                prm_timer : false,
                             }],
                             prm_batchsize : [],
                             prm_batchsize_kg : [],
@@ -160,19 +176,32 @@ function App() {
                             prm_spray : [],
                             prm_spray_kgmin : [],
                             prm_spray_rpm : [],
+                            prm_gra_spray_air : [],
+                            prm_gra_micro_prs : [],
+                            prm_inlet_air_temp : [],
+                            prm_exh_air_temp : [],
+                            prm_inlet_air_vol : [],
+                            prm_inlet_air_vol_rpm : [],
+                            prm_roller_speed : [],
+                            prm_roller_gap : [],
                             prm_grate : [],
                             prm_blendrpm : [],
+                            prm_filling_depth : [],
                             prm_cforece : [],
                             prm_feeder : [],
+                            prm_feeder_2nd : [],
                             prm_turret : [],
                             prm_pforce : [],
                             prm_mforce : [],
+                            prm_pforce_2nd : [],
+                            prm_mforce_2nd : [],
                             prm_pforce_kgf : [],
                             prm_mforce_kgf : [],
                             prm_drum : [],
                             prm_paair : [],
                             prm_atair : [],
-                            prm_fill : []
+                            prm_fill : [],
+                            prm_timer : []
                         }}
                         handlePageTitle = { handlePageTitle }
                         handleSystemCode = { handleSystemCode } />
@@ -207,7 +236,7 @@ function App() {
                         handleSystemCode={handleSystemCode}/>
                     }/>
 
-                    <Route path='/productlist' element={<ViewProduct handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                    <Route path='/productlist' element={<ProductVMD handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/viewpv' element={<ViewPV handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/addproduct' element={
                         <ProductRecorder

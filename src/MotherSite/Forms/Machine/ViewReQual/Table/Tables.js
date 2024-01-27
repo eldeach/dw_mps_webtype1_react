@@ -1,24 +1,21 @@
 // ======================================================================================== [Import Libaray]
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cookies from 'react-cookies';
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 //icon
-import ClearIcon from '@mui/icons-material/Clear';
+
 // ======================================================================================== [Import Component] js
 // its lang Object
-import actCodeBook from '../../ActCodeBook/actCodeBook';
-import tablesLang from './tablesLang'
+import actCodeBook from '../../../../Component/CodeBook/actCodeBook';
 
 // Table
-import Periodic1yQual from './Periodic1yQual/Periodic1yQual'
-import PeriodicQual from './PeriodicQual/PeriodicQual'
-import PeriodicSter from './PeriodicSter/PeriodicSter'
-import PeriodicVHP from './PeriodicVHP/PeriodicVHP'
-import PeriodicReview from './PeriodicReview/PeriodicReview'
-
-//onClick={() => setViewSelect(2)}
+import Periodic1yQual from './Periodic1yQual'
+import PeriodicQual from './PeriodicQual'
+import PeriodicSter from './PeriodicSter'
+import PeriodicVHP from './PeriodicVHP'
+import PeriodicReview from './PeriodicReview'
 
 // ======================================================================================== [Import Component] CSS
 

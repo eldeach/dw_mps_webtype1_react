@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import cookies from 'react-cookies'
 import * as yup from 'yup';
-import moment from 'moment/moment';
 
 // ======================================================================================== [Import Material UI Libaray]
 import { Button, Modal, Paper, TextField } from '@mui/material';
@@ -19,6 +18,7 @@ import SessionTimer from './Component/SessionTimer'
 // ======================================================================================== [Import Component] CSS
 
 function LoginButton(){
+    const navigate = useNavigate();
     
     const style = {
         subtitle:{
@@ -65,55 +65,13 @@ function LoginButton(){
     const [popup,setPopup] = useState(0);
     const handleModalClose = () => setPopup(0);
 
-    const [loginStatus,setLoginStatus] = useState (false);
-    const [expireTimeMin, setExpireTimeMin] = useState (0)
-    const [expireTimeSec, setExpireTimeSec] = useState (0)
-    const [receivedDateTime, setReceivedDateTime] = useState('')
-    const [expireDateTime, setExpireDateTime] = useState('')
+    const [loginStatus, setLoginStatus] = useState (false);
+    const [expireDateTime, setExpireDateTime] = useState(null)
     
     const loginStatusUpdate = (receivedData) => {
         setLoginStatus (true)
-        let expireMinCal = Math.floor( receivedData.expireTimeMinutes / 1 )
-        let expireSecCal = Math.round(( receivedData.expireTimeMinutes % 1 ) * 60)
-        setReceivedDateTime(receivedData.nowDateTime)
-        setExpireDateTime(moment(receivedData.nowDateTime).add(expireMinCal,'m').add(expireSecCal,'s'))
-        setExpireTimeMin(expireMinCal)
-        setExpireTimeSec(expireSecCal)
+        setExpireDateTime(receivedData.expireDateTime)
     }
-    const loginStatusExpired = () => {
-        setLoginStatus (false)
-        setExpireTimeMin(0)
-        setExpireTimeSec(0)
-    }
-
-    const onSubmitFunc = async function (values, actions){
-        await axios.post('/local-login' , values)
-        .then((res) => {
-            if (res.status === 200){
-                console.log(res.data)
-                loginStatusUpdate(res.data)
-            }
-            else {
-
-            }
-        })
-        .catch((error) => {
-            if (error.response.status === 452){
-                console.log(error.response.data)
-            }
-            else {
-                console.log("알수 없는 에러")
-                console.log(error)
-            }
-            loginStatusExpired()
-        })
-        .finally(()=>{
-            handleModalClose();
-        })
-    }
-
-
-    const navigate = useNavigate();
 
     const logoutFunc = async function () {
         await axios.get("/local-logout")
@@ -124,13 +82,44 @@ function LoginButton(){
         .catch((err) => console.log(err))
     }
 
-    
+    const loginStatusExpired = () => {
+        setLoginStatus (false)
+        setExpireDateTime(null)
+        // navigate('/sessionexpired')
+    }
+
+    const onSubmitFunc = async function (values){
+        await axios.post('/local-login' , values)
+        .then((res) => {
+            if (res.status === 200){
+                // loginStatusUpdate(res.data)
+                alert(`${res.data[cookies.load('site-lang')]}`)
+            }
+            else {
+
+            }
+        })
+        .catch((error) => {
+            if (error.response.status === 452){
+                // console.log(error.response.data)
+                alert(`${error.response.data[cookies.load('site-lang')]}`)
+            }
+            else {
+                console.log("알수 없는 에러")
+                console.log(error)
+            }
+            loginStatusExpired()
+        })
+        .finally(()=>{
+            sessioncheck();
+            handleModalClose();
+        })
+    }
 
     const sessioncheck = async function () {
         await axios.get('/sessioncheck')
         .then((res) => {
             if (res.status === 200){
-                console.log(res.data)
                 loginStatusUpdate(res.data)
             }
             else {
@@ -139,7 +128,7 @@ function LoginButton(){
         })
         .catch((error) => {
             if (error.response.status === 452){
-                console.log(error.response.data)
+                // console.log(error.response.data)
             }
             else {
                 console.log("알수 없는 에러")
@@ -149,20 +138,11 @@ function LoginButton(){
         })
     }
 
-    const extentionSession = async function () {
-        if ( expireTimeMin < 1) {
-            sessioncheck()
-        }
-        else {
-            navigate('/sessionexpired')
-        }
-    }
-
     window.addEventListener('mousedown', (e)=>{
-        extentionSession()
+        sessioncheck()
     });
     window.addEventListener('keydown', (e)=>{
-        extentionSession()
+        sessioncheck()
     });
 
     useEffect(() => {
@@ -172,24 +152,19 @@ function LoginButton(){
     return (
         <div style = {{display : 'flex', flexDirection : 'row'}}>
             <Button variant="outlined" color = "white" size="small" onClick={()=>{ loginStatus ? logoutFunc() : setPopup(1) }}>
-                {loginStatus ? loginButtonLang.displayedButton.logout[cookies.load('site-lang')] : loginButtonLang.displayedButton.login[cookies.load('site-lang')]}
+                {
+                    loginStatus ?
+                    loginButtonLang.displayedButton.logout[cookies.load('site-lang')]
+                    : loginButtonLang.displayedButton.login[cookies.load('site-lang')]
+                }
             </Button>
             {
-                ( expireTimeMin + expireTimeSec + loginStatus ) === 0 ? <div/> : 
-                <div style = {{width: '64px', display : 'flex', justifyContent : 'center', alignItems: 'center', marginLeft : '10px', borderRadius : '5px', boxSizing : 'border-box', border : ( expireTimeMin === 0 ? ( expireTimeSec < 30 ? 'red solid 0.5px' : '#98B9F4 solid 1px' ) : '#98B9F4 solid 1px' )}}>
-                    <SessionTimer
-                    expireTimeMin = { expireTimeMin }
-                    setExpireTimeMin = { setExpireTimeMin }
-                    expireTimeSec = { expireTimeSec }
-                    setExpireTimeSec = { setExpireTimeSec }
-                    receivedDateTime = { receivedDateTime }
-                    setReceivedDateTime = { setReceivedDateTime }
-                    expireDateTime = { expireDateTime }
-                    setExpireDateTime = { setExpireDateTime }
-                    loginStatus = { loginStatus }
-                    setLoginStatus = { setLoginStatus }
-                    />
-                </div>
+                loginStatus ?         
+                <SessionTimer
+                expireDateTime = { expireDateTime }
+                endFunc = { logoutFunc }
+                />
+                :<div/>
             }
             <Modal open={( popup === 1 )} onClose={ handleModalClose }>
                 <Paper sx={style.popupPaper} elevation={3}>
@@ -198,7 +173,7 @@ function LoginButton(){
                         validationSchema={yupSchema}
                         initialValues={initialValues}
                         onSubmit={async (values, actions)=>{
-                            await onSubmitFunc(values, actions)
+                            await onSubmitFunc(values);
                         }}
                         >
                             {formikProps => (

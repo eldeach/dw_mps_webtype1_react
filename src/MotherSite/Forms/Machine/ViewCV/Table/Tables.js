@@ -1,21 +1,17 @@
 // ======================================================================================== [Import Libaray]
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cookies from 'react-cookies';
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 //icon
-import ClearIcon from '@mui/icons-material/Clear';
+
 // ======================================================================================== [Import Component] js
 // its lang Object
-import actCodeBook from '../../ActCodeBook/actCodeBook';
-import tablesLang from './tablesLang'
+import actCodeBook from '../../../../Component/CodeBook/actCodeBook';
 
 // Table
-import CV1y from './CV1y/CV1y'
-
-
-//onClick={() => setViewSelect(2)}
+import CV1y from './CV1y'
 
 // ======================================================================================== [Import Component] CSS
 

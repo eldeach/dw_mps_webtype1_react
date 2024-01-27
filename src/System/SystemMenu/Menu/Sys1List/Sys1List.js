@@ -21,38 +21,42 @@ import sys1ListLang from './sys1ListLang';
 // ======================================================================================== [Import Component] CSS
 
 function Sys1List() {
-  
 
-  return (
-    <div>
-      <List>
-        <ListItemNavPath navPath={'/'} icon={<ReplayCircleFilledIcon color = 'sys1'/>} text={ sys1ListLang.returnFirstPage[cookies.load('site-lang')] }/>
-      </List>
-      <Divider />
-      <List>
-        <ListItemNavPath navPath={'/myprepared'} icon={<DrawIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.myprepared[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/myreview'} icon={<DrawIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.myreview[cookies.load('site-lang')] }/>
-      </List>
-      <Divider />
-      <List>
-        <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewUser[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewProd[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewMachine[cookies.load('site-lang')] }/>
-      </List>
-      <Divider />
-      <List>
-        <ListItemNavPath navPath={'/viewrequal'} icon={<ChangeCircleIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewReQual[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/viewmt'} icon={<BorderOuterIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewMt[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/viewprm'} icon={<PermDataSettingIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewPrm[cookies.load('site-lang')] }/>
-        <ListItemNavPath navPath={'/viewcv'} icon={<ShowerIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewCV[cookies.load('site-lang')] }/>
-      </List>
-      <Divider />
-      <List>
-        <ListItemNavPath navPath={'/viewpv'} icon={<VaccinesIcon color = 'sys1' size = "small"/>} text={ sys1ListLang.viewPrPV[cookies.load('site-lang')] }/>
-      </List>
-      <Divider />
-    </div>
-  )
+
+    return (
+        <div>
+            <List>
+                <ListItemNavPath navPath={'/'} icon={<ReplayCircleFilledIcon color='sys1' />} text={sys1ListLang.returnFirstPage[cookies.load('site-lang')]} />
+            </List>
+            <Divider />
+            <div style={{ marginLeft:'6px', fontSize: '11px', color: 'grey' }}>{{ kor: `오송제제기술팀 계정과 권한이 필요함`, eng: `Account and permissions are required for the Osong Technical Operation Team` }[cookies.load('site-lang')]}</div>
+            <Divider />
+            <List>
+                <ListItemNavPath navPath={'/myprepared'} icon={<DrawIcon color='sys1' size="small" />} text={sys1ListLang.myprepared[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/myreview'} icon={<DrawIcon color='sys1' size="small" />} text={sys1ListLang.myreview[cookies.load('site-lang')]} />
+            </List>
+            <Divider />
+            <List>
+                <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color='sys1' size="small" />} text={sys1ListLang.viewUser[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color='sys1' size="small" />} text={sys1ListLang.viewProd[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color='sys1' size="small" />} text={sys1ListLang.viewMachine[cookies.load('site-lang')]} />
+            </List>
+            <Divider />
+            <div style={{ marginLeft:'6px', fontSize: '11px', color: 'grey' }}>{{ kor: `공장 내부 전산망에 공개됨`, eng: `Accessible on the internal network of the factory` }[cookies.load('site-lang')]}</div>
+            <Divider />
+            <List>
+                <ListItemNavPath navPath={'/viewrequal'} icon={<ChangeCircleIcon color='sys1' size="small" />} text={sys1ListLang.viewReQual[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/viewmt'} icon={<BorderOuterIcon color='sys1' size="small" />} text={sys1ListLang.viewMt[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/viewprm'} icon={<PermDataSettingIcon color='sys1' size="small" />} text={sys1ListLang.viewPrm[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/viewcv'} icon={<ShowerIcon color='sys1' size="small" />} text={sys1ListLang.viewCV[cookies.load('site-lang')]} />
+            </List>
+            <Divider />
+            <List>
+                <ListItemNavPath navPath={'/viewpv'} icon={<VaccinesIcon color='sys1' size="small" />} text={sys1ListLang.viewPrPV[cookies.load('site-lang')]} />
+            </List>
+            <Divider />
+        </div>
+    )
 }
 
 export default Sys1List;

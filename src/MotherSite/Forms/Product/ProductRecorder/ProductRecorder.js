@@ -21,10 +21,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import productRecorderLang from './productRecorderLang'
 
 // Sub Recorder
-import QualModalButton from '../../Machine/MachineRecorder/ModalRecorder/QualModalButton/QualModalButton'
+import CdmsSelectorMB from '../../../Component/ModalButton/CdmsSelector/CdmsSelectorMB'
 
 // Const Object
-import actCodeBook from '../../Machine/ActCodeBook/actCodeBook'
+import actCodeBook from '../../../Component/CodeBook/actCodeBook'
 
 // Component
 import ParamItemDiv from '../../../Component/ParamItemDiv/ParamItemDiv'
@@ -402,7 +402,7 @@ function MachineRecorder(props){
                                             </div>
                                         ))
                                     }
-                                    <QualModalButton
+                                    <CdmsSelectorMB
                                     colName = 'valAtt'
                                     qualAtt = 'PV'
                                     inheritedArr = { formikProps.values.prod_periodic_pv }
@@ -426,7 +426,7 @@ function MachineRecorder(props){
                                             </div>
                                         ))
                                     }
-                                    <QualModalButton
+                                    <CdmsSelectorMB
                                     colName = 'valAtt'
                                     qualAtt = 'PV'
                                     inheritedArr = { formikProps.values.prod_pv }

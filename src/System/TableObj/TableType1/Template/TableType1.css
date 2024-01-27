@@ -10,7 +10,7 @@
   }
 
 .table-type-1 th, td {
-    border: 1px solid #aaa;
+    /* border: 1px solid #aaa; */
     background-clip: padding-box;
     scroll-snap-align: start;
     padding: 0.1rem;
