@@ -15,7 +15,7 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "approval_payload_id",
         {
             header: { kor : "승인 고유 번호", eng : "Approval Unique ID" },
-            size: 100,
+            size: 150,
             enableColumnFilter: true,
         }
     ),

@@ -6,24 +6,20 @@
 
 
 // ======================================================================================== [Import Component] js
-import Tbl1NoFooter from '../../../../../System/TableObj/TableType1/PreMade/Tbl1NoFooter'
+import PgParamTbl from '../../../../../System/TanStackTableObj/PgParamTbl/PgParamTbl'
 import columnDef from './columnDef'
 
 // ======================================================================================== [Import Component] CSS
 
 function FinalApproval (){
-    return (
-        <Tbl1NoFooter
-        getUrl = {'/getmyreviewlist'}
-        params = {{
-            sys_code : 'avm',
-            approval_type : 'FINAL_APPROVAL',
-        }}
-        columnDef = {columnDef}
-        divStyle={{ marginLeft : '5px', marginTop : '10px', maxWidth : '100vw', maxHeight : '100vh', overflow : 'auto'}}
-        tableStyle = {{ }}
-        headerStyle = {{ fontSize : '12px' }}
-        rowStyle = {{ fontSize : '12px' }} // 일괄 모든 row에 스타일 적용, columnDef의 cell 렌더가 우선순위가 높음
+    return(
+        <PgParamTbl
+            getUrl = '/getmyreviewlist'
+            columns = { columnDef }
+            params = {{
+                sys_code : 'avm',
+                approval_type : 'FINAL_APPROVAL',
+            }}
         />
     )
 }

@@ -23,6 +23,7 @@ import SessionExpired from './System/RedirectPage/SessionExpired/SessionExpired'
 import SubmitSuccess from './System/RedirectPage/SubmitSuccess/SubmitSuccess';
 
 // Sys 1 Forms
+import FI from './MotherSite/Forms/FirstImpression/FI'
 import MyPrepared from './MotherSite/Forms/MyPrepared/MyPrepared'
 import MyReview from './MotherSite/Forms/MyReview/MyReview'
 import UserRecorder from './MotherSite/Forms/User/UserRecorder/UserRecorder';
@@ -54,6 +55,7 @@ function App() {
     const handleSystemCode = (codeValue) => setSystemCode(codeValue)
 
     useEffect(() => {
+        console.log(cookies.load('site-lang'))
         if (!cookies.load('site-lang')) {
             cookies.save('site-lang', 'eng', { path: '/' })
         }
@@ -72,8 +74,9 @@ function App() {
                             <Box sx={{ flexGrow: 1 }}>
 
                             </Box>
-                            <div style={{fontSize:'18px', marginRight:'20px', fontWeight:'bolder'}}>{menuConfig[systemCode].name}</div>
-                            <GoSystemButton handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/>
+                            <div style={{fontSize : '19px', marginTop : '1px', fontWeight : 'bolder'}}>AVM</div>
+                            {/* <div style={{fontSize:'18px', marginRight:'20px', fontWeight:'bolder'}}>{menuConfig[systemCode].name}</div> */}
+                            {/* <GoSystemButton handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode}/> */}
                             <LangButton />
                             <LoginButton />
                         </Toolbar>
@@ -87,7 +90,7 @@ function App() {
                 <div style={{ height: '60px' }} />
 
                 <Routes>
-                    <Route path='/' element={<div/>} />
+                    <Route path='/' element={<FI handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/noauth' element={<NoAuthPage/>} />
                     <Route path='/sessionexpired' element={<SessionExpired/>} />
                     <Route path='/submitsuccess' element={<SubmitSuccess/>} />
@@ -137,6 +140,8 @@ function App() {
                             prm_list : [{
                                 prm_batchsize : false,
                                 prm_batchsize_kg : false,
+                                prm_batchsize_vial : false,
+                                prm_batchsize_syringe : false,
                                 prm_gentlewing : false,
                                 prm_chopper : false,
                                 prm_spray : false,
@@ -171,6 +176,8 @@ function App() {
                             }],
                             prm_batchsize : [],
                             prm_batchsize_kg : [],
+                            prm_batchsize_vial : [],
+                            prm_batchsize_syringe : [],
                             prm_gentlewing : [],
                             prm_chopper : [],
                             prm_spray : [],
@@ -256,8 +263,6 @@ function App() {
                         handlePageTitle={handlePageTitle}
                         handleSystemCode={handleSystemCode}/>
                     }/>
-
-                    
                 </Routes>
             </div>
     </ThemeProvider>

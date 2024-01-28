@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, Checkbox, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup, Switch, IconButton, Paper, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormControl, FormLabel, Radio, RadioGroup, Switch, IconButton, Paper, TextField, Typography, CircularProgress, Backdrop } from '@mui/material';
 import { pink } from '@mui/material/colors';
 //icon
 import ClearIcon from '@mui/icons-material/Clear';
@@ -210,6 +210,8 @@ function MachineRecorder(props) {
                 prm_list: values.prm_list,
                 prm_batchsize: values.prm_batchsize,
                 prm_batchsize_kg: values.prm_batchsize_kg,
+                prm_batchsize_vial: values.prm_batchsize_vial,
+                prm_batchsize_syringe: values.prm_batchsize_syringe,
                 prm_gentlewing: values.prm_gentlewing,
                 prm_chopper: values.prm_chopper,
                 prm_spray: values.prm_spray,
@@ -273,7 +275,13 @@ function MachineRecorder(props) {
         { icon: <SaveIcon />, name: 'Save' },
     ];
 
-
+    const [backdrop, setBackdrop] = useState(false);
+    const backdropClose = () => {
+        setBackdrop(false);
+    };
+    const backdropOpen = () => {
+        setBackdrop(true);
+    };
 
     useEffect(() => {
         console.log(props.initialValues.prm_batchsize)
@@ -286,7 +294,9 @@ function MachineRecorder(props) {
             validationSchema={yupSchema}
             initialValues={props.initialValues}
             onSubmit={async (values, actions) => {
+                backdropOpen()
                 await onSubmitFunc(values, actions)
+                backdropClose()
             }}
         >
             {formikProps => (
@@ -513,14 +523,6 @@ function MachineRecorder(props) {
                                         />
                                     </RadioGroup>
                                 </FormControl>
-
-                                {/* <FormControlLabel
-                                control={ <Switch color = 'sys1' checked={ formikProps.values.not_in_use } onChange={ ( e ) => {formikProps.setFieldValue('not_in_use',e.target.checked)} } name="not_in_use" /> }
-                                label={
-                                    <Typography size="small" sx = {{ fontSize : '14px', color : (formikProps.values.gmp_impact ? 'orange' : 'black') }}>{`Not in use`}</Typography>     
-                                }
-                                /> */}
-
                                 <div>
                                     <FormControlLabel
                                         color='sys1'
@@ -705,6 +707,8 @@ function MachineRecorder(props) {
                                     <div id='prmListPaper_col_A' style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_batchsize' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_batchsize_kg' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_batchsize_vial' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_batchsize_syringe' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_gentlewing' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_chopper' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_spray' />
@@ -1027,6 +1031,64 @@ function MachineRecorder(props) {
                                                 qualAtt='Q'
                                                 inheritedArr={formikProps.values.prm_batchsize_kg}
                                                 updateValue={function (newValue) { formikProps.setFieldValue('prm_batchsize_kg', newValue) }}
+                                            />
+                                        </Paper>
+                                }
+                            </div>
+                            <div id='paramItem34'>
+                                {
+                                    !formikProps.values.prm_list[0].prm_batchsize_vial ? <div /> :
+                                        <Paper sx={style.paper} elevation={3}>
+                                            <div style={style.subtitle.box}>
+                                                <VerifiedIcon color='sys1' />
+                                                <div style={style.subtitle.text}>{`${prmCodeBook.prm_batchsize_vial[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_batchsize_vial.length})`}</div>
+                                            </div>
+                                            { // 현재 배열 객체 정보 출력 iterator
+                                                formikProps.values.prm_batchsize_vial.map((oneItem, index) => (
+                                                    <div style={style.arrItem.oneItem}>
+                                                        <ParamItemDiv
+                                                            valueUnit={oneItem.valueUnit}
+                                                            oneItem={oneItem} />
+                                                        <div style={style.arrItem.delItem}>
+                                                            <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_batchsize_vial', arrDelElement(formikProps.values.prm_batchsize_vial, index))}><DeleteForeverIcon /></Button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                            <CdmsSelectorMB
+                                                colName='qualAtt'
+                                                qualAtt='Q'
+                                                inheritedArr={formikProps.values.prm_batchsize_vial}
+                                                updateValue={function (newValue) { formikProps.setFieldValue('prm_batchsize_vial', newValue) }}
+                                            />
+                                        </Paper>
+                                }
+                            </div>
+                            <div id='paramItem35'>
+                                {
+                                    !formikProps.values.prm_list[0].prm_batchsize_syringe ? <div /> :
+                                        <Paper sx={style.paper} elevation={3}>
+                                            <div style={style.subtitle.box}>
+                                                <VerifiedIcon color='sys1' />
+                                                <div style={style.subtitle.text}>{`${prmCodeBook.prm_batchsize_syringe[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_batchsize_syringe.length})`}</div>
+                                            </div>
+                                            { // 현재 배열 객체 정보 출력 iterator
+                                                formikProps.values.prm_batchsize_syringe.map((oneItem, index) => (
+                                                    <div style={style.arrItem.oneItem}>
+                                                        <ParamItemDiv
+                                                            valueUnit={oneItem.valueUnit}
+                                                            oneItem={oneItem} />
+                                                        <div style={style.arrItem.delItem}>
+                                                            <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_batchsize_syringe', arrDelElement(formikProps.values.prm_batchsize_syringe, index))}><DeleteForeverIcon /></Button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                            <CdmsSelectorMB
+                                                colName='qualAtt'
+                                                qualAtt='Q'
+                                                inheritedArr={formikProps.values.prm_batchsize_syringe}
+                                                updateValue={function (newValue) { formikProps.setFieldValue('prm_batchsize_syringe', newValue) }}
                                             />
                                         </Paper>
                                 }
@@ -2041,6 +2103,12 @@ function MachineRecorder(props) {
                                 </div>
                         }
                     </div>
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={backdrop}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </form>
             )}
         </Formik>

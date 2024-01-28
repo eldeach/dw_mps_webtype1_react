@@ -1,23 +1,21 @@
 // ======================================================================================== [Import Libaray]
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cookies from 'react-cookies';
 
 // ======================================================================================== [Import Material UI Libaray]
-import { Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 //icon
-import ClearIcon from '@mui/icons-material/Clear';
+
 // ======================================================================================== [Import Component] js
 // its lang Object
 import tablesLang from './tablesLang'
 
 // Table
-import Approved from './Approved/Approved'
-import UnderApproved from './UnderApproved/UnderApproved'
-import Prepared from './Prepared/Prepared'
-import Rejected from './Rejected/Rejected'
-import Void from './Void/Void'
-
-//onClick={() => setViewSelect(2)}
+import Approved from './Approved'
+import UnderApproved from './UnderApproved'
+import Prepared from './Prepared'
+import Rejected from './Rejected'
+import Void from './Void'
 
 // ======================================================================================== [Import Component] CSS
 

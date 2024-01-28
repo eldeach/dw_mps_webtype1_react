@@ -94,6 +94,8 @@ function Revision (props) {
                         prm_list : !props.oneItem.prm_list ? [] : JSON.parse(props.oneItem.prm_list),
                         prm_batchsize : !props.oneItem.prm_batchsize ? [] : JSON.parse(props.oneItem.prm_batchsize),
                         prm_batchsize_kg : !props.oneItem.prm_batchsize_kg ? [] : JSON.parse(props.oneItem.prm_batchsize_kg),
+                        prm_batchsize_vial : !props.oneItem.prm_batchsize_vial ? [] : JSON.parse(props.oneItem.prm_batchsize_vial),
+                        prm_batchsize_syringe : !props.oneItem.prm_batchsize_syringe ? [] : JSON.parse(props.oneItem.prm_batchsize_syringe),
                         prm_gentlewing : !props.oneItem.prm_gentlewing ? [] : JSON.parse(props.oneItem.prm_gentlewing),
                         prm_chopper : !props.oneItem.prm_chopper ? [] : JSON.parse(props.oneItem.prm_chopper),
                         prm_spray : !props.oneItem.prm_spray ? [] : JSON.parse(props.oneItem.prm_spray),

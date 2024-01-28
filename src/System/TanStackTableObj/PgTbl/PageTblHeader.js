@@ -65,7 +65,7 @@ function TableHeader(props) {
                 {
                     header.column.getCanSort() && !header.column.getIsSorted() ? (<UnfoldMoreIcon sx={{ fontSize: '20px', pb: 0.3, mr: 'auto' }} />) : null
                 }
-                <div onClick={header.column.getToggleSortingHandler()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: header.column.getCanSort() ? "pointer" : "default", }} >
+                <div onClick={header.column.getToggleSortingHandler()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  cursor: header.column.getCanSort() ? "pointer" : "default", }} >
                     {
                         header.isPlaceholder ? null
                             : flexRender(

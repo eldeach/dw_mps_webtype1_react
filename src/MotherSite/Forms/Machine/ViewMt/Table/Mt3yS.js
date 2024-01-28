@@ -7,7 +7,7 @@
 
 // ======================================================================================== [Import Component] js
 import PageTbl from '../../../../../System/TanStackTableObj/PgTbl/PageTbl'
-import columnDef from '../../../../Component/Table/columnDef/PeriodicStatus/cdPeriodicStatus'
+import columnDef from '../../../../Component/Table/columnDef/PeriodicStatus/cdPeriodicStatus_Mt3yS'
 
 // ======================================================================================== [Import Component] CSS
 

@@ -27,6 +27,34 @@ const prmCodeBook = {
             },
         }
     },
+    prm_batchsize_vial : {
+        kor : `최악 배치 사이즈 [Vial]`,
+        eng : `Worst Batch Size [Vial]`,
+        value : {
+            min_value : {
+                kor : `최악 배치 사이즈 [Vial] 최소`,
+                eng : `Worst Batch Size [Vial] Min`,
+            },
+            max_value : {
+                kor : `최악 배치 사이즈 [Vial] 최대`,
+                eng : `Worst Batch Size [Vial] Max`,
+            },
+        }
+    },
+    prm_batchsize_syringe : {
+        kor : `최악 배치 사이즈 [Syringe]`,
+        eng : `Worst Batch Size [Syringe]`,
+        value : {
+            min_value : {
+                kor : `최악 배치 사이즈 [Syringe] 최소`,
+                eng : `Worst Batch Size [Syringe] Min`,
+            },
+            max_value : {
+                kor : `최악 배치 사이즈 [Syringe] 최대`,
+                eng : `Worst Batch Size [Syringe] Max`,
+            },
+        }
+    },
     prm_gentlewing : {
         kor : `GentleWing Speed [RPM]`,
         eng : `GentleWing Speed [RPM]`,

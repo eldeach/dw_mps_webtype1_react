@@ -11,11 +11,11 @@ import ClearIcon from '@mui/icons-material/Clear';
 import tablesLang from './tablesLang'
 
 // Table
-import Approved from './Approved/Approved'
-import UnderApproved from './UnderApproved/UnderApproved'
-import Prepared from './Prepared/Prepared'
-import Rejected from './Rejected/Rejected'
-import Void from './Void/Void'
+import Approved from './Approved'
+import UnderApproved from './UnderApproved'
+import Prepared from './Prepared'
+import Rejected from './Rejected'
+import Void from './Void'
 
 //onClick={() => setViewSelect(2)}
 

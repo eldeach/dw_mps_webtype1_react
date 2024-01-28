@@ -14,7 +14,7 @@ import columnDef from '../../../../Component/Table/columnDef/ViewMasterData/Mach
 function Void (){
     return(
         <PageTbl
-            getUrl = '/getMachineListUnderVoid'
+            getUrl = '/getMachineListVoid'
             columns = { columnDef }
         />
     )

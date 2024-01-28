@@ -4,7 +4,6 @@ import cookies from 'react-cookies'
 
 // ======================================================================================== [Import Material UI Libaray]
 //icon
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CircleIcon from '@mui/icons-material/Circle';
 // ======================================================================================== [Import Component] js
 
@@ -13,9 +12,9 @@ import CircleIcon from '@mui/icons-material/Circle';
 import Revision from '../../../../../../Component/Table/Button/Revision/MachineMasterData/Revision'
 
 // Component
-import PrmList from '../../../../CellValuePopUp/PrmList/PrmList'
-import PrmDocs from '../../../../CellValuePopUp/PrmDocs/PrmDocs'
-import Docs from '../../../../CellValuePopUp/Docs/Docs'
+import PrmList from '../../../../Button/CellValuePopUp/PrmList/PrmList'
+import PrmDocs from '../../../../Button/CellValuePopUp/PrmDocs/PrmDocs'
+import Docs from '../../../../Button/CellValuePopUp/Docs/Docs'
 import UsageStatusLabel from '../../../../Label/UsageStatusLabel/UsageStatusLabel'
 import GmpImpactLabel from '../../../../Label/GmpImpactLabel/GmpImpactLabel'
 
@@ -30,9 +29,10 @@ const columnHelper = createColumnHelper();
 const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     {
         id: "rowview",
-        size:100, // TanStack Table은 컬럼 사이즈가 20이 최소
-        header: { kor : '개정', eng :'Revision'},
-        cell: ({ row }) =>  <Revision oneItem = {row.original}/>
+        size:80, // TanStack Table은 컬럼 사이즈가 20이 최소
+        header: <div style={{width:'80px', textAlign:'center'}}>{{ kor : '개정', eng :'Revision'}[cookies.load('site-lang')]}</div>,
+        cell: ({ row }) =>  (<Revision oneItem = {row.original}/>)
+        
     },
     columnHelper.accessor( "data_ver",
         {
@@ -402,6 +402,22 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
     columnHelper.accessor( "prm_batchsize_kg",
         {
             header: prmCodeBook.prm_batchsize_kg[cookies.load('site-lang')],
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <PrmDocs docList={renderValue.getValue()} />,
+        }
+    ),
+    columnHelper.accessor( "prm_batchsize_vial",
+        {
+            header: prmCodeBook.prm_batchsize_vial[cookies.load('site-lang')],
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <PrmDocs docList={renderValue.getValue()} />,
+        }
+    ),
+    columnHelper.accessor( "prm_batchsize_syringe",
+        {
+            header: prmCodeBook.prm_batchsize_syringe[cookies.load('site-lang')],
             size: 150,
             enableColumnFilter: true,
             cell: renderValue => <PrmDocs docList={renderValue.getValue()} />,
