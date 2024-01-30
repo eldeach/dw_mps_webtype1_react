@@ -17,19 +17,19 @@ import SessionTimer from './Component/SessionTimer'
 
 // ======================================================================================== [Import Component] CSS
 
-function LoginButton(){
+function LoginButton() {
     const navigate = useNavigate();
-    
+
     const style = {
-        subtitle:{
-            box : {
-                display:'flex', flexDirection:'column', alignItems:'center', fontSize:'medium'
+        subtitle: {
+            box: {
+                display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: 'medium'
             },
-            text : {
-                fontSize : '20px', marginTop:'4px', marginLeft:'2px'
+            text: {
+                fontSize: '20px', marginTop: '4px', marginLeft: '2px'
             }
         },
-        popupPaper : {
+        popupPaper: {
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -37,13 +37,13 @@ function LoginButton(){
             boxShadow: 24,
             p: 2,
         },
-        inputTexstField : {
+        inputTexstField: {
             fontSize: 14,
-            paddingRight:0
+            paddingRight: 0
         },
-        button : {
-            submitButton : {
-                width:534,
+        button: {
+            submitButton: {
+                width: 534,
             },
         }
 
@@ -51,145 +51,171 @@ function LoginButton(){
 
     const yupSchema = yup.object().shape({
         user_account: yup.string()
-        .required(loginButtonLang.loginForm.inputField.user_account.valMsg.required[cookies.load('site-lang')]),
-    
-        user_pw: yup.string()
-        .required(loginButtonLang.loginForm.inputField.user_pw.valMsg.required[cookies.load('site-lang')])
-      });
+            .required(loginButtonLang.loginForm.inputField.user_account.valMsg.required[cookies.load('site-lang')]),
 
-      const initialValues = {
+        user_pw: yup.string()
+            .required(loginButtonLang.loginForm.inputField.user_pw.valMsg.required[cookies.load('site-lang')])
+    });
+
+    const initialValues = {
         user_account: '',
-        user_pw:'',
+        user_pw: '',
     }
 
-    const [popup,setPopup] = useState(0);
+    const [popup, setPopup] = useState(0);
     const handleModalClose = () => setPopup(0);
 
-    const [loginStatus, setLoginStatus] = useState (false);
+    const [loginStatus, setLoginStatus] = useState(false);
     const [expireDateTime, setExpireDateTime] = useState(null)
-    
+
     const loginStatusUpdate = (receivedData) => {
-        setLoginStatus (true)
+        setLoginStatus(true)
+        setImminent(false)
         setExpireDateTime(receivedData.expireDateTime)
     }
 
     const logoutFunc = async function () {
         await axios.get("/local-logout")
-        .then((res) => {
-            loginStatusExpired()
-            navigate('/sessionexpired')
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                loginStatusExpired()
+                navigate('/sessionexpired')
+            })
+            .catch((err) => console.log(err))
     }
 
     const loginStatusExpired = () => {
-        setLoginStatus (false)
+        setLoginStatus(false)
+        setImminent(false)
         setExpireDateTime(null)
         // navigate('/sessionexpired')
     }
 
-    const onSubmitFunc = async function (values){
-        await axios.post('/local-login' , values)
-        .then((res) => {
-            if (res.status === 200){
-                // loginStatusUpdate(res.data)
-                alert(`${res.data[cookies.load('site-lang')]}`)
-            }
-            else {
+    const onSubmitFunc = async function (values) {
+        await axios.post('/local-login', values)
+            .then((res) => {
+                if (res.status === 200) {
+                    // loginStatusUpdate(res.data)
+                    alert(`${res.data[cookies.load('site-lang')]}`)
+                }
+                else {
 
-            }
-        })
-        .catch((error) => {
-            if (error.response.status === 452){
-                // console.log(error.response.data)
-                alert(`${error.response.data[cookies.load('site-lang')]}`)
-            }
-            else {
-                console.log("알수 없는 에러")
-                console.log(error)
-            }
-            loginStatusExpired()
-        })
-        .finally(()=>{
-            sessioncheck();
-            handleModalClose();
-        })
+                }
+            })
+            .catch((error) => {
+                if (error.response.status === 452) {
+                    // console.log(error.response.data)
+                    alert(`${error.response.data[cookies.load('site-lang')]}`)
+                }
+                else {
+                    console.log("알수 없는 에러")
+                    console.log(error)
+                }
+                loginStatusExpired()
+            })
+            .finally(() => {
+                sessioncheck();
+                handleModalClose();
+            })
     }
 
     const sessioncheck = async function () {
         await axios.get('/sessioncheck')
-        .then((res) => {
-            if (res.status === 200){
-                loginStatusUpdate(res.data)
-            }
-            else {
+            .then((res) => {
+                if (res.status === 200) {
+                    loginStatusUpdate(res.data)
+                }
+                else {
 
-            }
-        })
-        .catch((error) => {
-            if (error.response.status === 452){
-                // console.log(error.response.data)
-            }
-            else {
-                console.log("알수 없는 에러")
-                console.log(error)
-            }
-            loginStatusExpired()
-        })
+                }
+            })
+            .catch((error) => {
+                if (error.response.status === 452) {
+                    // console.log(error.response.data)
+                }
+                else {
+                    console.log("알수 없는 에러")
+                    console.log(error)
+                }
+                loginStatusExpired()
+            })
     }
 
-    window.addEventListener('mousedown', (e)=>{
-        sessioncheck()
-    });
-    window.addEventListener('keydown', (e)=>{
-        sessioncheck()
-    });
+    const [imminent, setImminent] = useState(false);
+
+    const handleImminent = (setVal) => {
+        setImminent(setVal)
+    }
 
     useEffect(() => {
         sessioncheck()
     }, [])
 
+    useEffect(() => {
+        const handleMouseDown = (e) => {
+            if (loginStatus && imminent) {
+                sessioncheck();
+                handleImminent(false);
+            }
+        };
+
+        const handleKeyDown = (e) => {
+            if (loginStatus && imminent) {
+                sessioncheck();
+                handleImminent(false);
+            }
+        };
+
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [loginStatus, imminent]);
+
     return (
-        <div style = {{display : 'flex', flexDirection : 'row'}}>
-            <Button variant="outlined" color = "white" size="small" onClick={()=>{ loginStatus ? logoutFunc() : setPopup(1) }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Button variant="outlined" color="white" size="small" onClick={() => { loginStatus ? logoutFunc() : setPopup(1) }}>
                 {
                     loginStatus ?
-                    loginButtonLang.displayedButton.logout[cookies.load('site-lang')]
-                    : loginButtonLang.displayedButton.login[cookies.load('site-lang')]
+                        loginButtonLang.displayedButton.logout[cookies.load('site-lang')]
+                        : loginButtonLang.displayedButton.login[cookies.load('site-lang')]
                 }
             </Button>
             {
-                loginStatus ?         
-                <SessionTimer
-                expireDateTime = { expireDateTime }
-                endFunc = { logoutFunc }
-                />
-                :<div/>
+                loginStatus ?
+                    <SessionTimer
+                        expireDateTime={expireDateTime}
+                        midFunc={handleImminent}
+                        endFunc={logoutFunc}
+                    />
+                    : <div />
             }
-            <Modal open={( popup === 1 )} onClose={ handleModalClose }>
+            <Modal open={(popup === 1)} onClose={handleModalClose}>
                 <Paper sx={style.popupPaper} elevation={3}>
-                    <div className = "popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
+                    <div className="popup-close-button-box"><button className='popup-close-button' onClick={handleModalClose}>X</button></div>
                     <Formik
                         validationSchema={yupSchema}
                         initialValues={initialValues}
-                        onSubmit={async (values, actions)=>{
+                        onSubmit={async (values, actions) => {
                             await onSubmitFunc(values);
                         }}
-                        >
-                            {formikProps => (
-                                <form
+                    >
+                        {formikProps => (
+                            <form
                                 noValidate
-                                style={{width:'350px', hegith:'240px', display:'flex', flexDirection:'column'}}
-                                id = "loginForm"
+                                style={{ width: '350px', hegith: '240px', display: 'flex', flexDirection: 'column' }}
+                                id="loginForm"
                                 autoComplete='off'
                                 onSubmit={formikProps.handleSubmit}
-                                >
-                                    <div>
-                                        <div style={style.subtitle.box}>
-                                            <AccountCircleIcon color='sys1' sx={{fontSize : 'xx-large'}}/>
-                                            <div style={style.subtitle.text}>{loginButtonLang.displayedButton.login[cookies.load('site-lang')]}</div>
-                                        </div>
-                                        <TextField
+                            >
+                                <div>
+                                    <div style={style.subtitle.box}>
+                                        <AccountCircleIcon color='sys1' sx={{ fontSize: 'xx-large' }} />
+                                        <div style={style.subtitle.text}>{loginButtonLang.displayedButton.login[cookies.load('site-lang')]}</div>
+                                    </div>
+                                    <TextField
                                         required
                                         variant="outlined"
                                         id="user_account"
@@ -203,10 +229,10 @@ function LoginButton(){
                                         size='small'
                                         margin="dense"
                                         fullWidth
-                                        inputProps={{style: style.inputTexstField}} // font size of input text
-                                        InputLabelProps={{style: style.inputTexstField}} // font size of input label
-                                        />
-                                        <TextField
+                                        inputProps={{ style: style.inputTexstField }} // font size of input text
+                                        InputLabelProps={{ style: style.inputTexstField }} // font size of input label
+                                    />
+                                    <TextField
                                         required
                                         variant="outlined"
                                         id="user_pw"
@@ -221,16 +247,16 @@ function LoginButton(){
                                         size='small'
                                         margin="dense"
                                         fullWidth
-                                        inputProps={{style: style.inputTexstField}} // font size of input text
-                                        InputLabelProps={{style: style.inputTexstField}} // font size of input label
-                                        />
-                                    </div>
-                                    <Button sx={{mt:1}} color='sys1' fullWidth variant="contained" size='small' type="submit" form="loginForm">{loginButtonLang.loginForm.button.submit[cookies.load('site-lang')]}</Button>
-                                </form>
-                            )}
+                                        inputProps={{ style: style.inputTexstField }} // font size of input text
+                                        InputLabelProps={{ style: style.inputTexstField }} // font size of input label
+                                    />
+                                </div>
+                                <Button sx={{ mt: 1 }} color='sys1' fullWidth variant="contained" size='small' type="submit" form="loginForm">{loginButtonLang.loginForm.button.submit[cookies.load('site-lang')]}</Button>
+                            </form>
+                        )}
                     </Formik>
                 </Paper>
-          </Modal>  
+            </Modal>
         </div>
     )
 }

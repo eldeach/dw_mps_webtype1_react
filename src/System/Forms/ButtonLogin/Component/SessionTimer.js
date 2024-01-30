@@ -29,6 +29,9 @@ function SessionTimer (props) {
                 props.endFunc();
                 clearInterval(countdown);
             } else {
+                if ( ( parseInt( remainedSec ) < 60 ) && ( 58 < parseInt( remainedSec ) ) ) {
+                    props.midFunc(true)
+                }
                 setExpireMin(remainedMin)
                 setExpireSec(remainedSec - remainedMin * 60)
             }

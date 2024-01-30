@@ -16,7 +16,11 @@ function FI(props) {
     const { handlePageTitle, handleSystemCode } = props
 
     useEffect(()=>{
-        handlePageTitle(`${{kor : '환영합니다', eng : 'Welcome'}[cookies.load('site-lang')]}`)
+        if({kor : '환영합니다', eng : 'Welcome'}[cookies.load('site-lang')]){
+            handlePageTitle('Welcome')
+        } else {
+            handlePageTitle(`${{kor : '환영합니다', eng : 'Welcome'}[cookies.load('site-lang')]}`)
+        }
         handleSystemCode('sys1')
     },[])
     return(
