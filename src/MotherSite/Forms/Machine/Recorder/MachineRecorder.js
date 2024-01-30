@@ -1105,6 +1105,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_gentlewing.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={1}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_gentlewing', arrDelElement(formikProps.values.prm_gentlewing, index))}><DeleteForeverIcon /></Button>
@@ -1161,6 +1162,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_spray.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_spray', arrDelElement(formikProps.values.prm_spray, index))}><DeleteForeverIcon /></Button>
@@ -1189,6 +1191,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_spray_kgmin.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_spray_kgmin', arrDelElement(formikProps.values.prm_spray_kgmin, index))}><DeleteForeverIcon /></Button>
@@ -1245,6 +1248,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_gra_spray_air.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint = { 1 }
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_gra_spray_air', arrDelElement(formikProps.values.prm_gra_spray_air, index))}><DeleteForeverIcon /></Button>
@@ -1441,6 +1445,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_roller_gap.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_roller_gap', arrDelElement(formikProps.values.prm_roller_gap, index))}><DeleteForeverIcon /></Button>
@@ -1665,6 +1670,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_pforce.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_pforce', arrDelElement(formikProps.values.prm_pforce, index))}><DeleteForeverIcon /></Button>
@@ -1694,6 +1700,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_mforce.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_mforce', arrDelElement(formikProps.values.prm_mforce, index))}><DeleteForeverIcon /></Button>
@@ -1722,6 +1729,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_pforce_2nd.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_pforce_2nd', arrDelElement(formikProps.values.prm_pforce_2nd, index))}><DeleteForeverIcon /></Button>
@@ -1751,6 +1759,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_mforce_2nd.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_mforce_2nd', arrDelElement(formikProps.values.prm_mforce_2nd, index))}><DeleteForeverIcon /></Button>
@@ -1865,6 +1874,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_paair.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={1}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_paair', arrDelElement(formikProps.values.prm_paair, index))}><DeleteForeverIcon /></Button>
@@ -1893,6 +1903,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_atair.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={1}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_atair', arrDelElement(formikProps.values.prm_atair, index))}><DeleteForeverIcon /></Button>

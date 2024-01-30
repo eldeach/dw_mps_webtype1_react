@@ -38,15 +38,35 @@ function ParamItemDiv (props) {
     });
 
     const handleMinValue = function(newValue){
-        props.oneItem.min_value = parseInt(newValue)
+        if (props.decimalPoint > 0) {
+            props.oneItem.min_value = parseFloat(newValue)
+        } else {
+            props.oneItem.min_value = parseInt(newValue)
+        }
     }
     const handleMaxValue = function(newValue){
-        props.oneItem.max_value = parseInt(newValue)
+        if (props.decimalPoint > 0) {
+            props.oneItem.max_value = parseFloat(newValue)
+        } else {
+            props.oneItem.max_value = parseInt(newValue)
+        }
     }
 
     useEffect(() => {
-        if ( !props.oneItem.min_value ) props.oneItem.min_value = parseInt(0)
-        if ( !props.oneItem.max_value ) props.oneItem.max_value = parseInt(0)
+        if ( !props.oneItem.min_value ) {
+            if (props.decimalPoint > 0) {
+                props.oneItem.min_value = parseFloat(0)
+            } else {
+                props.oneItem.min_value = parseInt(0)
+            }
+        }
+        if ( !props.oneItem.max_value ) {
+            if (props.decimalPoint > 0) {
+                props.oneItem.max_value = parseFloat(0)
+            } else {
+                props.oneItem.max_value = parseInt(0)
+            }
+        }
     }, [])
 
     return (
@@ -76,7 +96,11 @@ function ParamItemDiv (props) {
                     label={paramItemDivLang.inputField.min_value.placeholder[cookies.load('site-lang')]}
                     value={formikProps.values.min_value}
                     onChange={(e) => {
-                        e.target.value = parseInt(e.target.value)
+                        if (props.decimalPoint > 0) {
+                            e.target.value = parseFloat(e.target.value)
+                        } else {
+                            e.target.value = parseInt(e.target.value)
+                        }
                         formikProps.handleChange(e);
                         handleMinValue(e.target.value);
                     }}
@@ -106,7 +130,11 @@ function ParamItemDiv (props) {
                     label={paramItemDivLang.inputField.max_value.placeholder[cookies.load('site-lang')]}
                     value={formikProps.values.max_value}
                     onChange={(e) => {
-                        e.target.value = parseInt(e.target.value)
+                        if (props.decimalPoint > 0) {
+                            e.target.value = parseFloat(e.target.value)
+                        } else {
+                            e.target.value = parseInt(e.target.value)
+                        }
                         formikProps.handleChange(e);
                         handleMaxValue(e.target.value);
                     }}
