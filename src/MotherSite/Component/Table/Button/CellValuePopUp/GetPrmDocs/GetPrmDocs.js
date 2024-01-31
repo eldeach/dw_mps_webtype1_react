@@ -4,7 +4,7 @@ import cookies from 'react-cookies'
 import axios from 'axios';
 
 // ======================================================================================== [Import Material UI Libaray]  
-import { Button, Modal, Paper, CircularProgress, Backdrop } from '@mui/material/';
+import { Button, Modal, Paper, Divider, CircularProgress, Backdrop } from '@mui/material/';
 //icon
 
 // ======================================================================================== [Import Component] js
@@ -15,7 +15,7 @@ import PrmDocItemDivReadOnlySlim from '../../../../PrmDocItemDivReadOnlySlim/Prm
 
 function GetPrmDocs(props) {
 
-    const { prm_tbl_name, prm_id_col_name, mng_code, data_ver } = props
+    const { prmIcon, prmName, prm_tbl_name, prm_id_col_name, mng_code, data_ver } = props
 
     const style = {
         subtitle: {
@@ -89,7 +89,7 @@ function GetPrmDocs(props) {
 
     return (
         <div>
-            <Button variant="contained" color='sys1' size="small" sx={{width : '120px'}} onClick={() => {
+            <Button variant="contained" color='sys1' size="small" sx={{ width: '120px' }} onClick={() => {
                 getDbData()
                 setPopup(1)
             }}>
@@ -97,7 +97,22 @@ function GetPrmDocs(props) {
             </Button>
             <Modal open={(popup === 1)} onClose={handleModalClose}>
                 <Paper sx={style.popup.paper} elevation={3}>
-                    <div style={{ width: '400px', maxHeight: '500px', display: 'flex', justifyContent: 'center', overflowY: 'auto' }}>
+                    <div style={{ width: '400px', maxHeight: '500px', display: 'flex', flexDirection: 'column', alignContent: 'center', overflowY: 'auto' }}>
+                        <div style={{ width: '380px' }}>
+                            <div className='verified_prm_label'>
+                                <div className='verified_prm_label_icon'>
+                                    {prmIcon}
+                                </div>
+                                <div className='verified_prm_label_text'>
+                                    {prmName}
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ width: '380px', textAlign:'center', marginTop:'3px', marginBottom:'3px' }}>
+                            <Divider />
+                            <div style={{ marginLeft: '6px', fontSize: '11px', color: 'grey' }}>{{ kor: `개별 적격성 평가 이력`, eng: `Individual Qualification History` }[cookies.load('site-lang')]}</div>
+                            <Divider />
+                        </div>
                         <div style={{ width: '380px' }}>
                             {
                                 docObj.map((oneDoc, index) => (

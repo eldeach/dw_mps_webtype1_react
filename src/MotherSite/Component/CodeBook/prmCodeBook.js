@@ -209,6 +209,20 @@ const prmCodeBook = {
             },
         }
     },
+    prm_exh_air_vol_rpm : {
+        kor : `배기풍량 [RPM]`,
+        eng : `Exhaust Air Volume [RPM]`,
+        value : {
+            min_value : {
+                kor : `배기풍량 [RPM] 최소`,
+                eng : `Exhaust Air Volume [RPM] Min`,
+            },
+            max_value : {
+                kor : `배기풍량 [RPM] 최대`,
+                eng : `Exhaust Air Volume [RPM] Max`,
+            },
+        }
+    },
     prm_roller_speed : {
         kor : `Roller Speed [RPM]`,
         eng : `Roller Speed [RPM]`,

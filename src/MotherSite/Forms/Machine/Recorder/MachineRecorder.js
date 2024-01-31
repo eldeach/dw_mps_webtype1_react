@@ -223,6 +223,7 @@ function MachineRecorder(props) {
                 prm_exh_air_temp: values.prm_exh_air_temp,
                 prm_inlet_air_vol: values.prm_inlet_air_vol,
                 prm_inlet_air_vol_rpm: values.prm_inlet_air_vol_rpm,
+                prm_exh_air_vol_rpm: values.prm_exh_air_vol_rpm,
                 prm_roller_speed: values.prm_roller_speed,
                 prm_roller_gap: values.prm_roller_gap,
                 prm_grate: values.prm_grate,
@@ -715,35 +716,36 @@ function MachineRecorder(props) {
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_spray_kgmin' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_spray_rpm' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_gra_spray_air' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_paair' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_atair' />
+                                    </div>
+                                    <div id='prmListPaper_col_B' style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_gra_micro_prs' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_inlet_air_temp' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_exh_air_temp' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_inlet_air_vol' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_inlet_air_vol_rpm' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_exh_air_vol_rpm' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_roller_speed' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_roller_gap' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_cforece' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_grate' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_blendrpm' />
-                                    </div>
-                                    <div id='prmListPaper_col_B' style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_filling_depth' />
-                                        <ParamChkBox formikProps={formikProps} prmCode='prm_cforece' />
+                                    </div>
+                                    <div id='prmListPaper_col_C' style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_turret' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_feeder' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_feeder_2nd' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_pforce' />
-                                        <ParamChkBox formikProps={formikProps} prmCode='prm_mforce' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_pforce_2nd' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_mforce' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_mforce_2nd' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_pforce_kgf' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_mforce_kgf' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_drum' />
-                                        <ParamChkBox formikProps={formikProps} prmCode='prm_paair' />
-                                    </div>
-                                    <div id='prmListPaper_col_C' style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ParamChkBox formikProps={formikProps} prmCode='prm_atair' />
-                                        <ParamChkBox formikProps={formikProps} prmCode='prm_fill' />
                                         <ParamChkBox formikProps={formikProps} prmCode='prm_timer' />
+                                        <ParamChkBox formikProps={formikProps} prmCode='prm_fill' />
                                     </div>
                                 </div>
                             </Paper>
@@ -1401,6 +1403,34 @@ function MachineRecorder(props) {
                                                 qualAtt='Q'
                                                 inheritedArr={formikProps.values.prm_inlet_air_vol_rpm}
                                                 updateValue={function (newValue) { formikProps.setFieldValue('prm_inlet_air_vol_rpm', newValue) }}
+                                            />
+                                        </Paper>
+                                }
+                            </div>
+                            <div id='paramItem36'>
+                                {
+                                    !formikProps.values.prm_list[0].prm_exh_air_vol_rpm ? <div /> :
+                                        <Paper sx={style.paper} elevation={3}>
+                                            <div style={style.subtitle.box}>
+                                                <VerifiedIcon color='sys1' />
+                                                <div style={style.subtitle.text}>{`${prmCodeBook.prm_exh_air_vol_rpm[cookies.load('site-lang')]} (Items : ${formikProps.values.prm_exh_air_vol_rpm.length})`}</div>
+                                            </div>
+                                            { // 현재 배열 객체 정보 출력 iterator
+                                                formikProps.values.prm_exh_air_vol_rpm.map((oneItem, index) => (
+                                                    <div style={style.arrItem.oneItem}>
+                                                        <ParamItemDiv
+                                                            oneItem={oneItem} />
+                                                        <div style={style.arrItem.delItem}>
+                                                            <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_exh_air_vol_rpm', arrDelElement(formikProps.values.prm_exh_air_vol_rpm, index))}><DeleteForeverIcon /></Button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                            <CdmsSelectorMB
+                                                colName='qualAtt'
+                                                qualAtt='Q'
+                                                inheritedArr={formikProps.values.prm_exh_air_vol_rpm}
+                                                updateValue={function (newValue) { formikProps.setFieldValue('prm_exh_air_vol_rpm', newValue) }}
                                             />
                                         </Paper>
                                 }

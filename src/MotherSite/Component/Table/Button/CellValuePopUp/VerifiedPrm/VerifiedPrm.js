@@ -68,7 +68,7 @@ function VerifiedPrm(props) {
                         <div style={{ color: 'grey', fontWeight: 'border', fontSize: '39px', marginRight: '6px', boxSizing: 'border-box', fontWeight: 'bolder' }}>
                             {oneItem.mng_code}
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '5px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '8px' }}>
                             <div style={{ fontSize: '14px', fontWeight: 'bolder', color: '#3f50b5' }}>
                                 {oneItem.mng_team}
                             </div>
@@ -257,7 +257,7 @@ function VerifiedPrm(props) {
                             (oneItem.prm_exh_air_temp_min_value || oneItem.prm_exh_air_temp_max_value) ?
                                 <OnePrmCard
                                     prmIcon={<FaTemperatureQuarter color='#76ff03' fontSize='inherit' />}
-                                    prmName={prmCodeBook.prm_inlet_air_temp[cookies.load('site-lang')]}
+                                    prmName={prmCodeBook.prm_exh_air_temp[cookies.load('site-lang')]}
                                     minValue={oneItem.prm_exh_air_temp_min_value}
                                     maxValue={oneItem.prm_exh_air_temp_max_value}
                                     prm_tbl_name={`tb_prm_exh_air_temp`}
@@ -290,6 +290,20 @@ function VerifiedPrm(props) {
                                     maxValue={oneItem.prm_inlet_air_vol_rpm_max_value}
                                     prm_tbl_name={`tb_prm_inlet_air_vol_rpm`}
                                     prm_id_col_name={`prm_inlet_air_vol_rpm_id`}
+                                    mng_code={oneItem.mng_code}
+                                    data_ver={oneItem.data_ver}
+                                />
+                                : <div />
+                        }
+                        {
+                            (oneItem.prm_exh_air_vol_rpm_min_value || oneItem.prm_exh_air_vol_rpm_max_value) ?
+                                <OnePrmCard
+                                    prmIcon={<GiWhirlwind color='#76ff03' fontSize='inherit' />}
+                                    prmName={prmCodeBook.prm_exh_air_vol_rpm[cookies.load('site-lang')]}
+                                    minValue={oneItem.prm_exh_air_vol_rpm_min_value}
+                                    maxValue={oneItem.prm_exh_air_vol_rpm_max_value}
+                                    prm_tbl_name={`tb_prm_exh_air_vol_rpm`}
+                                    prm_id_col_name={`prm_exh_air_vol_rpm_id`}
                                     mng_code={oneItem.mng_code}
                                     data_ver={oneItem.data_ver}
                                 />
@@ -537,7 +551,7 @@ function VerifiedPrm(props) {
                             (oneItem.prm_atair_min_value || oneItem.prm_atair_max_value) ?
                                 <OnePrmCard
                                     prmIcon={<GiChaingun color='#76ff03' fontSize='inherit' />}
-                                    prmName={prmCodeBook.prm_paair[cookies.load('site-lang')]}
+                                    prmName={prmCodeBook.prm_atair[cookies.load('site-lang')]}
                                     minValue={oneItem.prm_atair_min_value}
                                     maxValue={oneItem.prm_atair_max_value}
                                     prm_tbl_name={`tb_prm_atair`}

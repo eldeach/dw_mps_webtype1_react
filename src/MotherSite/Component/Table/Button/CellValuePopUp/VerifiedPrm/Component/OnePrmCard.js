@@ -47,6 +47,8 @@ function OnePrmCard(props) {
             <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
                 <div style={{ flexGrow: 1 }} />
                 <GetPrmDocs
+                    prmIcon = {prmIcon}
+                    prmName = {prmName}
                     prm_tbl_name={prm_tbl_name}
                     prm_id_col_name={prm_id_col_name}
                     mng_code={mng_code}

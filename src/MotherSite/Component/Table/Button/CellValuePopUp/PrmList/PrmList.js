@@ -78,6 +78,7 @@ function PrmList (props) {
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_exh_air_temp'}/>
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_inlet_air_vol'}/>
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_inlet_air_vol_rpm'}/>
+                                    <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_exh_air_vol_rpm'}/>
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_roller_speed'}/>
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_roller_gap'}/>
                                     <PrmLabel prmListObj = {prmListObj} prmCode = {'prm_grate'}/>

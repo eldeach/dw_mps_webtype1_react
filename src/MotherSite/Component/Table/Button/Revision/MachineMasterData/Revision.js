@@ -107,6 +107,7 @@ function Revision (props) {
                         prm_exh_air_temp : !props.oneItem.prm_exh_air_temp ? [] : JSON.parse(props.oneItem.prm_exh_air_temp),
                         prm_inlet_air_vol : !props.oneItem.prm_inlet_air_vol ? [] : JSON.parse(props.oneItem.prm_inlet_air_vol),
                         prm_inlet_air_vol_rpm : !props.oneItem.prm_inlet_air_vol_rpm ? [] : JSON.parse(props.oneItem.prm_inlet_air_vol_rpm),
+                        prm_exh_air_vol_rpm : !props.oneItem.prm_exh_air_vol_rpm ? [] : JSON.parse(props.oneItem.prm_exh_air_vol_rpm),
                         prm_roller_speed : !props.oneItem.prm_roller_speed ? [] : JSON.parse(props.oneItem.prm_roller_speed),
                         prm_roller_gap : !props.oneItem.prm_roller_gap ? [] : JSON.parse(props.oneItem.prm_roller_gap),
                         prm_grate : !props.oneItem.prm_grate ? [] : JSON.parse(props.oneItem.prm_grate),

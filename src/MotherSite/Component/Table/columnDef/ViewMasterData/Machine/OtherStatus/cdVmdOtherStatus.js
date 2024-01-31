@@ -526,6 +526,14 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             cell: renderValue => <PrmDocs docList={renderValue.getValue()} />,
         }
     ),
+    columnHelper.accessor("prm_exh_air_vol_rpm",
+        {
+            header: prmCodeBook.prm_exh_air_vol_rpm[cookies.load('site-lang')],
+            size: 150,
+            enableColumnFilter: true,
+            cell: renderValue => <PrmDocs docList={renderValue.getValue()} />,
+        }
+    ),
     columnHelper.accessor("prm_roller_speed",
         {
             header: prmCodeBook.prm_roller_speed[cookies.load('site-lang')],
