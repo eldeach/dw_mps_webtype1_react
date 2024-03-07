@@ -1020,6 +1020,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_batchsize_kg.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
+                                                            decimalPoint={2}
                                                             valueUnit={oneItem.valueUnit}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
@@ -1250,7 +1251,7 @@ function MachineRecorder(props) {
                                                 formikProps.values.prm_gra_spray_air.map((oneItem, index) => (
                                                     <div style={style.arrItem.oneItem}>
                                                         <ParamItemDiv
-                                                            decimalPoint = { 1 }
+                                                            decimalPoint={1}
                                                             oneItem={oneItem} />
                                                         <div style={style.arrItem.delItem}>
                                                             <Button size="small" variant='contained' style={{ height: '100%' }} sx={{ p: 0 }} color='error' onClick={() => formikProps.setFieldValue('prm_gra_spray_air', arrDelElement(formikProps.values.prm_gra_spray_air, index))}><DeleteForeverIcon /></Button>
