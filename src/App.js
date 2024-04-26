@@ -40,6 +40,9 @@ import ProductVMD from './MotherSite/Forms/Product/ViewMasterData/ProductVMD'
 import ViewPV from './MotherSite/Forms/Product/ViewPV/ViewPV'
 import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductRecorder'
 
+// Mailer
+import MailerMngList from './Mailer/MailerMngList';
+
 // ======================================================================================== [Import Component] CSS
 import './App.css';
 
@@ -98,6 +101,8 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     
+                    <Route path='/mailinglist' element={<MailerMngList handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
+                   
                     <Route path='/machinelist' element={<MachineVMD handlePageTitle = { handlePageTitle } handleSystemCode = { handleSystemCode } />} />
                     <Route path='/addmachine' element={
                         <MachineRecorder

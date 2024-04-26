@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import axios from 'axios';
 
-// import moment from 'moment';
+import moment from 'moment';
 // import 'moment/locale/ko';	//대한민국
 
 // ======================================================================================== [Import Material UI Libaray]
@@ -164,8 +164,7 @@ function UserRecorder(props){
                 user_pw : values.user_pw,
                 user_name : values.user_name,
                 user_nickname : values.user_nickname,
-                // user_birthday : moment(new Date(values.user_birthday)).format('YYYY-MM-DD'),
-                user_birthday : values.user_birthday,
+                user_birthday : moment(values.user_birthday).format('YYYY-MM-DD'),
                 user_gender : values.user_gender,
                 user_email : values.user_email,
                 user_phone : values.user_phone,

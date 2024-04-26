@@ -13,6 +13,7 @@ import BorderOuterIcon from '@mui/icons-material/BorderOuter';
 import ListIcon from '@mui/icons-material/List';
 import ShowerIcon from '@mui/icons-material/Shower';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
+import SendIcon from '@mui/icons-material/Send';
 
 // ======================================================================================== [Import Component] js
 import ListItemNavPath from '../ListItemWrapper/ListItemNavPath';
@@ -40,6 +41,7 @@ function Sys1List() {
                 <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color='sys1' size="small" />} text={sys1ListLang.viewUser[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color='sys1' size="small" />} text={sys1ListLang.viewProd[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color='sys1' size="small" />} text={sys1ListLang.viewMachine[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/mailinglist'} icon={<SendIcon color='sys1' size="small" />} text={sys1ListLang.mailinglist[cookies.load('site-lang')]} />
             </List>
             <Divider />
             <div style={{ marginLeft:'6px', fontSize: '11px', color: 'grey' }}>{{ kor: `공장 내부 전산망에 공개됨`, eng: `Accessible on the internal network of the factory` }[cookies.load('site-lang')]}</div>

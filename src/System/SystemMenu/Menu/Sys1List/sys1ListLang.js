@@ -15,6 +15,10 @@ const sys1ListLang = {
         kor : "설비/시스템 목록",
         eng : "Machine/System List"
     },
+    mailinglist : {
+        kor : "메일링 목록",
+        eng : "Mailig List"
+    },
     viewReQual : {
         kor : "정기적 재적격성 평가 목록",
         eng : "Periodic Re-Qual List"
