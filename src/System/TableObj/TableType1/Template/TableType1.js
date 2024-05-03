@@ -13,7 +13,7 @@ import TableHeader from '../Components/TableHeader/TableHeader';
 import tableType1Lang from './tableType1Lang';
 
 // ======================================================================================== [Import Component] CSS
-import './TableType1.css'
+import '../../../../Table/Table.css'
 
 
 // TableType1 props 작성 패턴

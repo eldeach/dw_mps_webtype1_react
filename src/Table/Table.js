@@ -1,5 +1,5 @@
 // ======================================================================================== [Import Libaray]
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import cookies from 'react-cookies'
 import axios from 'axios';
 import {
@@ -12,7 +12,6 @@ import {
     getPaginationRowModel
 } from "@tanstack/react-table";
 
-
 // ======================================================================================== [Import Material UI Libaray]
 import { IconButton, Pagination, TextField, CircularProgress, Backdrop } from '@mui/material';
 //icon
@@ -20,15 +19,14 @@ import ClearIcon from '@mui/icons-material/Clear';
 import AutoModeIcon from '@mui/icons-material/AutoMode';
 
 // ======================================================================================== [Import Component] js
-import ExcelDownButton from './TableExcelDownButton'
+import TableExcelDownButton from './TableExcelDownButton'
 import TableHeader from './TableHeader';
 
 
 // ======================================================================================== [Import Component] CSS
 import './Table.css'
 
-function PageTable({ reqParam, columns } ) {
-
+function Table({ size, reqParam, columns, setTableSelected }) {
     const style = {
         inputTexstField: {
             fontSize: 12,
@@ -37,11 +35,62 @@ function PageTable({ reqParam, columns } ) {
         }
     }
 
+
+    const [tblWidthValue, setTblWidthValue] = useState(null);
+    const tableRef = useRef(null);
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.target.className.includes("page-tbl")) {
+                    const { width } = entry.contentRect;
+                    setTblWidthValue(width);
+                }
+            }
+        });
+
+        resizeObserver.observe(tableRef.current);
+
+        return () => {
+            if (tableRef.current) {
+                resizeObserver.unobserve(tableRef.current);
+            }
+        };
+    }, []);
+
+
+    const [colTotalWidth, setColTotalWidth] = useState(null);
+    useEffect(() => {
+        let totalSize = 0;
+        for (const column of columns) {
+            if (column.size) {
+                totalSize += column.size;
+            }
+        }
+        setColTotalWidth(totalSize)
+    }, [])
+
+
     const [data, setData] = useState([]); // table의 data 변수
+    const getDbData = async () => {
+        backdropOpen()
+        let rs = await axios({ ...reqParam })
+            .then((res) => {
+                return res.data;
+            })
+            .catch((error) => {
+                console.log(error)
+                return error.response;
+            })
+        setData(rs)
+        backdropClose()
+    }
+    useEffect(() => {
+        getDbData()
+    }, [])
+
 
     const [filtering, setFiltering] = useState(""); // 선택된 row 정보 ("인덱스 : boolean" pair의 객체 구조)
-
-
+    const [rowSelection, setRowSelection] = useState({}); // 선택된 row 정보 ("인덱스 : boolean" pair의 객체 구조)
     const table = useReactTable({
         data,
         columns,
@@ -52,16 +101,31 @@ function PageTable({ reqParam, columns } ) {
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
-                pageSize: 18,
+                pageSize: size.tblNumRow,
                 pageIndex: 0
             },
         },
         state: {
             globalFilter: filtering,
+            rowSelection: rowSelection,
         },
         onGlobalFilterChanged: setFiltering,
+        onRowSelectionChange: setRowSelection, // 선택사항이 바뀔 때 수행할 함수, onChange 같은 거
         enableRowSelection: true, // selection을 허용할지 여부, row => row.original.age > 18 이런식으로 선택할 수 있는 범위를 한정할 수 있는듯 (from 유투브 - TanStack React Table v8 - Part 5 - Row Selection, Checkbox selection, Display Selected Rows)
     })
+
+
+    const rowOriginalExtractor = function () { //props.setTableSelected에 선택된 행의 original 객체만 하나씩 push
+        let tempArr = []
+        table.getSelectedRowModel().flatRows.map((oneRow, index) => { // 선택된 행 model 객체
+            tempArr.push(oneRow.original) // original키에 행 정보가 담겨있음
+        })
+        if (setTableSelected) setTableSelected(tempArr) // props.setTableSelected
+    }
+    useEffect(() => {
+        rowOriginalExtractor()
+    }, [rowSelection])
+
 
     const handlePaegChange = (event, value) => {
         table.setPageIndex(value - 1)
@@ -75,26 +139,8 @@ function PageTable({ reqParam, columns } ) {
         setBackdrop(true);
     };
 
-    const getDbData = async () => {
-        backdropOpen()
-        let rs = await axios({...reqParam})
-            .then((res) => {
-                return res.data;
-            })
-            .catch((error) => {
-                console.log(error)
-                return error.response;
-            })
-        setData(rs)
-        backdropClose()
-    }
-
-    useEffect(() => {
-        getDbData()
-    }, [])
-
     return (
-        <div className="page-tbl">
+        <div style={{ width: size.tableWidth }} className="page-tbl" ref={tableRef}>
             <div className='page-tbl-ctrl'>
                 <div style={{ display: 'flex', flexDirection: 'column', width: '490px' }}>
                     <div style={{ flexGrow: '1' }} />
@@ -106,6 +152,18 @@ function PageTable({ reqParam, columns } ) {
                             }[cookies.load('site-lang')]
                         }
                     </div>
+                    {
+                        setTableSelected ?
+                            <div style={{ fontSize: '12px', marginBottom: '3px' }}>
+                                {
+                                    {
+                                        kor: `선택됨 : ${table.getSelectedRowModel().flatRows.length} 행`,
+                                        eng: `Selected : ${table.getSelectedRowModel().flatRows.length} Rows`
+                                    }[cookies.load('site-lang')]
+                                }
+                            </div>
+                            : <div />
+                    }
                 </div>
                 <div style={{ flexGrow: '1', textAlign: 'center' }}>
                     <TextField
@@ -131,7 +189,7 @@ function PageTable({ reqParam, columns } ) {
                         InputLabelProps={{ style: style.inputTexstField }} // font size of input label
                     />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', width: '490px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: '510px' }}>
                     <div style={{ flexGrow: 1 }} />
                     <Pagination
                         sx={{ mt: 1 }}
@@ -145,7 +203,7 @@ function PageTable({ reqParam, columns } ) {
                     <IconButton size="small" edge="end" color="primary" sx={{ ml: 0.5, mt: 0.5 }} onClick={() => getDbData()} >
                         <AutoModeIcon />
                     </IconButton>
-                    <ExcelDownButton data={data} sheetName={reqParam.url.replace(`/`, "")} />
+                    <TableExcelDownButton data={data} sheetName={reqParam.url.replace(`/`, "")} />
                 </div>
             </div>
             <div className="page-tbl-box">
@@ -156,7 +214,7 @@ function PageTable({ reqParam, columns } ) {
                                 <tr key={headerGroup.id} style={{ fontSize: '12px' }}>
                                     {
                                         headerGroup.headers.map(header => (
-                                            <TableHeader key={header.id} header={header} />
+                                            <TableHeader key={header.id} header={header} tblWidthValue={tblWidthValue} colTotalWidth={colTotalWidth} />
                                         ))
                                     }
                                 </tr>
@@ -181,12 +239,6 @@ function PageTable({ reqParam, columns } ) {
                         }
                     </tbody>
                 </table>
-                {/* <div>
-                <button onClick={() => table.setPageIndex(0)}> go to first </button>
-                <button onClick={() => table.previousPage()} > previous </button>
-                <button onClick={() => table.nextPage()} > next </button>
-                <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}  > last </button>
-            </div> */}
             </div>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -198,4 +250,4 @@ function PageTable({ reqParam, columns } ) {
     )
 }
 
-export default PageTable;
+export default Table;

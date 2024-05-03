@@ -1,8 +1,7 @@
 // ======================================================================================== [Import Libaray]
 import { flexRender } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import cookies from 'react-cookies'
-
 
 // ======================================================================================== [Import Material UI Libaray]
 import { IconButton } from '@mui/material';
@@ -18,14 +17,24 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 
 // ======================================================================================== [Import Component] CSS
 
-function TableHeader(props) {
+function TableHeader({ header, tblWidthValue, colTotalWidth }) {
 
-    const { header } = props;
+    const [thWidth, setThWidth] = useState(null);
+    useEffect(() => {
+        if (tblWidthValue) {
+            setThWidth(Math.round((tblWidthValue - 30) * (header.getSize() / colTotalWidth)))
+        }
+    }, [tblWidthValue]);
+
 
     const sortedUniqueValues = useMemo(() => {
-        const values = Array.from(header.column.getFacetedUniqueValues().keys()).sort();
-        return values;
-    },[header.column.getFacetedUniqueValues()])
+        let values = []
+            header.id != "SELECT" ? (
+                header.id != "ACTION" ? values = Array.from(header.column.getFacetedUniqueValues().keys()).sort()
+                : values = []
+             ) : values = []
+            return values;
+    })
 
     const onFilterChange = (value) => {
         if (value === "null") {
@@ -48,24 +57,24 @@ function TableHeader(props) {
     }
     const [optionValue, setOptionValue] = useState(null)
     const [inputValue, setInputValue] = useState("")
-    
+
     return (
         <th
             key={header.id}
             style={{
                 minWidth: header.getSize(),
-                width: header.getSize(),
-                maxWidth: header.getSize(),
+                width: thWidth,
+                maxWidth: thWidth,
             }}
         >
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {
                     { asc: <ExpandLessIcon sx={{ fontSize: '20px', pb: 0.3, mr: 'auto' }} />, desc: <ExpandMoreIcon sx={{ fontSize: '20px', pb: 0.3, mr: 'auto' }} /> }[header.column.getIsSorted()]
                 }
                 {
                     header.column.getCanSort() && !header.column.getIsSorted() ? (<UnfoldMoreIcon sx={{ fontSize: '20px', pb: 0.3, mr: 'auto' }} />) : null
                 }
-                <div onClick={header.column.getToggleSortingHandler()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  cursor: header.column.getCanSort() ? "pointer" : "default", }} >
+                <div onClick={header.column.getToggleSortingHandler()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: header.column.getCanSort() ? "pointer" : "default", }} >
                     {
                         header.isPlaceholder ? null
                             : flexRender(
@@ -76,7 +85,7 @@ function TableHeader(props) {
                     }
                 </div>
                 {
-                    header.id === "select" ? null :
+                    (header.id === "SELECT" || header.id === "ACTION") ? null :
                         header.column.getCanFilter() ?
                             <IconButton size="small" edge="end" color='inherit' sx={{ ml: 'auto', mr: 0.4, p: 0 }} onClick={handleFilterToggle}>
                                 {
@@ -97,19 +106,20 @@ function TableHeader(props) {
                             }} >
                                 <option value="null">
                                     {{
-                                        kor : "선택 안 함",
-                                        eng : "Not choosing"
+                                        kor: "선택 안 함",
+                                        eng: "Not choosing"
                                     }[cookies.load('site-lang')]}
                                 </option>
                                 {
                                     sortedUniqueValues.map((value) => <option key={value}>{value}</option>)
                                 }
                             </select>
-                            <input value = {inputValue} onChange={({ currentTarget: { value } }) => {
+                            <input value={inputValue} onChange={({ currentTarget: { value } }) => {
                                 setOptionValue("null")
                                 setInputValue(value)
-                                onFilterChange(value)}
-                                } />
+                                onFilterChange(value)
+                            }
+                            } />
                         </div>
                         : null
                 ) : null
