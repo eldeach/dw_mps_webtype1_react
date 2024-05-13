@@ -29,11 +29,11 @@ function TableHeader({ header, tblWidthValue, colTotalWidth }) {
 
     const sortedUniqueValues = useMemo(() => {
         let values = []
-            header.id != "SELECT" ? (
-                header.id != "ACTION" ? values = Array.from(header.column.getFacetedUniqueValues().keys()).sort()
+        header.id != "SELECT" ? (
+            header.id != "ACTION" ? values = Array.from(header.column.getFacetedUniqueValues().keys()).sort()
                 : values = []
-             ) : values = []
-            return values;
+        ) : values = []
+        return values;
     })
 
     const onFilterChange = (value) => {

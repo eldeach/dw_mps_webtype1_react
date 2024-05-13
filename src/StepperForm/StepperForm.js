@@ -22,6 +22,7 @@ import Check from "@mui/icons-material/Check";
 import SettingsIcon from '@mui/icons-material/Settings';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import VideoLabelIcon from '@mui/icons-material/VideoLabel';
+import { makeStyles } from '@material-ui/core';
 
 // ======================================================================================== [Import Component] js
 // N/A
@@ -71,12 +72,6 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
     function ColorlibStepIcon(props) {
         const { active, completed, error, className } = props;
 
-        const icons = {
-            1: <SettingsIcon />,
-            2: <GroupAddIcon />,
-            3: <VideoLabelIcon />,
-        };
-
         return (
             <ColorlibStepIconRoot ownerState={{ completed, active, error }} className={className}>
                 {!completed && !error &&
@@ -90,11 +85,10 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                     </div>
                 }
                 {/* {icons[String(props.icon)]} */}
-                {completed && !error && <Check />}
+                {completed && !error && <Check fontSize='12px' />}
             </ColorlibStepIconRoot>
         );
     }
-
     return (
         <Formik
             validationSchema={yupSchema}
@@ -115,17 +109,26 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                 >
                     <Stepper activeStep={activeStep} orientation="vertical" >
                         {steps.map((step, index) => (
-                            <Step key={step.label} >
+                            <Step key={step.label}>
                                 <StepLabel
-                                    // StepIconComponent={ColorlibStepIcon}
+                                    StepIconComponent={ColorlibStepIcon}
                                     optional={
                                         index === (steps.length - 1) ? (
                                             <Typography variant="caption">Last step</Typography>
                                         ) : null
                                     }
                                     error={step.errStat(formikProps)}
+
                                 >
-                                    {step.label}
+                                    <div style={{
+                                        cursor: 'pointer',
+                                        // backgroundColor: 'transparent',
+                                        // border: '0px'
+                                    }}
+                                        onClick={() => { setActiveStep(index) }}
+                                    >
+                                        {step.label}
+                                    </div>
                                 </StepLabel>
                                 <StepContent>
                                     <Typography>{step.description}</Typography>
@@ -138,7 +141,7 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                                                 onClick={handleNext}
                                                 sx={{ mt: 1, mr: 1 }}
                                             >
-                                                {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                                                {index === steps.length - 1 ? {kor:'완료', eng:'Finish'}[cookies.load('site-lang')] : {kor:'계속', eng:'Continue'}[cookies.load('site-lang')]}
                                             </Button>
                                             <Button
                                                 color={muiColor}
@@ -146,7 +149,7 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                                                 onClick={handleBack}
                                                 sx={{ mt: 1, mr: 1 }}
                                             >
-                                                Back
+                                                {{kor:'뒤로', eng:'Back'}[cookies.load('site-lang')]}
                                             </Button>
                                         </div>
                                     </Box>
@@ -156,19 +159,19 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                     </Stepper>
                     {activeStep === steps.length && (
                         <Paper square elevation={0} sx={{ p: 3 }}>
-                            <Typography>All steps completed - you&apos;re finished</Typography>
+                            <Typography>{{kor:'모든 스텝이 완료되었습니다.', eng:'All steps have been completed'}[cookies.load('site-lang')]}</Typography>
                             <Button
                                 color={muiColor}
                                 type="submit"
                                 form={formId}
                                 sx={{ mt: 1, mr: 1 }}>
-                                Submit
+                                {{kor:'제출', eng:'Submit'}[cookies.load('site-lang')]}
                             </Button>
                             <Button
                                 color={muiColor}
                                 onClick={handleBack}
                                 sx={{ mt: 1, mr: 1 }}>
-                                Back
+                                {{kor:'뒤로', eng:'Back'}[cookies.load('site-lang')]}
                             </Button>
                         </Paper>
                     )}

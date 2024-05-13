@@ -101,7 +101,17 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
 
-                    <Route path='/mailingadd' element={<MailerAddEmail handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
+                    <Route path='/mailingadd' element={
+                        <MailerAddEmail
+                            handlePageTitle={handlePageTitle}
+                            handleSystemCode={handleSystemCode}
+                            initialValues={{
+                                mailing_object: '',
+                                email_address: '',
+                                mailing_role: ''
+                            }}
+                        />
+                    } />
                     <Route path='/mailinglist' element={<MailerMngList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
 
                     <Route path='/machinelist' element={<MachineVMD handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />

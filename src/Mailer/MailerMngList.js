@@ -9,6 +9,7 @@ import { Button } from '@mui/material/';
 // Material Icons
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 // ======================================================================================== [Import Component] js
 import Table from '../Table/Table'
@@ -41,6 +42,7 @@ function MailerMngList(props) {
                     tableWidth: '96vw',
                     tblNumRow: 5
                 }}
+                muiColor='sys1'
                 reqParam={{
                     method: 'get',
                     url: '/mailingmnglist',
@@ -48,6 +50,7 @@ function MailerMngList(props) {
                         'Content-Type': 'application/json'
                     }
                 }}
+                multiSelectable = {true}
                 setTableSelected={setTableSelected}
                 columns={columnDef}
             />
@@ -58,20 +61,41 @@ function MailerMngList(props) {
 export default MailerMngList;
 
 function test1(row) {
-    return (<button style={{ fontSzie: '12px' }} onClick={() => { alert(row.mng_name) }}>
+    return (<button onClick={() => { alert(row.mng_name) }}>
         <BorderColorIcon sx={{ fontSize: 'inherit' }} />
     </button>)
 }
 function test2(row) {
-    return (<button style={{ fontSzie: '12px' }} onClick={() => { console.log(row.MNG_CODE) }}>
+    return (<button onClick={() => {
+        if (window.confirm("삭제하시겠습니까?")) {
+            alert(`${row.MNG_CODE} 삭제완료`);
+            window.location.reload();
+        }
+        else {
+            alert("취소");
+        }
+    }}>
         <DeleteForeverIcon sx={{ fontSize: 'inherit' }} />
+    </button>)
+}
+function test3(row) {
+    return (<button onClick={() => {
+        if (window.confirm("비활성화 하시겠습니까?")) {
+            alert(`${row.MNG_CODE} 비활성화 완료`);
+            window.location.reload();
+        }
+        else {
+            alert("취소");
+        }
+    }}>
+        <RemoveCircleOutlineIcon sx={{ fontSize: 'inherit' }} />
     </button>)
 }
 
 
 const columnHelper = createColumnHelper();
 const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
-    TableActionColumn([test1, test2]),
+    TableActionColumn([test1, test2, test3]),
     TableCheckColumn,
     columnHelper.accessor("MNG_CODE",
         {
@@ -98,6 +122,13 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
         {
             header: { kor: "이메일 역할", eng: "EMAIL ROLE" },
             size: 170,
+            enableColumnFilter: true,
+        }
+    ),
+    columnHelper.accessor("USE_YN",
+        {
+            header: { kor: "사용여부", eng: "In Use" },
+            size: 80,
             enableColumnFilter: true,
         }
     )

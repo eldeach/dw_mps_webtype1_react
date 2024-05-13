@@ -11,7 +11,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 // ======================================================================================== [Import Component] CSS
 
-function ExcelDownButton({ data, sheetName }) {
+function ExcelDownButton({ data, muiColor, sheetName }) {
     const download = async () => {
         // workbook(엑셀 파일 하나를 구성하는 여러 시트로 이루어진 단위) 생성
         const workbook = new ExcelJS.Workbook();
@@ -46,7 +46,7 @@ function ExcelDownButton({ data, sheetName }) {
     };
 
     return (
-        <IconButton size="small" edge="end" color="primary" sx={{ ml: 0.5, mt: 0.5 }} onClick={() => download()}>
+        <IconButton size="small" edge="end" color={muiColor} sx={{ ml: 0.5, mt: 0.5 }} onClick={() => download()}>
             <CloudDownloadIcon />
         </IconButton>
     )

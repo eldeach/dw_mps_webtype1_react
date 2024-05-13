@@ -26,7 +26,7 @@ import TableHeader from './TableHeader';
 // ======================================================================================== [Import Component] CSS
 import './Table.css'
 
-function Table({ size, reqParam, columns, setTableSelected }) {
+function Table({ size, muiColor, reqParam, multiSelectable, columns, setTableSelected }) {
     const style = {
         inputTexstField: {
             fontSize: 12,
@@ -109,6 +109,7 @@ function Table({ size, reqParam, columns, setTableSelected }) {
             globalFilter: filtering,
             rowSelection: rowSelection,
         },
+        enableMultiRowSelection : multiSelectable,
         onGlobalFilterChanged: setFiltering,
         onRowSelectionChange: setRowSelection, // 선택사항이 바뀔 때 수행할 함수, onChange 같은 거
         enableRowSelection: true, // selection을 허용할지 여부, row => row.original.age > 18 이런식으로 선택할 수 있는 범위를 한정할 수 있는듯 (from 유투브 - TanStack React Table v8 - Part 5 - Row Selection, Checkbox selection, Display Selected Rows)
@@ -168,7 +169,7 @@ function Table({ size, reqParam, columns, setTableSelected }) {
                 <div style={{ flexGrow: '1', textAlign: 'center' }}>
                     <TextField
                         sx={{ width: '400px', mb: 0.5 }}
-                        color='primary'
+                        color={muiColor}
                         variant="outlined"
                         id="search_field"
                         name="search_field"
@@ -199,11 +200,11 @@ function Table({ size, reqParam, columns, setTableSelected }) {
                         page={table.options.state.pagination.pageIndex + 1}
                         onChange={handlePaegChange}
                         variant="outlined"
-                        color="primary" />
-                    <IconButton size="small" edge="end" color="primary" sx={{ ml: 0.5, mt: 0.5 }} onClick={() => getDbData()} >
+                        color={muiColor} />
+                    <IconButton size="small" edge="end" color={muiColor} sx={{ ml: 0.5, mt: 0.5 }} onClick={() => getDbData()} >
                         <AutoModeIcon />
                     </IconButton>
-                    <TableExcelDownButton data={data} sheetName={reqParam.url.replace(`/`, "")} />
+                    <TableExcelDownButton data={data} muiColor={muiColor} sheetName={reqParam.url.replace(`/`, "")} />
                 </div>
             </div>
             <div className="page-tbl-box">
