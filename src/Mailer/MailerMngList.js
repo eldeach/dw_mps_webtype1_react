@@ -45,7 +45,7 @@ function MailerMngList(props) {
                 muiColor='sys1'
                 reqParam={{
                     method: 'get',
-                    url: '/mailingmnglist',
+                    url: '/mailinggetlist',
                     headers: {
                         'Content-Type': 'application/json'
                     }
