@@ -132,7 +132,7 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                                 </StepLabel>
                                 <StepContent>
                                     <Typography>{step.description}</Typography>
-                                    <step.content formikProps={formikProps} />
+                                    <step.Content formikProps={formikProps} />
                                     <Box sx={{ mb: 2 }}>
                                         <div>
                                             <Button

@@ -26,7 +26,7 @@ import TableHeader from './TableHeader';
 // ======================================================================================== [Import Component] CSS
 import './Table.css'
 
-function Table({ size, muiColor, reqParam, multiSelectable, columns, setTableSelected }) {
+function Table({ size, muiColor, reqParam, extGetDataFunc, multiSelectable, columns, setTableSelected }) {
     const style = {
         inputTexstField: {
             fontSize: 12,
@@ -73,15 +73,20 @@ function Table({ size, muiColor, reqParam, multiSelectable, columns, setTableSel
     const [data, setData] = useState([]); // table의 data 변수
     const getDbData = async () => {
         backdropOpen()
-        let rs = await axios({ ...reqParam })
-            .then((res) => {
-                return res.data;
-            })
-            .catch((error) => {
-                console.log(error)
-                return error.response;
-            })
-        setData(rs)
+        if (extGetDataFunc) {
+            let rs = await extGetDataFunc(reqParam)
+            setData(rs)
+        } else {
+            let rs = await axios(reqParam)
+                .then((res) => {
+                    return res.data;
+                })
+                .catch((error) => {
+                    alert(error.response)
+                    return [];
+                })
+            setData(rs)
+        }
         backdropClose()
     }
     useEffect(() => {
@@ -109,7 +114,7 @@ function Table({ size, muiColor, reqParam, multiSelectable, columns, setTableSel
             globalFilter: filtering,
             rowSelection: rowSelection,
         },
-        enableMultiRowSelection : multiSelectable,
+        enableMultiRowSelection: multiSelectable,
         onGlobalFilterChanged: setFiltering,
         onRowSelectionChange: setRowSelection, // 선택사항이 바뀔 때 수행할 함수, onChange 같은 거
         enableRowSelection: true, // selection을 허용할지 여부, row => row.original.age > 18 이런식으로 선택할 수 있는 범위를 한정할 수 있는듯 (from 유투브 - TanStack React Table v8 - Part 5 - Row Selection, Checkbox selection, Display Selected Rows)
@@ -200,7 +205,8 @@ function Table({ size, muiColor, reqParam, multiSelectable, columns, setTableSel
                         page={table.options.state.pagination.pageIndex + 1}
                         onChange={handlePaegChange}
                         variant="outlined"
-                        color={muiColor} />
+                        color={muiColor}
+                    />
                     <IconButton size="small" edge="end" color={muiColor} sx={{ ml: 0.5, mt: 0.5 }} onClick={() => getDbData()} >
                         <AutoModeIcon />
                     </IconButton>

@@ -41,8 +41,8 @@ import ViewPV from './MotherSite/Forms/Product/ViewPV/ViewPV'
 import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductRecorder'
 
 // Mailer
-import MailerAddEmail from './Mailer/MailerAddEmail';
-import MailerMngList from './Mailer/MailerMngList';
+import MailingList from './Mailing/MailingList';
+import MailingAddList from './Mailing/MailingAddList';
 
 // ======================================================================================== [Import Component] CSS
 import './App.css';
@@ -101,18 +101,19 @@ function App() {
                     <Route path='/myprepared' element={<MyPrepared handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
                     <Route path='/myreview' element={<MyReview handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
 
-                    <Route path='/mailingadd' element={
-                        <MailerAddEmail
+                    <Route path='/mailingaddlist' element={
+                        <MailingAddList
                             handlePageTitle={handlePageTitle}
                             handleSystemCode={handleSystemCode}
-                            initialValues={{
-                                mailing_object: '',
-                                email_address: '',
-                                mailing_role: ''
-                            }}
                         />
                     } />
-                    <Route path='/mailinglist' element={<MailerMngList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
+                    <Route path='/mailingupdlist' element={
+                        <MailingAddList
+                            handlePageTitle={handlePageTitle}
+                            handleSystemCode={handleSystemCode}
+                        />
+                    } />
+                    <Route path='/mailinglist' element={<MailingList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
 
                     <Route path='/machinelist' element={<MachineVMD handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
                     <Route path='/addmachine' element={
