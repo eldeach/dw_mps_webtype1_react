@@ -77,7 +77,7 @@ function Table({ size, muiColor, reqParam, extGetDataFunc, multiSelectable, colu
             let rs = await extGetDataFunc(reqParam)
             setData(rs)
         } else {
-            let rs = await axios(reqParam)
+            let rs = await axios({ ...reqParam })
                 .then((res) => {
                     return res.data;
                 })

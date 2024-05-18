@@ -174,36 +174,44 @@ function MailingAddListitem() {
             MNG_CODE: values.MNG_CODE,
             EMAIL_ADDRESS: values.EMAIL_ADDRESS,
             EMAIL_ROLE: values.EMAIL_ROLE,
-            UUID_STR : values.UUID_STR
+            UUID_STR: values.UUID_STR
         }
+
+        let reqMethod = ''
+        let reqUrl = ''
 
         if (location.pathname == '/mailingaddlist') {
-            let rs = await axios.post('/reqmailingaddlist', valuePayload)
-                .then((res) => {
-                    console.log(res)
-                    navigate('/submitsuccess')
-                    return res
-                })
-                .catch((error) => {
-                    return error.response
-                })
-
-            console.log(rs.status)
-            if (rs.status === 200) {
-                actions.resetForm()
-            } else if (rs.status === 452) {
-                alert(rs.data[cookies.load('site-lang')])
-            } else if (rs.status === 512) {
-                alert(rs.data[cookies.load('site-lang')])
-            }
-            else {
-                alert(rs)
-            }
+            reqMethod = 'post'
+            reqUrl = 'reqmailingaddlist'
         } else if (location.pathname == '/mailingupdlist') {
-            alert("수정모드")
+            reqMethod = 'put'
+            reqUrl = 'reqmailingupdlist'
         }
 
-
+        let reqParam = {
+            method: reqMethod,
+            url: reqUrl,
+            params: {
+                valuePayload: valuePayload
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        await axios(reqParam)
+            .then((res) => {
+                let rs = res.data;
+                if (rs.output.P_RESULT == "SUCCESS") {
+                    actions.resetForm();
+                    navigate('/submitsuccess');
+                } else if (rs.output.P_RESULT == "ERROR") {
+                    alert(`${rs.output.P_VALUE}`)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error.response)
+            })
     }
 
     return (

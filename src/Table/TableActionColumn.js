@@ -11,11 +11,11 @@ import cookies from 'react-cookies'
 // ======================================================================================== [Import Component] CSS
 // N/A
 
-const TableActionColumn = (actions) => {
+const TableActionColumn = (size, actions) => {
     return (
         {
             id: "ACTION",
-            size: 80, // TanStack Table은 컬럼 사이즈가 20이 최소
+            size: size, // TanStack Table은 컬럼 사이즈가 20이 최소
             header: { kor: '액션', eng: 'Action' },
             cell: ({ row }) => (
                 <div>

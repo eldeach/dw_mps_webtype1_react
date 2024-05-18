@@ -19,10 +19,9 @@ import TableActionColumn from '../Table/TableActionColumn'
 // ======================================================================================== [Import Component] CSS
 // N/A
 
-function MailingGetList(props) {
+function MailingList(props) {
     const { handlePageTitle, handleSystemCode } = props
 
-    const [tblData, setTblData] = useState([]);
     const [tableSelected, setTableSelected] = useState([]);
 
     useEffect(() => {
@@ -32,133 +31,125 @@ function MailingGetList(props) {
 
     let naviagte = useNavigate();
 
-
-    const getData = async (reqParam) => {
-        let rs = await axios(reqParam)
-            .then((res) => {
-                let rs = res.data;
-                if (rs.output.P_RESULT == "SUCCESS") {
-                    return rs.recordsets[0];
-                } else if (rs.output.P_RESULT == "ERROR") {
-                    alert(`${rs.output.P_VALUE}`)
-                    return [];
+    const selectedUseYN = async (useYN) => {
+        let stmt = '비활성화'
+        if (useYN == 'Y') stmt = '활성화'
+        else stmt = '비활성화'
+        if (window.confirm(`${tableSelected.length}개 항목을 ${stmt} 하시겠습니까?`)) {
+            let disableRows = []
+            tableSelected.map((value, index) => {
+                disableRows.push(value.UUID_STR)
+            })
+            let reqParam = {
+                method: "put",
+                url: "/reqmailingguseynlist",
+                params: {
+                    disableRows: disableRows,
+                    useyn: useYN
+                },
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            })
-            .catch((error) => {
-                alert(error.response)
-                return [];
-            })
-        return rs;
-    }
-    return (
-        <div>
-            <Button onClick={() => {
-                naviagte('/mailingaddlist', {
-                    state: {
-                        initialValues: {
-                            MNG_CODE: '',
-                            EMAIL_ADDRESS: '',
-                            EMAIL_ROLE: '',
-                            UUID_STR: ''
-                        }
+            }
+            await axios(reqParam)
+                .then((res) => {
+                    let rs = res.data;
+                    if (rs.output.P_RESULT == "SUCCESS") {
+                        alert(`${tableSelected.length}개 ${stmt} 완료`);
+                        window.location.reload();
+                    } else if (rs.output.P_RESULT == "ERROR") {
+                        alert(`${rs.output.P_VALUE}`)
                     }
                 })
-            }}>
+                .catch((error) => {
+                    alert(error.response)
+                })
+        }
+        else {
+            alert("취소");
+        }
+    }
 
-                ADD
-            </Button>
-            <Button onClick={async () => {
-                if (window.confirm(`${tableSelected.length}개 항목을 삭제하시겠습니까?`)) {
-                    let delRows = []
-                    tableSelected.map((value, index) => {
-                        delRows.push(value.UUID_STR)
-                    })
-                    let reqParam = {
-                        method: "delete",
-                        url: "/reqmailinggdelist",
-                        params: {
-                            delRows: delRows
-                        },
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }
-                    await axios(reqParam)
-                        .then((res) => {
-                            let rs = res.data;
-                            if (rs.output.P_RESULT == "SUCCESS") {
-                                alert(`${tableSelected.length}개 삭제완료`);
-                                window.location.reload();
-                            } else if (rs.output.P_RESULT == "ERROR") {
-                                alert(`${rs.output.P_VALUE}`)
+    return (
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: '96vw', display: 'flex', flexDirection: 'row', fontSize: '12px' }}>
+                <Button sx={{ ml: 1, mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={() => {
+                    naviagte('/mailingaddlist', {
+                        state: {
+                            initialValues: {
+                                MNG_CODE: '',
+                                EMAIL_ADDRESS: '',
+                                EMAIL_ROLE: '',
+                                UUID_STR: ''
                             }
-                        })
-                        .catch((error) => {
-                            alert(error.response)
-                        })
-                }
-                else {
-                    alert("취소");
-                }
-            }}>
-                DEL
-            </Button>
-            <Button onClick={async () => {
-                if (window.confirm(`${tableSelected.length}개 항목을 비활성화 하시겠습니까?`)) {
-                    let disableRows = []
-                    tableSelected.map((value, index) => {
-                        disableRows.push(value.UUID_STR)
-                    })
-                    // let params = {
-                    //     disableRows: disableRows,
-                    //     useyn: 'N'
-                    // }
-                    // await axios.put("/reqmailingguseynlist", params)
-                    //     .then(() => {
-                    //         alert(`${tableSelected.length}개 비활성화 완료`);
-                    //         window.location.reload();
-                    //     })
-                    //     .catch(() => {
-                    //         alert(`문제가 발생했습니다.`)
-                    //     })
-                    let reqParam = {
-                        method: "put",
-                        url: "/reqmailingguseynlist",
-                        params: {
-                            disableRows: disableRows,
-                            useyn: 'N'
-                        },
-                        headers: {
-                            'Content-Type': 'application/json'
                         }
-                    }
-                    await axios(reqParam)
-                        .then((res) => {
-                            let rs = res.data;
-                            if (rs.output.P_RESULT == "SUCCESS") {
-                                alert(`${tableSelected.length}개 비활성화 완료`);
-                                window.location.reload();
-                            } else if (rs.output.P_RESULT == "ERROR") {
-                                alert(`${rs.output.P_VALUE}`)
+                    })
+                }}>
+                    ADD
+                </Button>
+                <Button sx={{ mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={async () => {
+                    if (window.confirm(`${tableSelected.length}개 항목을 삭제하시겠습니까?`)) {
+                        let delRows = []
+                        tableSelected.map((value, index) => {
+                            delRows.push(value.UUID_STR)
+                        })
+                        let reqParam = {
+                            method: "delete",
+                            url: "/reqmailinggdelist",
+                            params: {
+                                delRows: delRows
+                            },
+                            headers: {
+                                'Content-Type': 'application/json'
                             }
-                        })
-                        .catch((error) => {
-                            alert(error.response)
-                        })
-                }
-                else {
-                    alert("취소");
-                }
-            }}>
-                DISABLE
-            </Button>
+                        }
+                        await axios(reqParam)
+                            .then((res) => {
+                                let rs = res.data;
+                                if (rs.output.P_RESULT == "SUCCESS") {
+                                    alert(`${tableSelected.length}개 삭제완료`);
+                                    window.location.reload();
+                                } else if (rs.output.P_RESULT == "ERROR") {
+                                    alert(`${rs.output.P_VALUE}`)
+                                }
+                            })
+                            .catch((error) => {
+                                alert(error.response)
+                            })
+                    }
+                    else {
+                        alert("취소");
+                    }
+                }}>
+                    DEL
+                </Button>
+                <Button sx={{ mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={async () => { selectedUseYN('Y') }}>ACTIVATE</Button>
+                <Button sx={{ mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={async () => { selectedUseYN('N') }}>DISABLE</Button>
+                <div style={{ flexGrow: 1 }} />
+            </div>
             <Table
                 size={{
                     tableWidth: '96vw',
                     tblNumRow: 5
                 }}
                 muiColor='sys1'
-                extGetDataFunc={getData}
+                extGetDataFunc={async (reqParam) => {
+                    let rs = await axios(reqParam)
+                        .then((res) => {
+                            let rs = res.data;
+                            if (rs.output.P_RESULT == "SUCCESS") {
+                                return rs.recordsets[0];
+                            } else if (rs.output.P_RESULT == "ERROR") {
+                                alert(`${rs.output.P_VALUE}`)
+                                return [];
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error.response)
+                            return [];
+                        })
+                    return rs;
+                }}
                 reqParam={{
                     method: 'get',
                     url: '/reqmailinggetlist',
@@ -174,11 +165,11 @@ function MailingGetList(props) {
     )
 }
 
-export default MailingGetList;
+export default MailingList;
 
 function MailingUpdList(row) {
     const navigate = useNavigate()
-    return (<button onClick={() => {
+    return (<Button variant='outlined' color='sys1' onClick={() => {
         navigate('/mailingupdlist', {
             state: {
                 initialValues: {
@@ -191,36 +182,12 @@ function MailingUpdList(row) {
         })
     }}>
         <BorderColorIcon sx={{ fontSize: 'inherit' }} />
-    </button>)
+    </Button>)
 }
-function disableList(row) {
-    return (<button onClick={async () => {
-        if (window.confirm("비활성화 하시겠습니까?")) {
-            let params = {
-                disableRows: [row.UUID_STR],
-                useyn: 'N'
-            }
-            await axios.put("/reqmailingguseynlist", params)
-                .then(() => {
-                    alert(`${row.MNG_CODE} 비활성화 완료`);
-                    window.location.reload();
-                })
-                .catch(() => {
-                    alert(`문제가 발생했습니다.`)
-                })
-        }
-        else {
-            alert("취소");
-        }
-    }}>
-        <RemoveCircleOutlineIcon sx={{ fontSize: 'inherit' }} />
-    </button>)
-}
-
 
 const columnHelper = createColumnHelper();
 const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
-    TableActionColumn([MailingUpdList, disableList]),
+    TableActionColumn(40, [MailingUpdList]),
     TableCheckColumn,
     columnHelper.accessor("MNG_CODE",
         {
