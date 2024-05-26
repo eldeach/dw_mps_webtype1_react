@@ -19,10 +19,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 //icon
 import Check from "@mui/icons-material/Check";
-import SettingsIcon from '@mui/icons-material/Settings';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
-import { makeStyles } from '@material-ui/core';
 
 // ======================================================================================== [Import Component] js
 // N/A
@@ -30,7 +26,7 @@ import { makeStyles } from '@material-ui/core';
 // ======================================================================================== [Import Component] CSS
 // N/A
 
-function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmitFunc, formId }) {
+function StepperForm({ size, muiColor, yupSchema, steps, initialValues, otherState, onSubmitFunc, formId }) {
 
     const [backdrop, setBackdrop] = useState(false);
     const backdropClose = () => {
@@ -132,7 +128,7 @@ function StepperForm({ size, muiColor, yupSchema, steps, initialValues, onSubmit
                                 </StepLabel>
                                 <StepContent>
                                     <Typography>{step.description}</Typography>
-                                    <step.Content formikProps={formikProps} />
+                                    <step.Content formikProps={formikProps} otherState = {otherState}/>
                                     <Box sx={{ mb: 2 }}>
                                         <div>
                                             <Button

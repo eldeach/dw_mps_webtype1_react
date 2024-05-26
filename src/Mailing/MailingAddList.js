@@ -7,7 +7,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // ======================================================================================== [Import Material UI Libaray]
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 //icon
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -29,9 +30,11 @@ const style = {
 }
 
 const yupSchema = yup.object().shape({
-    MNG_CODE: yup.string()
+    MNG_CODE: yup.object()
         .required("입력필요"),
     EMAIL_ADDRESS: yup.string()
+        .required("입력필요"),
+    RECEIVE_TYPE: yup.object()
         .required("입력필요"),
 });
 
@@ -42,37 +45,40 @@ const steps = [
         errStat: (formikProps) => {
             return (formikProps.touched.MNG_CODE && Boolean(formikProps.errors.MNG_CODE))
         },
-        Content: ({ formikProps }) => {
+        Content: ({ formikProps, otherState }) => {
             let location = useLocation()
+            let machineNameList = otherState.machineNameList;
+
             return (
                 <div>
-                    <TextField
-                        required
+                    <Autocomplete
                         disabled={location.pathname == "/mailingupdlist"}
-                        variant="outlined"
-                        id="MNG_CODE"
-                        name="MNG_CODE"
-                        label="Mailing Object"
                         value={formikProps.values.MNG_CODE}
-                        onChange={(e) => {
-                            formikProps.handleChange(e);
-                            formikProps.setFieldValue('MNG_CODE', e.target.value.trim()); // 입력 값의 양 옆 공백 제거 후 저장
+                        onChange={(e, v) => {
+                            formikProps.handleChange(e)
+                            formikProps.setFieldValue('MNG_CODE', v);
                         }}
-                        onBlur={formikProps.handleBlur}
-                        helperText={formikProps.touched.MNG_CODE ? formikProps.errors.MNG_CODE : ""}
-                        error={formikProps.touched.MNG_CODE && Boolean(formikProps.errors.MNG_CODE)}
-                        size='small'
+                        disablePortal
+                        size="small"
                         margin="dense"
                         fullWidth
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton size='small' onClick={() => { formikProps.setFieldValue('MNG_CODE', '') }}>
-                                    <ClearIcon size='small' />
-                                </IconButton>
-                            ),
-                            style: style.inputTexstField // font size of input text
-                        }}
-                        InputLabelProps={{ style: style.inputTexstField }} // font size of input label
+                        id="MNG_CODE"
+                        options={machineNameList}
+                        getOptionLabel={(option) => option.mng_name}
+                        renderOption={(props, option) => (
+                            <Box component="li" {...props}>
+                                {`(${option.mng_code}) ${option.mng_name} / ${option.mng_team}`}
+                            </Box>
+                        )}
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                color="sys1"
+                                label={`${{ kor: `메일링 대상`, eng: `Machine that provides information via mailing` }[cookies.load(`site-lang`)]}`}
+                                inputProps={{
+                                    ...params.inputProps,
+                                }}
+                            />}
                     />
                 </div>
             )
@@ -84,7 +90,7 @@ const steps = [
         errStat: (formikProps) => {
             return (formikProps.touched.EMAIL_ADDRESS && Boolean(formikProps.errors.EMAIL_ADDRESS))
         },
-        Content: ({ formikProps }) => {
+        Content: ({ formikProps, otherState}) => {
             return (
                 <div>
                     <TextField
@@ -119,40 +125,95 @@ const steps = [
         }
     },
     {
+        label: { kor: `수신 유형`, eng: `Receiving Type` }[cookies.load(`site-lang`)],
+        description: { kor: `이메일 수신자 유형을 지정해주세요.`, eng: `Please specify the type of email recipient.` }[cookies.load(`site-lang`)],
+        errStat: (formikProps) => {
+            return (formikProps.touched.RECEIVE_TYPE && Boolean(formikProps.errors.RECEIVE_TYPE))
+        },
+        Content: ({ formikProps, otherState }) => {
+            let typeList = [
+                { typeCode: 'TO', typeName: { kor: `수신`, eng: `Recipient` }[cookies.load(`site-lang`)] },
+                { typeCode: 'CC', typeName: { kor: `참조`, eng: `Carbon Copy` }[cookies.load(`site-lang`)] },
+            ]
+            return (
+                <div>
+                    <Autocomplete
+                        id="RECEIVE_TYPE"
+                        value={formikProps.values.RECEIVE_TYPE}
+                        onChange={(e, v) => {
+                            formikProps.handleChange(e)
+                            formikProps.setFieldValue('RECEIVE_TYPE', v);
+                        }}
+                        disablePortal
+                        size="small"
+                        margin="dense"
+                        fullWidth
+                        options={typeList}
+                        getOptionLabel={(option) => option.typeName}
+                        renderOption={(props, option) => (
+                            <Box component="li" {...props}>
+                                {`(${option.typeCode}) ${option.typeName}`}
+                            </Box>
+                        )}
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                color="sys1"
+                                label={`${{ kor: `수신 유형`, eng: `Receiving Type` }[cookies.load(`site-lang`)]}`}
+                                inputProps={{
+                                    ...params.inputProps,
+                                }}
+                            />}
+                    />
+                </div>
+            )
+        }
+    },
+    {
         label: { kor: `역할명`, eng: `Role Name` }[cookies.load(`site-lang`)],
         description: { kor: `이메일 수신자의 역할을 지정해주세요.`, eng: `Please designate the role of the email recipient.` }[cookies.load(`site-lang`)],
         errStat: (formikProps) => {
             return (false)
         },
-        Content: ({ formikProps }) => {
+        Content: ({ formikProps, otherState }) => {
+
+            let roleList = [
+                { roleCode: 'P', roleName: { kor: `수행자`, eng: `Performer` }[cookies.load(`site-lang`)] },
+                { roleCode: 'CP', roleName: { kor: `연락 담당자`, eng: `Contact Person` }[cookies.load(`site-lang`)] },
+                { roleCode: 'PL', roleName: { kor: `파트장`, eng: `Part Leader` }[cookies.load(`site-lang`)] },
+                { roleCode: 'TL', roleName: { kor: `팀장`, eng: `Team Leader` }[cookies.load(`site-lang`)] },
+                { roleCode: 'SME', roleName: { kor: `SME`, eng: `SME` }[cookies.load(`site-lang`)] },
+            ]
             return (
                 <div>
-                    <TextField
-                        required
-                        variant="outlined"
+                    <Autocomplete
                         id="EMAIL_ROLE"
-                        name="EMAIL_ROLE"
-                        label="Email Role"
                         value={formikProps.values.EMAIL_ROLE}
-                        onChange={(e) => {
-                            formikProps.handleChange(e);
-                            formikProps.setFieldValue('EMAIL_ROLE', e.target.value.trim()); // 입력 값의 양 옆 공백 제거 후 저장
+                        onChange={(e, v) => {
+                            formikProps.handleChange(e)
+                            formikProps.setFieldValue('EMAIL_ROLE', v);
+                            console.log(formikProps.values.EMAIL_ROLE)
                         }}
-                        onBlur={formikProps.handleBlur}
-                        helperText={formikProps.touched.EMAIL_ROLE ? formikProps.errors.EMAIL_ROLE : ""}
-                        error={formikProps.touched.EMAIL_ROLE && Boolean(formikProps.errors.EMAIL_ROLE)}
-                        size='small'
+                        options={roleList}
+                        getOptionLabel={(option) => option.roleName}
+                        renderOption={(props, option) => (
+                            <Box component="li" {...props}>
+                                {`(${option.roleCode}) ${option.roleName}`}
+                            </Box>
+                        )}
+                        disablePortal
+                        size="small"
                         margin="dense"
                         fullWidth
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton size='small' onClick={() => { formikProps.setFieldValue('EMAIL_ROLE', '') }}>
-                                    <ClearIcon size='small' />
-                                </IconButton>
-                            ),
-                            style: style.inputTexstField // font size of input text
-                        }}
-                        InputLabelProps={{ style: style.inputTexstField }} // font size of input label
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                color="sys1"
+                                label={`${{ kor: "이메일 역할", eng: "EMAIL ROLE" }[cookies.load(`site-lang`)]}`}
+                                inputProps={{
+                                    ...params.inputProps,
+                                }}
+                            />}
                     />
                 </div>
             )
@@ -162,18 +223,18 @@ const steps = [
 
 function MailingAddListitem() {
 
-
-
     let location = useLocation();
     let initialValues = location.state.initialValues;
+    let otherState = location.state.otherState;
 
     let navigate = useNavigate()
 
     const onSubmitFunc = async function (values, actions) {
         const valuePayload = {
-            MNG_CODE: values.MNG_CODE,
+            MNG_CODE: values.MNG_CODE.mng_code,
             EMAIL_ADDRESS: values.EMAIL_ADDRESS,
-            EMAIL_ROLE: values.EMAIL_ROLE,
+            RECEIVE_TYPE: values.RECEIVE_TYPE.typeCode,
+            EMAIL_ROLE: values.EMAIL_ROLE.roleCode,
             UUID_STR: values.UUID_STR
         }
 
@@ -218,12 +279,13 @@ function MailingAddListitem() {
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <StepperForm
                 size={{
-                    width: '800px'
+                    width: '738px'
                 }}
                 muiColor='sys1'
                 yupSchema={yupSchema}
                 steps={steps}
-                initialValues={initialValues}
+                initialValues = {initialValues}
+                otherState={otherState}
                 onSubmitFunc={onSubmitFunc}
                 formId={"mailer_add_email"}
             />

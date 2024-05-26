@@ -14,6 +14,8 @@ import ListIcon from '@mui/icons-material/List';
 import ShowerIcon from '@mui/icons-material/Shower';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import SendIcon from '@mui/icons-material/Send';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import PolicyIcon from '@mui/icons-material/Policy';
 
 // ======================================================================================== [Import Component] js
 import ListItemNavPath from '../ListItemWrapper/ListItemNavPath';
@@ -30,7 +32,7 @@ function Sys1List() {
                 <ListItemNavPath navPath={'/'} icon={<ReplayCircleFilledIcon color='sys1' />} text={sys1ListLang.returnFirstPage[cookies.load('site-lang')]} />
             </List>
             <Divider />
-            <div style={{ marginLeft:'6px', fontSize: '11px', color: 'grey' }}>{{ kor: `오송제제기술팀 계정과 권한이 필요함`, eng: `Account and permissions are required for the Osong Technical Operation Team` }[cookies.load('site-lang')]}</div>
+            <div style={{ marginLeft: '6px', fontSize: '11px', color: 'grey' }}>{{ kor: `오송제제기술팀 계정과 권한이 필요함`, eng: `Account and permissions are required for the Osong Technical Operation Team` }[cookies.load('site-lang')]}</div>
             <Divider />
             <List>
                 <ListItemNavPath navPath={'/myprepared'} icon={<DrawIcon color='sys1' size="small" />} text={sys1ListLang.myprepared[cookies.load('site-lang')]} />
@@ -41,10 +43,13 @@ function Sys1List() {
                 <ListItemNavPath navPath={'/userlist'} icon={<RecentActorsIcon color='sys1' size="small" />} text={sys1ListLang.viewUser[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/productlist'} icon={<VaccinesIcon color='sys1' size="small" />} text={sys1ListLang.viewProd[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color='sys1' size="small" />} text={sys1ListLang.viewMachine[cookies.load('site-lang')]} />
+                <div style={{ marginLeft: '6px', fontSize: '11px', color: 'grey' }}>{{ kor: `시스템 설정`, eng: `System Settings` }[cookies.load('site-lang')]}</div>
                 <ListItemNavPath navPath={'/mailinglist'} icon={<SendIcon color='sys1' size="small" />} text={sys1ListLang.mailinglist[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/schedulerlist'} icon={<ScheduleIcon color='sys1' size="small" />} text={sys1ListLang.schedulerlist[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/auditlist'} icon={<PolicyIcon color='sys1' size="small" />} text={sys1ListLang.auditlist[cookies.load('site-lang')]} />
             </List>
             <Divider />
-            <div style={{ marginLeft:'6px', fontSize: '11px', color: 'grey' }}>{{ kor: `공장 내부 전산망에 공개됨`, eng: `Accessible on the internal network of the factory` }[cookies.load('site-lang')]}</div>
+            <div style={{ marginLeft: '6px', fontSize: '11px', color: 'grey' }}>{{ kor: `공장 내부 전산망에 공개됨`, eng: `Accessible on the internal network of the factory` }[cookies.load('site-lang')]}</div>
             <Divider />
             <List>
                 <ListItemNavPath navPath={'/viewrequal'} icon={<ChangeCircleIcon color='sys1' size="small" />} text={sys1ListLang.viewReQual[cookies.load('site-lang')]} />

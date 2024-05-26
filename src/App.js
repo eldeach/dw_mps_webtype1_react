@@ -44,6 +44,14 @@ import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductR
 import MailingList from './Mailing/MailingList';
 import MailingAddList from './Mailing/MailingAddList';
 
+
+//Scheduler
+import SchedulerList from './Scheduler/SchedulerList';
+import SchedulerUpdList from './Scheduler/SchedulerUpdList';
+
+//Audit
+import AuditList from './Audit/auditList';
+
 // ======================================================================================== [Import Component] CSS
 import './App.css';
 
@@ -58,7 +66,7 @@ function App() {
     const handleSystemCode = (codeValue) => setSystemCode(codeValue)
 
     useEffect(() => {
-        console.log(cookies.load('site-lang'))
+        // console.log(cookies.load('site-lang'))
         if (!cookies.load('site-lang')) {
             cookies.save('site-lang', 'eng', { path: '/' })
         }
@@ -114,6 +122,12 @@ function App() {
                         />
                     } />
                     <Route path='/mailinglist' element={<MailingList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
+
+
+                    <Route path='/schedulerupdlist' element={<SchedulerUpdList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
+                    <Route path='/schedulerlist' element={<SchedulerList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
+                    
+                    <Route path='/auditlist' element={<AuditList handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
 
                     <Route path='/machinelist' element={<MachineVMD handlePageTitle={handlePageTitle} handleSystemCode={handleSystemCode} />} />
                     <Route path='/addmachine' element={

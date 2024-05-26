@@ -19,6 +19,14 @@ const sys1ListLang = {
         kor : "메일링 목록",
         eng : "Mailig List"
     },
+    schedulerlist : {
+        kor : "스케줄러 리스트",
+        eng : "Scheduler List"
+    },
+    auditlist : {
+        kor: '감사 추적 기록',
+        eng: 'Audit Trail History' 
+    },
     viewReQual : {
         kor : "정기적 재적격성 평가 목록",
         eng : "Periodic Re-Qual List"

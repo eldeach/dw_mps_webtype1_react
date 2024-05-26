@@ -9,7 +9,6 @@ import axios from 'axios';
 import { Button } from '@mui/material/';
 // Material Icons
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 // ======================================================================================== [Import Component] js
 import Table from '../Table/Table'
@@ -42,7 +41,7 @@ function MailingList(props) {
             })
             let reqParam = {
                 method: "put",
-                url: "/reqmailingguseynlist",
+                url: "/reqmailinguseynlist",
                 params: {
                     disableRows: disableRows,
                     useyn: useYN
@@ -73,14 +72,39 @@ function MailingList(props) {
     return (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ width: '96vw', display: 'flex', flexDirection: 'row', fontSize: '12px' }}>
-                <Button sx={{ ml: 1, mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={() => {
+                <Button sx={{ ml: 1, mr: 1 }} fontSize='inherit' variant='outlined' color='sys1' onClick={async () => {
+                    let reqParam = {
+                        method: 'get',
+                        url: '/reqmachinegetnamelist',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                    let rs = await axios(reqParam)
+                        .then((res) => {
+                            let rs = res.data;
+                            if (rs.output.P_RESULT == "SUCCESS") {
+                                return rs.recordsets[0];
+                            } else if (rs.output.P_RESULT == "ERROR") {
+                                alert(`${rs.output.P_VALUE}`)
+                                return [];
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error.response)
+                            return [];
+                        })
                     naviagte('/mailingaddlist', {
                         state: {
                             initialValues: {
-                                MNG_CODE: '',
-                                EMAIL_ADDRESS: '',
-                                EMAIL_ROLE: '',
-                                UUID_STR: ''
+                                MNG_CODE: null,
+                                EMAIL_ADDRESS: null,
+                                EMAIL_ROLE: null,
+                                RECEIVE_TYPE: null,
+                                UUID_STR: null
+                            },
+                            otherState: {
+                                machineNameList: rs
                             }
                         }
                     })
@@ -130,7 +154,7 @@ function MailingList(props) {
             <Table
                 size={{
                     tableWidth: '96vw',
-                    tblNumRow: 5
+                    tblNumRow: 15
                 }}
                 muiColor='sys1'
                 extGetDataFunc={async (reqParam) => {
@@ -169,14 +193,59 @@ export default MailingList;
 
 function MailingUpdList(row) {
     const navigate = useNavigate()
-    return (<Button variant='outlined' color='sys1' onClick={() => {
+    return (<Button variant='outlined' color='sys1' onClick={async () => {
+        let reqParam = {
+            method: 'get',
+            url: '/reqmachinegetname',
+            params: {
+                MNG_CODE: row.MNG_CODE,
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        let machine = await axios(reqParam)
+            .then((res) => {
+                let rs = res.data;
+                if (rs.output.P_RESULT == "SUCCESS") {
+                    return rs.recordsets[0][0];
+                } else if (rs.output.P_RESULT == "ERROR") {
+                    alert(`${rs.output.P_VALUE}`)
+                    return [];
+                }
+            })
+            .catch((error) => {
+                alert(error.response)
+                return [];
+            })
+
+        let typeList = [
+            { typeCode: 'TO', typeName: { kor: `수신`, eng: `Recipient` }[cookies.load(`site-lang`)] },
+            { typeCode: 'CC', typeName: { kor: `참조`, eng: `Carbon Copy` }[cookies.load(`site-lang`)] },
+        ]
+        let receiveType = typeList.find(type => type.typeCode == row.RECEIVE_TYPE);
+
+
+        let roleList = [
+            { roleCode: 'P', roleName: { kor: `수행자`, eng: `Performer` }[cookies.load(`site-lang`)] },
+            { roleCode: 'CP', roleName: { kor: `연락 담당자`, eng: `Contact Person` }[cookies.load(`site-lang`)] },
+            { roleCode: 'PL', roleName: { kor: `파트장`, eng: `Part Leader` }[cookies.load(`site-lang`)] },
+            { roleCode: 'TL', roleName: { kor: `팀장`, eng: `Team Leader` }[cookies.load(`site-lang`)] },
+            { roleCode: 'SME', roleName: { kor: `SME`, eng: `SME` }[cookies.load(`site-lang`)] },
+        ]
+        let emailRole = roleList.find(role => role.roleCode == row.EMAIL_ROLE);
+
         navigate('/mailingupdlist', {
             state: {
                 initialValues: {
-                    MNG_CODE: row.MNG_CODE,
+                    MNG_CODE: machine,
                     EMAIL_ADDRESS: row.EMAIL_ADDRESS,
-                    EMAIL_ROLE: row.EMAIL_ROLE,
+                    EMAIL_ROLE: emailRole,
+                    RECEIVE_TYPE: receiveType,
                     UUID_STR: row.UUID_STR
+                },
+                otherState: {
+                    machineNameList: []
                 }
             }
         })
@@ -203,6 +272,13 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
+    columnHelper.accessor("MNG_TEAM",
+        {
+            header: { kor: "관리팀", eng: "Management team" },
+            size: 150,
+            enableColumnFilter: true,
+        }
+    ),
     columnHelper.accessor("EMAIL_ADDRESS",
         {
             header: { kor: "이메일", eng: "주소" },
@@ -210,11 +286,43 @@ const columnDef = [  // TanStack Table은 컬럼 사이즈가 20이 최소
             enableColumnFilter: true,
         }
     ),
+    columnHelper.accessor("RECEIVE_TYPE",
+        {
+            header: { kor: `수신 유형`, eng: `Receiving Type` },
+            size: 170,
+            enableColumnFilter: true,
+            cell: renderValue => {
+                let typeList = [
+                    { typeCode: 'TO', typeName: { kor: `수신`, eng: `Recipient` } },
+                    { typeCode: 'CC', typeName: { kor: `참조`, eng: `Carbon Copy` } },
+                ]
+                let receiveType = typeList.find(type => type.typeCode == renderValue.getValue());
+                if (!receiveType) {
+                    return <div>{renderValue.getValue()}</div>;  // 기본값으로 'Unknown' 텍스트 반환
+                }
+                return <div>{receiveType.typeName[cookies.load(`site-lang`)]}</div>;
+            }
+        }
+    ),
     columnHelper.accessor("EMAIL_ROLE",
         {
             header: { kor: "이메일 역할", eng: "EMAIL ROLE" },
             size: 170,
             enableColumnFilter: true,
+            cell: renderValue => {
+                let roleList = [
+                    { roleCode: 'P', roleName: { kor: `수행자`, eng: `Performer` } },
+                    { roleCode: 'CP', roleName: { kor: `연락 담당자`, eng: `Contact Person` } },
+                    { roleCode: 'PL', roleName: { kor: `파트장`, eng: `Part Leader` } },
+                    { roleCode: 'TL', roleName: { kor: `팀장`, eng: `Team Leader` } },
+                    { roleCode: 'SME', roleName: { kor: `SME`, eng: `SME` } },
+                ]
+                let emailRole = roleList.find(role => role.roleCode == renderValue.getValue());
+                if (!emailRole) {
+                    return <div>{renderValue.getValue()}</div>;  // 기본값으로 'Unknown' 텍스트 반환
+                }
+                return <div>{emailRole.roleName[cookies.load(`site-lang`)]}</div>;
+            }
         }
     ),
     columnHelper.accessor("USE_YN",
