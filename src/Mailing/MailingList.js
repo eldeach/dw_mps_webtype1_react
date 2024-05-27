@@ -154,7 +154,7 @@ function MailingList(props) {
             <Table
                 size={{
                     tableWidth: '96vw',
-                    tblNumRow: 15
+                    tblNumRow: 20
                 }}
                 muiColor='sys1'
                 extGetDataFunc={async (reqParam) => {
