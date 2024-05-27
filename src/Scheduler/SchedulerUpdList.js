@@ -103,7 +103,10 @@ const steps = [
                 <div>
                     <Autocomplete
                         value={formikProps.values.PERIOD_UNIT}
-                        onChange={formikProps.handleChange}
+                        onChange={(e, v) => {
+                            formikProps.handleChange(e)
+                            formikProps.setFieldValue('PERIOD_UNIT', v);
+                        }}
                         disablePortal
                         size="small"
                         margin="dense"
