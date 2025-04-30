@@ -19,6 +19,10 @@ const sys1ListLang = {
         kor : "메일링 목록",
         eng : "Mailig List"
     },
+    mailingupdlistbyteam : {
+        kor : "메일링 목록 설정 (팀 단위)",
+        eng : "Update Mailing List (By 팀)"
+    },
     schedulerlist : {
         kor : "스케줄러 리스트",
         eng : "Scheduler List"

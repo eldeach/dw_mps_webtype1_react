@@ -45,6 +45,7 @@ function Sys1List() {
                 <ListItemNavPath navPath={'/machinelist'} icon={<ListIcon color='sys1' size="small" />} text={sys1ListLang.viewMachine[cookies.load('site-lang')]} />
                 <div style={{ marginLeft: '6px', fontSize: '11px', color: 'grey' }}>{{ kor: `시스템 설정`, eng: `System Settings` }[cookies.load('site-lang')]}</div>
                 <ListItemNavPath navPath={'/mailinglist'} icon={<SendIcon color='sys1' size="small" />} text={sys1ListLang.mailinglist[cookies.load('site-lang')]} />
+                <ListItemNavPath navPath={'/mailingupdlistbyteam'} icon={<SendIcon color='sys1' size="small" />} text={sys1ListLang.mailingupdlistbyteam[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/schedulerlist'} icon={<ScheduleIcon color='sys1' size="small" />} text={sys1ListLang.schedulerlist[cookies.load('site-lang')]} />
                 <ListItemNavPath navPath={'/auditlist'} icon={<PolicyIcon color='sys1' size="small" />} text={sys1ListLang.auditlist[cookies.load('site-lang')]} />
             </List>

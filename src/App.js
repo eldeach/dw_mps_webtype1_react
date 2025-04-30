@@ -43,6 +43,7 @@ import ProductRecorder from './MotherSite/Forms/Product/ProductRecorder/ProductR
 // Mailer
 import MailingList from './Mailing/MailingList';
 import MailingAddList from './Mailing/MailingAddList';
+import MailingUpdListByTeam from './Mailing/MailingUpdListByTeam';
 
 
 //Scheduler
@@ -117,6 +118,12 @@ function App() {
                     } />
                     <Route path='/mailingupdlist' element={
                         <MailingAddList
+                            handlePageTitle={handlePageTitle}
+                            handleSystemCode={handleSystemCode}
+                        />
+                    } />
+                    <Route path='/mailingupdlistbyteam' element={
+                        <MailingUpdListByTeam
                             handlePageTitle={handlePageTitle}
                             handleSystemCode={handleSystemCode}
                         />

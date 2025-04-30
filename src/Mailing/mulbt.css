@@ -1,0 +1,71 @@
+.mulbt {
+    margin: 10px;
+}
+
+.mulbt p,
+.mulbt select,
+.mulbt input,
+.mulbt button {
+    font-size: small;
+}
+
+
+.mulbt select,
+.mulbt input,
+.mulbt button {
+    min-height: 30px;
+}
+
+.mulbt-1st-row {
+    width: 600px;
+    padding-bottom: 5px;
+    border-bottom: 1px grey solid;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.mulbt-2nd-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* border-bottom: 1px grey solid; */
+}
+
+.mulbt-2nd-mail-list-row {
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.mulbt-2nd-mail-list-row input {
+    flex-grow: 1;
+}
+
+.mulbt-button {
+    border: 1px solid #3f50b5;
+    border-radius: 3px;
+    color: #3f50b5;
+    background-color: transparent;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.mulbt-button:hover {
+    border-color: #3f50b5;
+    color: white;
+    background-color: #3f50b5;
+    cursor: pointer;
+}
+
+.mulbt-button[disabled] {
+    border-color: #cccccc;
+    color: #999999;
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    opacity: 0.6; /* 시각적 비활성화 표현 */
+}
